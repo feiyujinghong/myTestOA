@@ -1,0 +1,45 @@
+
+
+<form action="{:U('add_to_group')}" method="post" enctype="application/x-www-form-urlencoded" role="form" class="form-horizontal">
+    <legend>
+        <p class="text-primary">
+            {$nickname} 所属的用户组列表
+        </p>
+    </legend>
+    <label class="col-sm-2 control-label" for="inputEmail3">
+        <volist name="auth_groups" id="vo">
+            <div class="checkbox">
+                <label>
+                    <input class="auth_groups" type="checkbox" name="group_id[]" value="{$vo.id}">
+                    {$vo.title}
+                </label>
+            </div>
+            <br/>
+        </volist>
+    </label>
+    <input type="hidden" name="uid" value="{:I('uid')}">
+    <input type="hidden" name="batch" value="true">
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+            <button class="btn btn-warning" onclick="javascript:history.back(-1);
+                    return false;">{$Think.lang.RETURN}</button>
+        </div>
+    </div>
+</form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        var group = [{$user_groups}];
+        $('.auth_groups').each(function() {
+            if ($.inArray(parseInt(this.value, 10), group) > -1) {
+                $(this).prop('checked', true);
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

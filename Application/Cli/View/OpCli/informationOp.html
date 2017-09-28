@@ -1,0 +1,120 @@
+
+<link rel="stylesheet" type="text/css" href="/Public/upload/uploadify.css">
+<script type="text/javascript" src="/Public/upload/jquery.uploadify-3.1.min.js"></script>
+<div class="container">
+	  <legend>
+      	{$Think.lang.INFORMATION_INFO}
+      </legend>
+    <div class="form-horizontal">
+      <div class="form-group">
+       <div class="col-sm-3">
+           {$up_load}
+       </div>
+</div>
+</div>
+</div>
+		    
+<table class="table table-bordered">
+    <tbody>
+        	<tr>
+			    
+			    <td colspan="3">
+			    	
+			    	<div id="show_upload">
+			           <volist name="infomationInfo" id="vo">
+						<if condition="$vo['is_show'] eq 1">
+						<div id="{$vo.id}" style='width:120px;float:left;'>
+							<img data-toggle="modal" data-target="#myModal" onclick="get_modal($(this))"  title="{$Think.lang.SHOW_BIG_PIC}" style='width:100px;height100px;' src="__ROOT__/{$vo['url']|get_m_pic}"/>
+							<br><a data-toggle="modal"  title="{$Think.lang.SHOW_BIG_PIC}" src="__ROOT__/{$vo['url']|get_m_pic}"  data-target="#myModal" onclick="get_modal($(this))">
+								{$vo['name']}
+								<a href="javascript:void(0)" onclick="dele_attach({$vo.id});"><i class="icon-trash-o"></i></a>
+							</a>
+							<input type="hidden" value="__ROOT__/{$vo['url']}"/>
+						</div>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				    	<else/>
+				    	<div style='width:120px;float:left;'>
+			                <img style="width:100px;height100px;" src="__ROOT__/{$vo['url']|showPic}"/>
+					    	<br><a title='点击下载'  href="__ROOT__/{$vo['url']}">{$vo['name']}</a>
+					    </div>
+				    	</if>
+				    </volist>
+			
+			        </div>
+			    	
+			    	
+			    	
+			    	
+			         <!--
+				        <a data-toggle="modal"  title='点击看大图'   data-target="#myModal">
+				            <img style='width:100px;height100px;' src="__ROOT__/{$product_info['product_pic']|get_m_pic}">
+				        </a>
+				     -->
+			
+			    </td>
+			</tr>
+    </tbody>
+</table>
+<style>
+    .success{
+        width:150px;
+    }
+</style>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">{$Think.lang.SHOW_BIG_PIC}</a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <img alt="" id="mymodal_id" src="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</tbody>
+</table>
+
+<style>
+    .success{
+        width:150px;
+    }
+</style>
+
+<script>
+function get_modal(obj) {
+	var url = obj.attr('src');
+	$("#mymodal_id").attr("src", url);
+	var o_url = obj.parent().children("input").val();
+	$("#mymodal_url").attr("href", o_url);
+}
+
+//删除图片
+function dele_attach(id) {
+    $.ajax({
+    type: "post",
+            url: "/index.php/Upload/Upload/dele_attach",
+            data: {id:id},
+            dataType: "html",
+            success: function(msg){
+            		alert(msg);
+                    $("#" + id + "").remove(); ;
+                    //window.location = window.location;
+                    return;
+            }
+    });
+}
+
+</script>

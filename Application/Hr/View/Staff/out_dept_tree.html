@@ -1,0 +1,167 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" 
+		               data-dismiss="modal" aria-hidden="true">
+		                  &times;
+		            </button>
+		            <h4 class="modal-title" id="myModalLabel">
+		               	匹配系统用户
+		            </h4>
+		         </div>
+		         <div class="modal-body"><!-- 11111111111111111111 -->
+
+						<link rel="stylesheet" href="__PUBLIC__/css/zTreeStyle/zTreeStyle.css" type="text/css">
+						<script type="text/javascript" src="__PUBLIC__/js/zTree/jquery.ztree.all-3.5.js"></script>
+						
+						<div style="float:left;width:150px;height:300px;overflow:auto;">
+							<div class="zTreeDemoBackground left" style="float:left;width:15%;">
+							    <ul id="treeDemo" class="ztree"></ul>
+							</div>
+						</div>
+						
+						<div style=" width:400px;height:300px;overflow:auto;" id="dept_str">
+							
+							
+						</div>
+						
+						<script>
+						    var setting = {
+						        data: {
+						            simpleData: {
+						                enable: true,
+						            },
+						        },
+						        callback: {
+						            onClick: onclick,
+						            onRightClick: OnRightClick
+						        }
+						    };
+						    
+						    function onclick(event, treeId, treeNode, clickFlag) {
+						        var dept_id = treeNode.id
+						        $.ajax({
+						    		type:"POST",
+						    		url:"__APP__/Auth/Auth/query_dept_user",
+						    		data:{dept_id:dept_id},
+						    		success:function(info){
+						    			$("#dept_str").html(info);
+						    		}
+						    	});
+						        
+						    }
+						    
+						    /*匹配系统客户*/
+						    function relation_sys(user_id,user_name,mobile) {
+						    	$("#user_id").val(user_id);
+						    	$("#user_name").val(user_name);
+						    	$("#name").val(user_name);
+						    	$("#phone").val(mobile);
+						    }
+						    
+						    function OnRightClick(event, treeId, treeNode) {
+						        if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
+						            zTree.cancelSelectedNode();
+						            showRMenu("root", event.clientX, event.clientY);
+						        } else if (treeNode && !treeNode.noR) {
+						            zTree.selectNode(treeNode);
+						            showRMenu("node", event.clientX, event.clientY);
+						        }
+						    }
+						
+						    function showRMenu(type, x, y) {
+						        $("#rMenu ul").show();
+						        if (type == "root") {
+						            $("#m_del").hide();
+						            $("#m_check").hide();
+						            $("#m_unCheck").hide();
+						        } else {
+						            $("#m_del").show();
+						            $("#m_check").show();
+						            $("#m_unCheck").show();
+						        }
+						        rMenu.css({"top": y + "px", "left": x + "px", "visibility": "visible"});
+						
+						        $("body").bind("mousedown", onBodyMouseDown);
+						    }
+						    function hideRMenu() {
+						        if (rMenu)
+						            rMenu.css({"visibility": "hidden"});
+						        $("body").unbind("mousedown", onBodyMouseDown);
+						    }
+						    function onBodyMouseDown(event) {
+						        if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
+						            rMenu.css({"visibility": "hidden"});
+						        }
+						    }
+						    var addCount = 1;
+						    /*
+						    function addTreeNode() {
+						        hideRMenu();
+						        var nodes = zTree.getSelectedNodes();
+						        var name = nodes[0].name;
+						        var id = nodes[0].id;
+						        $.get("{:U(addType)}", function(data) {
+						            $(".modal-body").html(data);
+						            $(".bs-example-modal-lg").modal("show");
+						            $("[name='pid']").val(id);
+						            $("[name='pname']").val(name);
+						        });
+						    }
+						    function removeTreeNode() {
+						        hideRMenu();
+						        var nodes = zTree.getSelectedNodes();
+						        if (nodes && nodes.length > 0) {
+						            if (nodes[0].children && nodes[0].children.length > 0) {
+						                var msg = "{$Think.lang.DELETE_TYPE_DESC}";
+						                if (confirm(msg) == true) {
+						                    zTree.removeNode(nodes[0]);
+						                }
+						            } else {
+						                zTree.removeNode(nodes[0]);
+						            }
+						        }
+						    }
+							*/
+						
+						    var zTree, rMenu;
+						    $(document).ready(function() {
+						        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+						        zTree = $.fn.zTree.getZTreeObj("treeDemo");
+						        rMenu = $("#rMenu");
+						    });
+						    //-->
+						
+							//var treeNodes1 = [{"id": "77", "name": "\u4e00\u7ec4\uff08M2-M3\uff09", "pId": "69"}, {"id": "78", "name": "\u4e8c\u7ec4\uff08M2-M3\uff09", "pId": "69"}, ];
+						    var treeNodes1 = {$tree_data};
+						    $(function() {
+						        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+						    });
+						</script>
+						<style type="text/css">
+						    div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+						    div#rMenu ul li{
+						        margin: 1px 0;
+						        padding: 0 5px;
+						        cursor: pointer;
+						        list-style: none outside none;
+						        background-color: #DFDFDF;
+						    }
+						</style>
+
+					<!-- 11111111111111111111111 -->
+				 </div>
+		         <div class="modal-footer">
+		            <button type="button" class="btn btn-default" 
+		               data-dismiss="modal">关闭
+		            </button>
+		            <button type="button" class="btn btn-primary">
+		               	提交更改
+		            </button>
+		         </div>
+		      	
+		      </div>
+		</div>
+	</div>

@@ -1,0 +1,22 @@
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    
+    <li role="presentation"  class="active"><a href="#group" aria-controls="group" role="tab" data-toggle="tab">{$Think.lang.OP_GROUP}</a></li>
+    <li role="presentation"><a href="#admin" aria-controls="admin" role="tab" data-toggle="tab">{$Think.lang.OP_G_GROUP}</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+      
+      <div role="tabpanel" class="tab-pane active" id="group">
+          <include file='group' />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="admin">
+          <include file='admin' />
+      </div>
+  </div>
+
+</div>

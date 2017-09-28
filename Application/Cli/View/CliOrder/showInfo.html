@@ -1,0 +1,52 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<form action="" method="post" id="form" role="form" class="form-horizontal">
+    <div id="contact" class="tab-pane">
+        <div class="container">
+            <legend>
+                <p class="text-primary">
+                    {$Think.lang.CLIY_ORDER}
+                    <a href="{:U('Account/start',array('id'=>$id))}" class="btn btn-info pull-right">{$Think.lang.HT_SEND}</a>&nbsp;
+                    <a href="javascript:window.history.back()" class="btn btn-warning pull-right" style="margin-right: 10px;">{$Think.lang.RETURN}</a> &nbsp;
+                </p>
+            </legend>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="success">{$Think.lang.CLIY_CLINAME}</td>
+                        <td>{$data.cli_name}</td>
+                        <td class="success">{$Think.lang.CLIY_DEND_TIME}</td>
+                        <td>{$data.order_time|date='Y-m-d',###}</td>
+                    </tr>
+                    <tr>
+                        <td class="success">{$Think.lang.REMARKS}</td>
+                        <td colspan="3">{$data.remark}</td>
+                    </tr>
+                    <table class="table table-bordered" id="product_info">
+                        <tr class="success">
+                            <td colspan="8" style="text-align: center;"><b>{$Think.lang.CLIY_PRD_LIST}</b></td>
+                        </tr>
+                        <tr>
+                            <td>{$Think.lang.CLIY_PRO_NAME}</td>
+                            <td>{$Think.lang.CLIY_USE_CHENGF}</td>
+                            <td>{$Think.lang.CLIY_HL}</td>
+                            <td>{$Think.lang.CLIY_JLDW}</td>
+                            <td>{$Think.lang.CLIY_XSJG}</td>
+                            <td>{$Think.lang.CLIY_SJ_PIECES}</td>
+                            <td>{$Think.lang.CLIY_SUM}</td>
+                        </tr>
+                        <foreach name='listData' item='vo'>
+                            <tr>
+                                <td>{$vo.product_name}</td>
+                                <td>{$vo.product_format}</td>
+                                <td>{$vo.product_content}</td>
+                                <td>{$vo.product_unit}</td>
+                                <td>{$vo.product_price}</td>
+                                <td>{$vo["selling_price"]}</td>
+                                <td>{$vo.count}</td>
+                            </tr>
+                        </foreach>
+                    </table>
+        </div>
+    </div>
+</div>
+</form>

@@ -1,0 +1,65 @@
+<legend>
+    <p class="text-primary">
+        {$Think.lang.PRODUCT_TYPE_ADD}
+    </p>
+</legend>
+<form action="{:U()}" method="post" role="form" id ='form' class="form-horizontal">
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_TYPE_TYPENAME}</label>
+        <div class="col-sm-10">
+            <input type="text" style="width:30%" class="form-control" name="name" id="name" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_TYPE_TYPENAME_EN}</label>
+        <div class="col-sm-10">
+            <input type="text" style="width:30%" class="form-control" name="en_name" id="name" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_SUPERIOR_MENU}</label>
+        <div class="col-sm-10">
+            <select class="form-control" style="width:30%" name="pid">
+                <option value="0">顶级类型</option>
+                <volist name="product_tree" id="product_tree">
+                    <option value="{$product_tree.id}">{$product_tree.title_show}</option>
+                </volist>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" style="width:30%" name="remarks" value="{$info.tip|default=''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary" id="submit-form" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+            <a class="btn btn-warning" href="{:U('product_type_list')}">{$Think.lang.RETURN}</a>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            	name: {
+                    validators: {
+                        notEmpty: {
+                            message: '类型名称不能为空'
+                        },
+                    }
+                },
+            }
+        });
+    });
+
+</script>

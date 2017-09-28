@@ -1,0 +1,158 @@
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    选择员工
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <link rel="stylesheet" href="__PUBLIC__/css/zTreeStyle/zTreeStyle.css" type="text/css">
+                <script type="text/javascript" src="__PUBLIC__/js/zTree/jquery.ztree.all-3.5.js"></script>
+
+                <div style="float:left;width:150px;height:300px;overflow:auto;">
+                    <div class="zTreeDemoBackground left" style="float:left;width:15%;">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                </div>
+
+                <div style=" width:400px;height:300px;overflow:auto;" id="user_list">
+
+
+                </div>
+
+                <script>
+                    var setting = {
+                        data: {
+                            simpleData: {
+                                enable: true,
+                            },
+                        },
+                        callback: {
+                            onClick: onclick,
+                        }
+                    };
+
+                    function onclick(event, treeId, treeNode, clickFlag) {
+                        var dept_id = treeNode.id
+                        $.ajax({
+                            type: "POST",
+                            dataType: "JSON",
+                            url: "__APP__/Auth/Auth/query_dept_staff",
+                            data: {dept_id: dept_id},
+                            success: function(info) {
+                                if (info.ret == 1) {
+                                    addUserList(info.data);
+                                }else{
+                                    $("#user_list").html("");
+                                }
+                            }
+                        });
+                    }
+
+                    /*匹配系统客户*/
+                    function relation_sys(user_id, user_name, mobile) {
+                        $("#user_id").val(user_id);
+                        $("#user_name").val(user_name);
+                        $("#name").val(user_name);
+                        $("#phone").val(mobile);
+                    }
+
+                    function addUserList(dataObj) {
+                            var ret = "<ul class=list-group>";
+                        for (var o in dataObj) {
+                            ret += "<li class='list-group-item'><i class='icon-check-empty'></i> 姓名：" + dataObj[o].name + "<div class='btn-group btn-group-xs' style='float:right;'> <button type='button' data-work-num ='"+dataObj[o].work_num+"'  data-user-id='"+dataObj[o].user_id+"' data-staff-id ='"+dataObj[o].id+"' data-user-name='"+dataObj[o].name+"' class='btn btn-default' onclick='selectUser(this)'>选择</button></div></li>";
+                        }
+                        ret += '</ul>';
+                        $("#user_list").html(ret);
+                    }
+
+                    var addCount = 1;
+                            var is_single =1; //是否多选 1单选0多选
+                    var zTree, rMenu;
+                    $(document).ready(function() {
+                        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+                        zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                        rMenu = $("#rMenu");
+                    });
+
+                    var treeNodes1 = {$tree_data};
+                    $(function() {
+                        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+                    });
+                    //选人
+                    function selectUser(obj) {
+                        var is_check = $(obj).parent().parent().find("i").attr("class");
+                        var user_name = $(obj).attr("data-user-name");
+                        var user_id = $(obj).attr("data-user-id");  //系统用户ID
+                        var staff_id = $(obj).attr("data-staff-id");    //员工ID
+                        var work_num  = $(obj).attr("data-work-num");   //合同工资
+                        var data = getUserInputData(staff_id,user_name,user_id,work_num);
+                        if (is_check == "icon-check-empty") {
+                            if (is_single == 1)
+                                $(".icon-check").attr("class", "icon-check-empty");
+                            $(obj).parent().parent().find("i").attr("class", "icon-check");
+                            $("inputinfo").html(data);
+                        } else {
+                            $(obj).parent().parent().find("i").attr("class", "icon-check-empty");
+                            $("inputinfo").html(data);
+                        }
+                    }
+                    //生成app方便插入的数据
+                    function getUserInputData(id,name,user_id,work_num){
+                        var input_info = $("inputinfo").html();
+                        input_info = input_info.replace(/@user_name/g,"@"+name);
+                        input_info = input_info.replace(/@staff_id/g,"@"+id);
+                        input_info = input_info.replace(/@user_id/g,"@"+user_id);
+                        input_info = input_info.replace(/@work_num/g,"@"+work_num);
+                        return input_info;
+                    }
+                    //选人确定
+                    function select_sure() {
+                        var data = $("inputinfo").html();
+                        $("#userModal").modal('hide');
+                        var functionName = $("functionname").html();
+                        setTimeout(functionName+"('"+data+"')",100);
+                    }
+                    $('#userModal').on('show.bs.modal', function(event) {
+                        var button = $(event.relatedTarget);//触发modal的按钮
+                        var functionName = button.data('function');
+                        var input_info = button.data("input-info");
+                        var modal = $(this)
+                        modal.find('inputinfo').html(input_info);
+                        modal.find('functionname').html(functionName);
+                        $(".icon-check").attr("class", "icon-check-empty");//清除所有选择
+                    })
+                </script>
+                <style type="text/css">
+                    div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+                    div#rMenu ul li{
+                        margin: 1px 0;
+                        padding: 0 5px;
+                        cursor: pointer;
+                        list-style: none outside none;
+                        background-color: #DFDFDF;
+                    }
+                </style>
+
+            </div>
+            <div class="modal-footer">
+                <inputinfo style='display:none'></inputinfo>
+                <functionname  style='display:none'></functionname>
+                <button type="button" class="btn btn-default" 
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="select_sure()">
+                    确定
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

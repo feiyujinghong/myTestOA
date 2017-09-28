@@ -1,0 +1,91 @@
+
+<script type="text/javascript">
+function next_department(obj){
+	if("r_next" == obj) { 
+		alert("已无下级部门");
+		return false;
+	}
+	var val = obj.value;
+	//var url = "Department/department_show?pid="+val;
+	window.location  = "__URL__/department_show?pid="+val;
+	
+}
+
+
+</script>
+<div id="tabs-308576" class="tabbable">
+	<legend>
+    	<p class="text-primary">
+    		公司结构
+    	</p>
+    </legend>
+	<ul class="nav nav-tabs">
+		<li class="active">
+		<a data-toggle="tab" href="#panel-270543">{$Think.lang.DEPARTMENT_LIST_SHOW}</a>
+		</li>
+		<li class="">
+		<a data-toggle="tab" href="#panel-46001">{$Think.lang.DEPARTMENT_TREE_SHOW}</a>
+		</li>
+	</ul>
+
+	<div class="tab-content">
+		<div id="panel-270543" class="tab-pane active">
+			<table class="table">
+				
+				
+				<thead>
+					<tr class="success">
+						<th>{$Think.lang.DEPARTMENT_NAME}</th>
+						<th>{$Think.lang.LEVEL}</th>
+						<th>{$Think.lang.DEPARTMENT_ADD_TIME}</th>
+						<th>{$Think.lang.REMARKS}</th>
+						<th>{$Think.lang.OPERATION}</th>
+					</tr>
+			    </thead>
+			  	
+			  	<tbody>
+			  	<notempty name="department">
+					<volist name="department" id="vo">
+						<tr class="line_g hover_bg">
+							
+							<td>{$vo.name}</td>
+							<td>{$vo.level}</td>
+							<td>{$vo.add_time|date="Y-m-d",###}</td>
+							<td>{$vo.remarks}</td>
+							<td>
+								<if condition="$vo['next_count'] neq 0 ">
+									<button type="button" class="btn btn-info" value="{$vo.id}" onClick="next_department(this)">{$Think.lang.DEPARTMENT_NEXT_DEPT}</button>
+								<else/>
+									<button type="button" class="btn btn-info" value="{$vo.id}" onClick="next_department('r_next')">{$Think.lang.DEPARTMENT_LAST_DEPT}</button>
+								</if>
+								<a href="{:U('Department/department_edit?id='.$vo['id'])}" class="authorize" data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+									<i class="icon-edit"></i>
+								</a>
+							</td>
+							
+						</tr>
+				  	</volist>
+			  	</notempty>
+			  	</tbody>
+			</table>
+		</div>
+		
+		<div id="panel-46001" class="tab-pane">
+			 <volist name="department_tree" id="department_tree">
+                 <div class="form-group">
+            		<label>
+            			{$department_tree.title_show}
+           			</label>
+           		</div>
+             </volist>
+		</div>
+	
+	</div>
+	
+</div>
+
+
+
+</div>
+</body>
+</html>  

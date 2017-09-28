@@ -1,0 +1,35 @@
+<legend>
+    <p class="text-primary">
+     {$Think.lang.CLIY_ORDER_LIST}
+        <a href="{:U('Cli/OpCli/cliList')}" class='btn btn-warning pull-right'>{$Think.lang.Return}</a>
+    </p>
+</legend>
+<table class='table table-bordered'>
+    <thead>
+        <tr class="success">
+            <th>{$Think.lang.CLIY_CLINAME}</th>
+            <th>{$Think.lang.CLIY_DEND_TIME}</th>
+            <th>{$Think.lang.CLIY_DEND_TIME}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+</thead>
+<if condition='!empty($data)'>
+    <volist name="data" id="vo">
+        <tr>
+            <td>{$vo.cli_name}</td>
+            <td>{$vo.order_time|date="Y-m-d",###}</td>
+            <td><php>echo $status[$vo['status']];</php></td>
+            <td>
+        <if condition="($vo['status'] eq 0)">
+            <a href="{:U('update',array('id'=>$vo['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}"><i class="icon-edit"></i></a>
+            
+        </if>
+        <a href="{:U('showInfo',array('id'=>$vo['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.VIEW}"><i class="icon-eye"></i></a>
+        </td>
+        </tr>
+    </volist>
+    <else />
+    <include file="Auth@Public/empty_data" />
+    </if>
+</table>
+{$_page}

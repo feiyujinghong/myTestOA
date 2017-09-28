@@ -1,0 +1,171 @@
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    选择系统用户
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <link rel="stylesheet" href="__PUBLIC__/css/zTreeStyle/zTreeStyle.css" type="text/css">
+                <script type="text/javascript" src="__PUBLIC__/js/zTree/jquery.ztree.all-3.5.js"></script>
+
+                <div style="float:left;width:150px;height:300px;overflow:auto;">
+                    <div class="zTreeDemoBackground left" style="float:left;width:15%;">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                </div>
+
+                <div style=" width:400px;height:300px;overflow:auto;" id="user_list">
+
+
+                </div>
+
+                <script>
+                    var setting = {
+                        data: {
+                            simpleData: {
+                                enable: true,
+                            },
+                        },
+                        callback: {
+                            onClick: onclick,
+                        }
+                    };
+
+                    var more_select = 0; //0-单选 -1多选
+                    var selected_users = new Array();//选中的用户id+name
+                    function onclick(event, treeId, treeNode, clickFlag) {
+                        var dept_id = treeNode.id
+                        $.ajax({
+                            type: "POST",
+                            dataType: "JSON",
+                            url: "__APP__/Auth/Auth/query_dept_user",
+                            data: {dept_id: dept_id},
+                            success: function(info) {
+                                if (info.ret != 0) {
+                                    addUserList(info.data);
+                                }else{
+                                    $("#user_list").html("");
+                                }
+                            }
+                        });
+                    }
+
+                    function addUserList(dataObj) {
+                        var ret = "<ul class=list-group>";
+                        for (var o in dataObj) {
+                            ret += "<li class='list-group-item'><i class='icon-square-o'></i> 姓名：" + dataObj[o].name + "<div class='btn-group btn-group-xs' style='float:right;'> <button type='button' data-user-id ='"+dataObj[o].id+"' data-user-name='"+dataObj[o].name+"' class='btn btn-default' onclick='selectUser(this)'>选择</button></div></li>";
+                        }
+                        ret += '</ul>';
+                        $("#user_list").html(ret);
+                    }
+
+                    var zTree, rMenu;
+                    $(document).ready(function() {
+                        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+                        zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                        rMenu = $("#rMenu");
+                    });
+
+                    var treeNodes1 = {$tree_data};
+                    $(function() {
+                        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+                    });
+                    //选人
+                    function selectUser(obj) {
+                        var is_check = $(obj).parent().parent().find("i").attr("class");
+                        var user_name = $(obj).attr("data-user-name");
+                        var user_id = $(obj).attr("data-user-id");
+                        if(more_select == 0){   //单选
+                            selected_users.splice(-1,selected_users.length-1)
+                        }
+                        selected_users[user_id] = user_name;
+                        if (is_check == "icon-square-o") {
+                            if(more_select == 0)//单选
+                                $(".icon-check-square-o").attr("class", "icon-square-o");
+                            $(obj).parent().parent().find("i").attr("class", "icon-check-square-o");
+                        } else {
+                            selected_users.splice(user_id,1);
+                            $(obj).parent().parent().find("i").attr("class", "icon-square-o");
+                        }
+                    }
+                    //选人确定
+                    function select_sure() {
+                        var key;
+                        var user_ids = "";
+                        var user_names = "";
+                        for(key in selected_users){
+                            if(selected_users[key] == "")
+                                continue;
+                            user_ids += key+",";
+                            user_names += selected_users[key]+",";
+                        }
+                        var input_info = $("inputinfo").html();
+                        user_ids = user_ids.substring(0,user_ids.length-1);
+                        user_names = user_names.substring(0,user_names.length-1);
+                        input_info = input_info.replace(/@user_name/g,"@"+user_names);
+                        input_info = input_info.replace(/@user_id/g,"@"+user_ids);
+                        $("#userModal").modal('hide');
+                        var functionName = $("functionname").html();
+                        setTimeout(functionName+"('"+input_info+"')",100);
+                    }
+                    $('#userModal').on('show.bs.modal', function(event) {
+                        var button = $(event.relatedTarget);//触发modal的按钮
+                        var functionName = button.data('function');
+                        var input_info = button.data("input-info");
+                        var is_clear = button.data("clear");
+                        if(button.data("more") == 1){   //是否多选
+                            more_select = 1;
+                        }
+                        if(is_clear == 1){  //每次打开选择控件后清空已选
+                            $("#user_list").html("");
+                            selected_users.splice(-1,selected_users.length-1);
+                        }
+                        var modal = $(this);
+                        modal.find('inputinfo').html(input_info);
+                        modal.find('functionname').html(functionName);
+                        $(".icon-check").attr("class", "icon-check-empty");//清除所有选择
+                    })
+                    
+                    function default_add_user(data) {
+                        var arr = data.split("#");
+                        for (var i in arr) {
+                            var keyVal = arr[i].split("@");
+                            $("#" + keyVal[0]).val(keyVal[1]);
+                        }
+                    }
+                    
+                </script>
+                <style type="text/css">
+                    div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+                    div#rMenu ul li{
+                        margin: 1px 0;
+                        padding: 0 5px;
+                        cursor: pointer;
+                        list-style: none outside none;
+                        background-color: #DFDFDF;
+                    }
+                </style>
+
+            </div>
+            <div class="modal-footer">
+                <inputinfo style='display:none'></inputinfo>
+                <functionname  style='display:none'></functionname>
+                <button type="button" class="btn btn-default" 
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="select_sure()">
+                    确定
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

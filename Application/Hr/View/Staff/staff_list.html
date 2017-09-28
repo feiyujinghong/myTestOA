@@ -1,0 +1,76 @@
+<legend>
+    <p class="text-primary">
+       {$Think.lang.STAFF_LIST}<a class="btn btn-info icon-plus pull-right" href="{:U('add_base_info')}">
+       		{$Think.lang.STAFF_ADD_STAFFMES}
+       </a>
+    </p>
+    
+</legend>
+
+<form class="form-inline" method="get">
+    <div class="form-group">
+        <label >{$Think.lang.STAFF_NAME}</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control"  placeholder="输入姓名">
+  </div>
+  <div class="form-group">
+        <label >{$Think.lang.STAFF_IDNUM}</label>
+        <input type="text" name="card_id" value="{$_GET['card_id']}" class="form-control"  placeholder="输入身份证号">
+  </div>
+  <div class="form-group">
+        <label >{$Think.lang.STAFF_PHONE}</label>
+        <input type="text" name="phone" value="{$_GET['phone']}" class="form-control"  placeholder="输入移动电话">
+  </div>
+  <div class="form-group">
+        <label >{$Think.lang.STAFF_ACCO}</label>
+        <input type="text" name="household_address" value="{$_GET['household_address']}" class="form-control" id="exampleInputEmail2" placeholder="输入户口所在地">
+  </div>
+  <div class="form-group">
+        <button type="submit" class="btn btn-default">{$Think.lang.SEARCH}<tton>
+                </div>
+                </form>
+                <table class="table table-striped">
+
+
+
+
+                    <thead>
+                        <tr class="success">
+                            <th>{$Think.lang.STAFF_W_BM}</th>
+                            <th>{$Think.lang.STAFF_W_TYPE}</th>
+                            <th>{$Think.lang.STAFF_NAME}</th>
+                            <th>{$Think.lang.STAFF_IDNUM}</th>
+                            <th>{$Think.lang.STAFF_PHONE}</th>
+                            <th>{$Think.lang.STAFF_TELE}</th>
+                            <th>{$Think.lang.STAFF_ACCO}</th>
+                            <th>{$Think.lang.STAFF_STUD}</th>
+                            <th>{$Think.lang.STAFF_ZZYY}</th>
+                            <th>{$Think.lang.STATIC}</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="staff_info" id="vo">
+                        <tr>
+                            <td>{$vo.work_dept}</td>
+                            <td>{$vo.work_type}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.card_id}</td>
+                            <td>{$vo.phone}</td>
+                            <td>{$vo.tele}</td>
+                            <td>{$vo.household_address}</td>
+                            <td>{$vo.college}</td>
+                            <td>{$vo.discipline}</td>
+                            <td>
+		                        <if condition="$vo['status'] eq 1">{$Think.lang.STAFF_STAFF_ZC}
+		                            <else/>{$Think.lang.STAFF_STAFF_LZ}
+		                        </if>
+	                        </td>
+                        <td>
+                            <a href="{:U('Staff/show_user_info?id='.$vo['id'])}" class="authorize" >{$Think.lang.VIEW}</a>
+                            <a href="{:U('Staff/update_user_info?id='.$vo['id'])}" class="authorize">{$Think.lang.UPDATE}</a>
+                        </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+                {$_page}

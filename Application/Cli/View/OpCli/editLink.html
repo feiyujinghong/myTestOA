@@ -1,0 +1,109 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<div id="tabs-308576" class="tabbable">
+						<form action="{:U('OpCli/editLink')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+						<div class="container">
+							<legend>
+					        	<p class="text-primary">
+						            	{$Think.lang.LINK_INFO}
+						        </p>
+					        </legend>
+					        
+					        <div class="form-horizontal">
+								   		<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_NAME}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="name" id="name" value="{$linkInfo['name']}">
+											</div>
+											
+											<label  class="col-sm-2 control-label">{$Think.lang.SEX}</label>
+								            <div class="col-sm-3">
+								                <input type="radio" name="sex" value="1" checked="checked" />{$Think.lang.MEN}
+								                <input type="radio" name="sex" value="2" <if condition="$linkInfo.sex eq 2">checked="checked"</if> >{$Think.lang.WOMEN}
+								            </div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_BRI}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="bir" id="bir" value="{$linkInfo['bir']}" onfocus="WdatePicker({skin: 'twoer'});" readonly="readonly"/>
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_ZHIWEI}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="position" value="{$linkInfo['position']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_MOBILE}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="mobile" id="mobile" value="{$linkInfo['mobile']}">
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_TELE}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="tele" value="{$linkInfo['tele']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_PRIVATE_EMAIL}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="private_email" id="private_email" value="{$linkInfo['private_email']}">
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_PUBLIC_EMAIL}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="com_email" value="{$linkInfo['com_email']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_FAX}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="fax" id="fax" value="{$linkInfo['fax']}">
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_WEB}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="web" value="{$linkInfo['web']}">
+											</div>
+										</div>
+										
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_WORKE_ADDRESS}</label>
+											<div class="col-sm-7">
+								            	<input type="text" class="form-control" name="work_address" id="work_address" value="{$linkInfo['work_address']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_YJ_ADDRESS}</label>
+											<div class="col-sm-7">
+								            	<input type="text" class="form-control" name="adderss" id="adderss" value="{$linkInfo['adderss']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+										    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+											<div class="col-sm-3">
+										          	<textarea class="comments" rows="5" cols="120" name="bak[]">{$cli_info['bak']}</textarea>
+											</div>
+										</div>
+								<center>
+								<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-3"></div>
+						            <div class="col-sm-offset-2 col-sm-3">
+						            	<input type="hidden" name="link_id" id="link_id" value="{$linkInfo['id']}"/>
+						                <button class="btn btn-large" id="submit-form" type="submit"><i class="icon-upload icon-white"></i>{$Think.lang.SUBMIT}</button>
+						            </div>
+						        </div>
+						        </center>
+						  </div>
+						   
+	    			</div>
+	    			</form>
+</div>
+
+

@@ -1,0 +1,67 @@
+<script type="text/javascript">
+    window.UEDITOR_HOME_URL = "__PUBLIC__/Ueditor/"; //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+</script>
+<load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+<a href="{:U('OpCli/cliList')}" class="btn btn-warning pull-right"><i class="icon-backward"></i> {$Think.lang.return}</a>
+<br>
+<foreach name="data" item="val">
+    <div class="bs-callout <if condition='$val.p_id eq 0'>bs-callout-info<else/>bs-callout-danger</if>" id="callout-type-dl-truncate">
+        <h4>{$val.title}</h4>
+        <p>{$Think.lang.HELP_SEND_TIME}：{$val.add_time|date="Y-m-d",###} | {$Think.lang.HELP_SEND_USER}：{$val.add_user_id|get_username}</p>
+        <div style="border-bottom: 1px dashed #5E99BD;"></div>
+        <if condition="$val.content eq ''">
+            {$Think.lang.HELP_GT_MES}
+            <else/>
+            {$val.content|htmlspecialchars_decode=###}
+        </if>
+    </div>
+
+</foreach>
+<form action="{:U('helpComment',array('id'=>$id))}" method="post" id="form" role="form" class="form-horizontal" >
+    <div id="contact" class="tab-pane">
+        <div class="form-group">
+            <label  class="col-sm-1 control-label">{$Think.lang.HELP_HF_CONTENT}</label>
+            <div class="col-sm-10">
+                <script type="text/plain" id="help_content" name="help_content"></script>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor;
+                        //具体参数配置在  editor_config.js  中
+                        var options = {
+                            initialFrameWidth: 950, //初化宽度
+                            initialFrameHeight: 300, //初化高度
+                            focus: false, //初始化时，是否让编辑器获得焦点true或false
+                            maximumWords: 5000, //允许的最大字符数
+                        };
+                        editor = new UE.ui.Editor(options);
+                        editor.render("help_content");
+                    });</script>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <button class="btn btn-danger" id="" type="button" onclick="submit_form()"><i class="icon-upload icon-white"></i>{$Think.lang.SUBMIT}</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<style>
+    .comments{
+        height:70px;
+        display: none;
+    }
+    .comment-list{
+        margin-top:10px;
+    }
+    .bs-callout p{
+        margin:0px;
+    }
+    
+</style>
+<script>
+    function submit_form(){
+        $("#form").submit();
+    }
+</script>

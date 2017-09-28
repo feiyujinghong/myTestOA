@@ -1,0 +1,60 @@
+
+<script type="text/javascript">
+	function insertDeparHtml(){
+		var in_html = $("#tr_line").clone(true);
+		in_html.insertBefore("#in_line");
+	}
+
+
+</script>
+<div class="container">
+    <form action="{:U(updateFlow,array('flow_id'=>$_GET['flow_id']))}" method="post" role="form" class="form-horizontal">
+        <legend>
+        	<p class="text-primary">
+        	{$Think.lang.FLOW_ADD}
+        	</p>
+        </legend>
+        
+        <div class="form-group">
+           <label class="col-sm-2 control-label">{$Think.lang.FLOW_NAME}</label>
+			<div class="col-sm-3">
+                <input type="text" name="flow_name" value="{$flow_data.flow_name}"  class="form-control" placeholder="{$Think.lang.FLOW_NAME}">
+
+            </div>
+        </div>
+        
+         <div class="form-group">
+            <label class="col-sm-2 control-label">{$Think.lang.FLOW_TYPE}</label>
+
+            <div class="col-sm-3" id="tr_line">
+	           	<select class="form-control"  name="cat_id">
+	                <volist name="type_tree" id="type_tree">
+                            <option value="{$type_tree.id}" <if condition='$type_tree["id"] eq $flow_data["cat_id"]'>selected</if>>{$type_tree.title_show}</option>
+	                </volist>
+	            </select>
+	        </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{$Think.lang.FLOW_DESC}</label>
+            <div class="col-sm-3">
+                <textarea class="form-control" rows="3" name="flow_desc">{$flow_data.flow_desc}</textarea>
+            </div>
+        </div>
+        
+        
+        
+        
+        <div class="form-group">
+    		<div class="col-sm-offset-2 col-sm-3">
+	            <button class="btn btn-primary" id="submit" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+	            <button class="btn btn-warning" onclick="javascript:history.back(-1);return false;">{$Think.lang.RETURN}</button>
+        	</div>
+        </div>
+    </form>
+    </div>
+    
+    
+</div>
+</body>
+</html>

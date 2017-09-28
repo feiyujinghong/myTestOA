@@ -1,0 +1,94 @@
+<legend>
+    <p class="text-primary">
+        	{$Think.lang.PRODUCT_LIST}
+        <a class="btn btn-primary icon-plus pull-right" href="{:U('add_product')}">{$Think.lang.PRODUCT_ADD}</a>
+    </p>
+</legend>
+<form class="form-inline"  method="get">
+        <div class="form-group">
+            <label >{$Think.lang.PRODUCT_NAME}</label>
+            <input type="text" name="product_name" value="{$_GET['product_name']}" class="form-control" id="exampleInputName2" placeholder="">
+
+
+
+            <label >{$Think.lang.PRODUCT_XH}</label>
+            <input type="text" name="product_format" value="{$_GET['product_format']}" class="form-control" id="exampleInputEmail2" placeholder="">
+
+
+
+            <label >{$Think.lang.PRODUCT_ISSELF}</label>
+
+
+
+            <select class="form-control"  name="is_self">
+                <option value="">{$Think.lang.PLEASE_SELECT}</option>
+                <option value="1" <if condition="$_GET['is_self'] eq 1">selected="selected"</if> >{$Think.lang.IS}</option>
+                <option value="2" <if condition="$_GET['is_self'] eq 2">selected="selected"</if> >{$Think.lang.NO}</option>
+            </select>
+
+
+        <button type="submit" class="btn btn-default">{$Think.lang.search}<tton>
+                </div>
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr class="success">
+                            <th>{$Think.lang.PRODUCT_NO}</th>
+                            <th>{$Think.lang.PRODUCT_NAME}</th>
+                             <th>{$Think.lang.PRODUCT_XH}</th>
+                            <th>{$Think.lang.PRODUCT_CONTENT}</th>
+                           
+                            <th>{$Think.lang.PRODUCT_PIECES}</th>
+                            <th>{$Think.lang.PRODUCT_ISSELF}</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <notempty name="product_info">
+                        <volist name="product_info" id="vo">
+                            <tr class="line_g hover_bg">
+                                <td>{$vo['product_no']}</td>
+                                <td>{$vo['product_name']}</td>
+                                 <td>{$vo['product_format']}</td>
+                                <td>{$vo['product_content']}</td>
+                               
+                                <td>{$vo['product_price']}</td>
+                                <td>
+                            <if condition="$vo.is_self eq 1">{$Think.lang.IS}
+                                <else/>{$Think.lang.NO}
+                            </if>
+                            </td>
+                            <td>
+                                <a href="{:U('Product/show_product_info?id='.$vo['id'])}" class="authorize" data-toggle="tooltip" data-placement="top" title="{$Think.lang.VIEW}">
+                                	<i class="icon-chain"></i>
+                               	</a>
+                                <a href="{:U('Product/product_update?id='.$vo['id'])}" class="authorize" data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+                                	<i class="icon-edit"></i>
+                                </a>
+                                
+<!--                                <a class="authorize" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="关联到客户" onclick="alert('暂未开放，请等待。');">
+                                	<i class="icon-user-md"></i>
+                                </a>
+                                <a class="authorize" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="关联到合同" onclick="alert('暂未开放，请等待。');">
+                                	<i class="icon-file-text-o"></i>
+                                </a>-->
+                            </td>
+                            </tr>
+                        </volist>
+                    </notempty>
+                    </tbody>
+
+                </table>
+
+                {$_page}
+                </div>
+
+                <script>$(function()
+                    {
+                        $("[data-toggle='popover']").popover();
+                    });
+                </script>
+
+                </body>
+                </html>  

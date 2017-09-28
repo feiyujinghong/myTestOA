@@ -1,0 +1,40 @@
+<legend>
+        	<p class="text-primary">
+                    用人申请{$now_process_name}
+        	</p>
+        </legend>  
+<table class="table table-bordered">
+	   <tbody>
+	      <tr>
+	         <td class="success">用人部门</td>
+	         <td>{$data.department}</td>
+	         <td class="success">申请人</td>
+	         <td>{$data.user_id|get_username=###}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">申请岗位</td>
+	         <td>{$data.position}</td>
+	         <td class="success">需求人数</td>
+	         <td>{$data.need_count}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">紧急程度</td>
+	         <td ><php>echo $_acute[$data['acute']];</php></td>
+                             <td class="success">申请原因</td>
+	         <td ><php>echo $c_s["recruitment_need"][$data['acute']];</php></td>
+	      </tr>
+	      <tr>
+	         <td class="success">到岗时间</td>
+	         <td colspan="3">{$data.entry_time|date="Y-m-d",###}</td>
+	      </tr>
+               <tr>
+	         <td class="success">职能概述</td>
+	         <td colspan="3">{$data.job_info}</td>
+	      </tr>
+               <tr>
+	         <td class="success">岗位要求</td>
+	         <td colspan="3">{$data.job_need}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	

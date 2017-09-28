@@ -1,0 +1,63 @@
+
+<div class="modal fade bs-example-modal-lg" id="selectWarehouse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{$Think.lang.product_select}</h4>
+            </div>
+            <div class="modal-body">
+                <form></form>
+                <form class='form-inline' id="warehouse_search_form">
+                        <div class="form-group">
+                            <label>{$Think.lang.warehouse_name}</label>
+                            <input type='hidden' name='warehouse_id'>
+                            <input type="text" class="form-control" name="name"  placeholder="{$Think.lang.warehouse_name}{$Think.lang.search}">
+                        </div>
+                        <div class="form-group">
+                            <label>{$Think.lang.warehouse_num}</label>
+                            <input type="text" class="form-control" name="num"  placeholder="{$Think.lang.warehouse_num}{$Think.lang.search}">
+                        </div>
+                        <a class="btn btn-primary" onclick="warehouse_search()"><i class=" icon-search"></i>{$Think.lang.search}</a>
+                </form>
+                <ul class=list-group id="warehouse_list">
+                    
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{$Think.lang.close}</button>
+                <button type="button" class="btn btn-primary"  id="product_sure" onclick="select_warehouse()">{$Think.lang.sure}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function warehouse_search() {
+        $.ajax({
+            url: "{:U('Product/Warehouse/warehouseSearch')}",
+            data: $("#warehouse_search_form").serialize(),
+            beforeSend: function() {
+                $("#warehouse_list").html("<center style='color:darkolivegreen;font-size:30px;margin-top:30px;'><i class='icon-spinner'></i></center>");
+            },
+            success: function($data) {
+                $("#warehouse_list").html($data);
+            }
+        });
+    }
+
+    function select_warehouse() {
+        $("#product_sure").attr("disabled", "true");
+        var functionName = $("[data-target='#selectWarehouse']").attr("data-func") + "()";
+        if ($("[type='radio']:checked").length <= 0) {
+            alert("{$Think.lang.please_select_warehouse}");
+            $("#product_sure").attr("disabled", false);
+            return false;
+        } 
+        setTimeout(functionName, 100);
+    }
+
+    $("#selectWarehouse").on("shown.bs.modal", function(e) {
+        warehouse_search();
+    });
+</script>

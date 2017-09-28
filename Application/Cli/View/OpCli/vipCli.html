@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    window.UEDITOR_HOME_URL = "__PUBLIC__/Ueditor/"; //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+</script>
+<load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+<div id="tabs-308576" class="tabbable">
+	
+						<form action="" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+						<div id="contact" class="tab-pane">
+						<div class="container">
+								<legend>
+						        	<p class="text-primary">
+							            	{$Think.lang.CLI_UP_VIP}
+							        </p>
+						        </legend>
+						        <div class="form-horizontal">
+							   		<div class="form-group">
+							            
+							            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_SJ_COUNT}</label>
+										<div class="col-sm-3">
+							            	<input type="text" class="form-control" name="" value="100万" readonly="readonly"/>
+										</div>
+										
+										
+									</div>
+									<div class="form-group">
+							            
+							            <label for="inputEmail3" class="col-sm-2 control-label"></label>
+										<div class="col-sm-3">
+											<b>{$Think.lang.CLI_SJ_BAK}：</b><br/>客户成交额超过100W
+										</div>
+										
+										
+									</div>
+									
+									<div class="form-group">
+										
+										<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARK}</label>
+									        <div class="col-sm-3">
+									            <script type="text/plain" id="bak" name="bak"></script>
+									            <script type="text/javascript">
+									                        $(function(){
+									                        var editor;
+									                                //具体参数配置在  editor_config.js  中
+									                                var options = {
+									                                initialFrameWidth:750, //初化宽度
+									                                        initialFrameHeight:300, //初化高度
+									                                        focus:false, //初始化时，是否让编辑器获得焦点true或false
+									                                        maximumWords:5000, //允许的最大字符数
+									                                };
+									                                editor = new UE.ui.Editor(options);
+									                                editor.render("bak");
+									                                editor.ready(function(){
+									                                editor.setContent(''); //加载数据库Action.class.PHP传过来的值
+									                                });
+									                        });
+									            </script>
+											</div>
+									</div>
+									
+							   	
+							   		<div class="form-group">
+							            <div class="col-sm-offset-2 col-sm-3">
+							            	<input type="hidden" name="follow_id" id="follow_id" value="{$followInfo.id}"/>
+							                <button class="btn btn-primary" id="" type="submit" onclick="return tishi();">{$Think.lang.SUBMIT}</button>
+							            </div>
+							        </div>
+							   
+							   </div>
+							   
+		    			</div>
+			</div>
+	    			</form>
+</div>
+<script>
+function tishi() {
+	alert("此功能待合同开发完成后!");
+	return false;
+}
+
+
+</script>

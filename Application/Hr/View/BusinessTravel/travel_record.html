@@ -1,0 +1,66 @@
+
+<legend>
+    <p class="text-primary">
+     {$Think.lang.BUST_RECORD}<a class="btn btn-primary pull-right" href='{:U("travel_apply")}'><i class="icon-plus"></i>{$Think.lang.BUST_APP}</a>
+    </p>
+</legend>
+
+<table class="table">
+    <thead>
+        <tr class="success">
+            <th>{$Think.lang.BUST_TITLE}</th>
+            <th>{$Think.lang.BUST_S_TIME}</th>
+            <th>{$Think.lang.BUST_F_TIME}</th>
+            <th>{$Think.lang.BUST_PLACE}</th>
+            <th>{$Think.lang.BUST_CONTENT}</th>
+            <th>{$Think.lang.REMARKS}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <notempty name="travel_info">
+        <volist name="travel_info" id="vo">
+            <tr class="line_g hover_bg">
+
+                <td>{$vo['title']}</td>
+                <td>{$vo['travel_start_time']|date="Y-m-d",###}</td>
+                <td>{$vo['travel_finish_time']|date="Y-m-d",###}</td>
+                <td>{$vo['travel_place']}</td>
+                <td>
+                    <a  style="width:180px;cursor: pointer" title="出差内容"  
+                            data-container="body" data-toggle="popover" data-placement="bottom" 
+                            data-content="{$vo['travel_info']}">
+                        {:mb_strimwidth($vo['travel_info'],0,20,"...","utf-8")}
+                    </a>
+
+                </td>
+                <td>
+                    <a  style="width:180px;cursor:pointer" title="备注"  
+                            data-container="body" data-toggle="popover" data-placement="bottom" 
+                            data-content="{$vo['remarks']}">
+                        {:mb_strimwidth($vo['remarks'],0,20,"...","utf-8")}
+                    </a>
+                </td>
+                <td>
+                    <!--<a href="{:U('BusinessTravel/up_date_travel?id='.$vo['id'])}" class="authorize">编辑</a>-->
+                    <a href="{:U(showInfo,array('id'=>$vo['id']))}">{$Think.lang.VIEW}</a>
+                </td>
+            </tr>
+        </volist>
+    </notempty>
+</tbody>
+
+</table>
+
+{$_page}
+</div>
+
+<script>$(function()
+    {
+        $("[data-toggle='popover']").popover();
+    });
+</script>
+
+</body>
+</html>  

@@ -1,0 +1,203 @@
+
+
+<form class="form-inline" id="search_form" method="get" style="margin-top:20px;">
+    <div class="form-group">
+        <label >{$Think.lang.product_name}</label>
+        <input type="text" name="product_name" value="{$_GET['product_name']}" class="form-control">
+
+        <label >{$Think.lang.product_no}</label>
+        <input type="text" name="product_no" value="{$_GET['product_no']}" class="form-control">
+
+        <label >{$Think.lang.is_self}</label>
+
+        <select class="form-control"  name="is_self">
+            <option value="">{$Think.lang.select_please}</option>
+            <option value="1" <if condition="$_GET['is_self'] eq 1">selected="selected"</if> >{$Think.lang.yes}</option>
+            <option value="2" <if condition="$_GET['is_self'] eq 2">selected="selected"</if> >{$Think.lang.no}</option>
+        </select>
+        <label >{$Think.lang.warning_level}</label>
+        <select class="form-control"  name="warning">
+            <option value="">{$Think.lang.select_please}</option>
+            <option value="1" <if condition="$_GET['warning'] eq 1">selected="selected"</if> >{$Think.lang.warnning}</option>
+            <option value="2" <if condition="$_GET['warning'] eq 2">selected="selected"</if> >{$Think.lang.danger}</option>
+        </select>
+        <button type="submit" class="btn btn-default">{$Think.lang.search}</button>
+                </div>
+    <button type="button" class="btn btn-primary pull-right" data-obj-id='{$id}' data-func="add_product_ajax" data-toggle="modal" data-target="#productModal">
+  <i class=" icon-plus"></i>{$Think.lang.warehouse_product_inner}
+</button>
+<div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    {$Think.lang.warehouse_num_option} <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="{:U('ioProduct',array('type'=>1))}">{$Think.lang.warehouse_num_outer}</a></li>
+    <li><a href="{:U('ioProduct',array('type'=>2))}">{$Think.lang.warehouse_num_inner}</a></li>
+    <li><a href="{:U('ioProduct',array('type'=>3))}">{$Think.lang.warehouse_num_remove}</a></li>
+    <li class="divider"></li>
+    <li><a href="javascript:void(0)"  onclick="exportcsv()">{$Think.lang.export_warehouse_num}</a></li>
+    <li><a href="{:U('exportSubmitInfo',array('warehouse_id'=>$id))}">{$Think.lang.export_submit_num}</a></li>
+  </ul>
+</div>
+                </form>
+<span class="products" style="width:10px;">{$io_products}</span>
+                <table class="table">
+                    <thead>
+                        <tr class="success">
+                            <th>{$Think.lang.select}</th>
+                            <th>{$Think.lang.product_no}</th>
+                            <th>{$Think.lang.product_name}</th>
+                            <th>{$Think.lang.product_format}</th>
+                            <th>{$Think.lang.product_unit}</th>
+                            <th>{$Think.lang.is_self}</th>
+                            <th>{$Think.lang.warehouse_count}</th>
+                            <th>{$Think.lang.warehouse_will_revel}</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id='product_volist'>
+                    <if condition="!empty($numData)">
+                        <volist name="numData" id="vo">
+                            <php>
+                                $warn_style = "";
+                                if($vo['count'] < $vo['warnning']){
+                                    $warn_style="style='color:#d58512'";
+                                    if($vo["count"] < $vo["danger"])
+                                        $warn_style="style='color:red;'";
+                                }
+                            </php>
+                            <tr class="line_g hover_bg" {$warn_style}>
+                                <td><input type='checkbox' class='select' value='{$vo.id}' <if condition="in_array($vo['id'],$is_checked_data)">checked</if> ></td>
+                                <td>{$vo['product_no']}</td>
+                                <td>{$vo['product_name']}</td>
+                                <td>{$vo['product_format']}</td>
+                                <td><php>echo $unit[$vo['product_unit']];</php></td>
+                                <td><php>echo $vo['is_self']==1 ? L("IS") : L("no") </php></td>
+                                <td id="count_{$vo.id}">{$vo["count"]}<if condition="$vo['submit']">({$vo.submit})</if></td>
+                                <td><a href="javascript:void(0)" onclick=windowopen("{:U('Container',array('warehouse_id'=>$id))}")>{$will[$vo["product_id"]]}</a></td>
+                                <td>
+                                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="{$Think.lang.submit_product}" onclick="submitProduct({$vo.product_id},{$id})"><i class="icon-arrow-circle-o-up"></i></a>
+                                <a href="{:U('warnning',array('w_p_id'=>$vo['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.warning_set}"><i class="icon-warning"></i></a>
+                                <a class="openwindow" style="cursor: pointer;" a-href="{:U('loglist',array('w_p_id'=>$vo['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.LOG}"><i class="icon-bookmark"></i></a>
+                                <if condition='in_array($vo["id"],$remove_data)'>
+                                    <a style="cursor:pointer;" href="{:U('removeInnser',array('p_id'=>$vo['id'],'id'=>$id))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.remove_inner}"><i class="icon-sign-in"></i></a>    
+                                </if>
+                                <a href='{:U("productDesc",array("id"=>$id,"product_id"=>$vo["product_id"]))}' data-toggle="tooltip" data-placement="top" title="{$Think.lang.product_desc}"><i class="icon-list"></i></a>
+                            </td>
+                            </tr>
+                        </volist>
+                        <else />
+                        <include file="Auth@Public/empty_data" />
+                    </if>
+                    </tbody>
+
+                </table>
+                {$_page}
+                <script>
+                    $(".select").bind("click",function(){
+                        if($(this).prop("checked")){
+                            $.get("{:U(addIOProduct)}",{id:$(this).val()},function(data){
+                                if(data == "error"){
+                                    alert("添加入库产品失败");
+                                }else{
+                                    $(".products").append(data);
+                                }
+                            });
+                        }else{
+                            var id = $(this).val();
+                            remove_product(id);
+                        }
+                    });
+                    
+                    function remove_product(id){
+                        $.get("{:U('removeProduct')}",{id:id},function(data){
+                            if(data == "success"){
+                                $("#selected_product_"+id).remove();
+                                $("[value='"+id+"']").prop("checked",false);
+                            }else{
+                                alert("移除失败");
+                            }
+                        });
+                    }
+                    
+                    function exportcsv(){
+                        $("#search_form").prop("action","{:U('exportnum',array('id'=>$id))}");
+                        $("#search_form").submit();
+                        $("#search_form").prop("action","{:U('warehousenum',array('id'=>$id))}");
+                    }
+                    
+                    $(".openwindow").bind("click",function(){
+                        windowopen($(this).attr("a-href"));
+                        return false;
+                    });
+                    
+                    //添加产品
+                    function add_product_ajax(){
+                            var ids="";
+                            
+                            $("[type='checkbox']:checked").each(function(){
+                                ids += $(this).val()+",";
+                            });
+                            var warehouse_id = $("[data-target='#productModal']").attr("data-obj-id");
+                            $.get("{:U('addProduct')}",{ids:ids,warehouse_id:warehouse_id},function($data){
+                                add_product_success();
+                            });
+                    }
+                    
+                    function add_product_success(){
+                        window.location.reload();
+                    }
+                    //显示modal
+                    function submitProduct(product_id,warehouse_id){
+                        $("[name='submit_warehouse_id']").val(warehouse_id);
+                        $("[name='submit_product_id']").val(product_id);
+                        $('#submitProduct').modal('show');
+                        
+                    }
+                    //提交上报数量
+                    function submit_product(){
+                        var submit_num = $("[name='submit']").val();
+                        if(submit_num == ""){
+                            alert("上报数量不能为空");
+                            return false;
+                        }
+                        if(isNaN(submit_num)){
+                            alert("上报数量必须为数字类型");
+                            return false;
+                        }
+                        $.get("{:U('submitProduct')}",{warehouse_id:$("[name='submit_warehouse_id']").val(),product_id:$("[name='submit_product_id']").val(),submit:submit_num},function(result){
+                            if(result==1){
+                                alert("上报成功");
+                            }else{
+                                alert("上报失败");
+                            }
+                            window.location.reload();
+                        });
+                    }
+                </script>
+                
+                <div class="modal fade bs-example-modal-sm" id="submitProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{$Think.lang.submit_product}</h4>
+            </div>
+            <div class="modal-body">
+                <form class='form-inline' id="product_search_form1">
+                        <div class="form-group">
+                            <label for="exampleInputName2">{$Think.lang.submit_num}</label>
+                            <input type='hidden' name='submit_warehouse_id'>
+                            <input type='hidden' name='submit_product_id'>
+                            <input type="text" class="form-control" name="submit">
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{$Think.lang.COLSE}</button>
+                <button type="button" class="btn btn-primary"  id="product_sure" onclick="submit_product()">{$Think.lang.SURE}</button>
+            </div>
+        </div>
+    </div>
+</div>

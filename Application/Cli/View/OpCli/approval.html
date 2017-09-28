@@ -1,0 +1,95 @@
+<include file="./Application/Auth/View/Public/header.html" />
+<table class="table table-bordered">
+    <tbody>
+        	<tr>
+	            <td class="success">{$Think.lang.CLI_CORP_NAME}</td>
+	            <td>{$baseInfo['company_name']}</td>
+				<td class="success">{$Think.lang.CLI_CORP_NO}</td>
+				
+				<td>{$baseInfo['company_no']}</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.CLI_SOURCE}</td>
+			    <td>{$baseInfo['source']}</td>
+			
+			    <td class="success">{$Think.lang.CLI_COUNTRY}</td>
+			    <td>{$baseInfo['country_ch']}</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.CLI_CITY}</td>
+			    <td>{$baseInfo['city_cch']}</td>
+			    <td class="success">{$Think.lang.CLI_AREA}</td>
+			    <td>{$baseInfo['area_cch']}</td>
+			</tr>
+			<tr>
+			<td class="success">{$Think.lang.CLI_DETAILED}</td>
+			    <td colspan="3">
+			    {$baseInfo['detailed']}
+				</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.CLI_FOLLOW_DAY}</td>
+			    <td >{$baseInfo['follow']}</td>
+			    <td class="success">{$Think.lang.CLI_MOUSE}</td>
+			    <td >张泽建</td>
+			</tr>
+	</tbody>
+</table>
+
+
+<div id="tabs-308576" class="tabbable">
+				
+	<form action="{:U('OpCli/approval')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+	<div class="container">
+		<legend>
+        	<p class="text-primary">
+	        	{$Think.lang.UPDATE_INFO}
+	        </p>
+        </legend>
+        <div class="form-horizontal">
+	   		<div class="form-group">
+	            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.APPLY_TIME}</label>
+				<div class="col-sm-3">
+	            	<span class="form-control">{$updateInfo.add_time|date="Y-m-d",###}</span>
+	            </div>
+			</div>
+			
+			<div class="form-group">
+	            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.UPDATE_CONTENT}</label>
+				<div class="col-sm-3">
+	            	{$updateInfo.str}
+				</div>
+			</div>
+			
+			<div class="form-group">
+	            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.UPDATE_R_F}</label>
+				<div class="col-sm-3">
+				            	<select class="form-control" name="is_agree">
+				                    <option value="">请选择</option>
+				                    <option value="1">同意</option>
+				                    <option value="2">拒绝</option>
+				                </select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+	            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+				<div class="col-sm-3">
+	            	<textarea rows="5" cols="120" name="bak"></textarea>
+				</div>
+			</div>
+			
+			<center>
+			<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-3"></div>
+	            <div class="col-sm-offset-2 col-sm-3">
+	            	<input type="hidden" name="id" id="id" value="{$updateInfo.id}"/>
+	                <button class="btn btn-large" id="submit-form" type="submit"><i class="icon-comment"></i>{$Think.lang.SUBMIT}</button>
+	            </div>
+	        </div>
+	        </center>
+	   </div>
+	</div>
+	</form>
+
+

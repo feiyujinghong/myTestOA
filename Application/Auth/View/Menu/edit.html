@@ -1,0 +1,95 @@
+
+
+<div class="container">
+    <form action="{:U()}" method="post" role="form" class="form-horizontal">
+        <legend>
+            <p class="text-primary">
+                <if condition="empty($info)">添加权限<else />修改权限</if>
+            </p>
+        </legend>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_TITLE}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="title" placeholder="{$Think.lang.MENU_TITLE_TS}" value="{$info.title|default=''}">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_SORTING}</label>
+
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="sort" placeholder="{$Think.lang.MENU_SORTING_TS}" value="{$info.sort|default=0}">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_URL}</label>
+
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="url" placeholder="{$Think.lang.MENU_URL_TS}" value="{$info.url|default=''}">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_SUPERIOR_MENU}</label>
+            <div class="col-sm-3">
+                <select class="form-control"  name="pid">
+                    <volist name="Menus" id="menu">
+                        <if condition='$menu["id"] eq $info["pid"]'>
+                            <option value="{$menu.id}" selected>{$menu.title_show}</option>
+                            <else />
+                            <option value="{$menu.id}" >{$menu.title_show}</option>
+                        </if>
+                    </volist>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_GORUP}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="group" value="{$info.group|default=''}">
+            </div>
+        </div>
+
+<!--        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_IS_HIDDEN}</label>
+            <div class="col-sm-3">
+                <input type="radio" name="hide" value="1">{$Think.lang.IS}
+                <input type="radio" name="hide" value="0">{$Think.lang.NO}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_ADMIN_SHOW}</label>
+            <div class="col-sm-3">
+                <input type="radio" name="is_dev" value="1">{$Think.lang.IS}
+                <input type="radio" name="is_dev" value="0">{$Think.lang.NO}
+            </div>
+        </div>-->
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="tip" placeholder="{$Think.lang.REMARKS_TS}" value="{$info.tip|default=''}">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <input type="hidden" name="id" value="{$info.id|default=''}">
+                <button class="btn btn-primary" id="submit" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+                <a href="{:U('menulist')}" class='btn btn-warning'>{$Think.lang.RETURN}</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>

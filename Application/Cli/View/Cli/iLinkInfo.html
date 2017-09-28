@@ -1,0 +1,52 @@
+<volist name="linkInfo" id="vo">
+<table class="table table-bordered">
+    <tbody>
+        	<tr>
+	            <td class="success">{$Think.lang.LINK_NAME}</td>
+	            <td>{$vo['name']}</td>
+				<td class="success">{$Think.lang.SEX}</td>
+				<td><if condition="$vo['sex'] eq 1">{$Think.lang.MEN}<else/>{$Think.lang.WOMEN}</if></td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.LINK_BRI}</td>
+			    <td>{$vo['bir']}</td>
+			
+			    <td class="success">{$Think.lang.LINK_ZHIWEI}</td>
+			    <td>{$vo['position']}</td>
+			    </tr>
+			<tr>
+			    <td class="success">{$Think.lang.LINK_MOBILE}</td>
+			    <td>{$vo['mobile']}</td>
+			    <td class="success">{$Think.lang.LINK_TELE}</td>
+			    <td>{$vo['tele']}</td>
+			</tr>
+			
+			<tr>
+			    <td class="success">{$Think.lang.LINK_PRIVATE_EMAIL}</td>
+			    <td>{$vo['private_email']}</td>
+			    <td class="success">{$Think.lang.LINK_PUBLIC_EMAIL}</td>
+			    <td>{$vo['com_email']}</td>
+			</tr>
+			
+			<tr>
+			    <td class="success">{$Think.lang.LINK_FAX}</td>
+			    <td>{$vo['fax']}</td>
+			    <td class="success">{$Think.lang.LINK_WEB}</td>
+			    <td>{$vo['web']}</td>
+			</tr>
+			
+			<tr>
+			    <td class="success">{$Think.lang.LINK_WORKE_ADDRESS}</td>
+			    <td colspan="3">{$vo['work_address']}</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.LINK_YJ_ADDRESS}</td>
+			    <td colspan="3">{$vo['adderss']}</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.LINK_BAK}</td>
+			    <td colspan="3">{$vo['bak']}</td>
+			</tr>
+</tbody>
+</table>
+</volist>

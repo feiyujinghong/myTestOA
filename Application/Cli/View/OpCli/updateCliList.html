@@ -1,0 +1,81 @@
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="success">
+
+                            <th>客户名称</th>
+                            <th>申请时间</th>
+                            <th>申请人</th>
+                             <th>状态</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <notempty  name="updateList">
+                            <volist name="updateList" id="vo">
+                            <tr>
+                                <td>{$vo.company_name}</td>
+                                <td>{$vo.add_time}</td>
+                                <td>{$vo.add_user}</td>
+                                <td>{$vo.status}</td>
+                                <td>
+                                	<a href='__APP__/Cli/OpCli/approval/id/{$vo.id}' title="审批" data-toggle="tooltip" data-placement="top"><i class="icon-edit"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                            
+                            </volist>
+                            
+                    <else />
+                        <include file="Auth@Public/empty_data" />
+                    </notempty>
+                    </tbody>
+
+                </table>
+                {$_page}
+                
+                
+                
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">{$Think.lang.LINK_INFO_LIST}</a>
+                </h4>
+            </div>
+             <div class="modal-body" id="links_html">
+                	
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script>
+function get_modal(id) {
+	$.ajax({
+		url: "/index.php/Cli/OpCli/linksHtml",
+        data: {base_id:id},
+        type:"post",
+        dataType:"html",
+        success:function(msg){
+            if(false === msg){
+            	alert("信息获取失败！");
+            }else{
+                $("#links_html").html(msg);
+            }
+        }
+    });
+}
+
+</script>

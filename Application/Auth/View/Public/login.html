@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>林格贝尔在线办公系统</title>
+        <link href="__PUBLIC__/img/title.ico" rel="SHORTCUT ICON" />
+        <link rel="stylesheet" type="text/css" href="__BOOTSTRAP__/css/bootstrap.css" media="all">
+        <link rel="stylesheet" type="text/css" href="__BOOTSTRAP__/css/font-awesome.css" media="all">
+        <style>
+            #login-page{
+                background: url(/Public/img/login-back.png) repeat-x;
+            }
+            #return_info{
+                color:red;
+            }
+            form{
+                background: url(/Public/img/login1.png) center no-repeat;
+                margin: 0 auto;
+                margin-top:200px;
+                padding: 30px;
+                width:1236px;
+                height:470px;
+                text-align: center;
+                
+            } 
+            .form-group{
+                margin:5px;
+            }
+            .login-form{
+                margin-left: 400px;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body id="login-page">
+        <div class="container">
+
+            <!-- 主体 -->
+            <form class="form-horizontal" method="POST" action="__ACTION__">
+                <div class="text-center">
+                    <h3><span style="color:white;font-family: '微软雅黑'">林格贝尔协同办公业务系统</span></h3>
+                </div>
+                <div class="login-form">
+                <div class="form-group">
+                    <div class="col-sm-6 input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="icon-user"></i></span>
+                        <input type="text" class="form-control"  name='username'  placeholder="用户名" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6 input-group">
+                        <span class="input-group-addon" id="basic-addon2"><i class="icon-check-circle-o"></i></span>
+                        <input type="password" class="form-control" id="inputPassword3"  name='password' placeholder="密码" aria-describedby="basic-addon2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3 input-group" style="float:left;">
+                        <span class="input-group-addon" id="basic-addon3"><i class="icon-h-square"></i></span>
+                        <input type="text" class="form-control" name='verify' placeholder="验证码"  aria-describedby="basic-addon3">
+                    </div>
+                    <div style="float:left;margin-left: 5px;">
+                        <img class="verifyimg reloadverify" style='width:100px;height:33px;' title="点击切换" src="{:U('Public/verify')}">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class=" col-sm-4">
+                            <button type="submit" class="btn btn-danger col-md-5">{$Think.lang.login}</button>
+                            <input type="radio" name="language" <if condition="$language eq 'zh-cn'">checked</if> value="zh-cn" id='cn'><label for="cn"><font color="white">{$Think.lang.public_zh_cn}</font></label>
+                            <input type="radio" name="language"  <if condition="$language eq 'en-us'">checked</if> value="en-us" id='en'><label for="en"><font color="white">{$Think.lang.public_en_us}</font></label>
+                            <span id='return_info' class="col-sm-10"></span>
+                        </div>
+                    </div>
+                    </div>
+            </form>
+        </div>
+        <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]-->
+        <!--[if gte IE 9]><!-->
+        <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="__BOOTSTRAP__/js/bootstrap.js"></script>
+        <!--<![endif]-->
+        <script type="text/javascript">
+            $("form").submit(function() {
+                var self = $(this);
+                $.ajax({
+                    url: "__ACTION__",
+                    data: self.serialize(),
+                    type: 'post',
+                    dataType: 'json',
+                    error: function() {
+                        alert("{$Think.lang.return_system_error}");
+                    },
+                    success: function(data) {
+                        if (data.status) {
+                            window.location.href = data.url;
+                        } else {
+                            $("#return_info").html(data.info);
+                            $(".reloadverify").click();
+                        }
+                    }
+                });
+                return false;
+            });
+
+
+            $(function() {
+                //刷新验证码
+                var verifyimg = $(".verifyimg").attr("src");
+                $(".reloadverify").click(function() {
+                    if (verifyimg.indexOf('?') > 0) {
+                        $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+                    } else {
+                        $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+                    }
+                });
+            });
+            
+            $("[name='language']").bind("click",function(){
+                var language = $(this).val();
+                window.location.href = "{:U('Index/index')}"+"?lang="+language;
+            })
+        </script>
+    </body>
+</html>

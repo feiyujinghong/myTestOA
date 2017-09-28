@@ -1,0 +1,37 @@
+<legend>
+    <p class="text-primary">
+        权限列表
+        <a href='{:U("add")}' class="btn btn-danger pull-right">添加权限</a>
+    </p>
+</legend>
+<table class='table table-hover'>
+<foreach name="main" item="val" key='key'>
+    <tr class="text-primary">
+        <td>{$val["title"]}</td>
+        <td>{$val["url"]}</td>
+        <td>
+            <a href="{:U('edit',array('id'=>$val['id']))}">编辑</a>
+            <a href="javascript:del({$val.id})">删除</a>
+        </td>
+    </tr>
+   <?php 
+   foreach($son[$key] as $sonv){
+   ?>
+        <tr>
+        <td style="padding-left:40px;">{$sonv["title"]}</td>
+        <td>{$sonv["url"]}</td>
+        <td>
+            <a href="{:U('edit',array('id'=>$sonv['id']))}">编辑</a>
+            <a href="javascript:del({$sonv.id})">删除</a>
+        </td>
+    </tr>
+       <?php }?>
+</foreach>
+    </table>
+<script>
+    function del(id){
+        if(confirm("确定要删除该权限吗？")){
+            window.location.href="delete/id/"+id;
+        }
+    }
+</script>

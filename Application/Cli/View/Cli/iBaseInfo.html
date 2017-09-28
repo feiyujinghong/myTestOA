@@ -1,0 +1,56 @@
+
+<table class="table table-bordered">
+    <tbody>
+        	<tr>
+	            <td class="success">{$Think.lang.CLI_CORP_NAME}</td>
+	            <td>{$baseInfo['company_name']}</td>
+				<td class="success">{$Think.lang.CLI_CORP_NO}</td>
+				
+				<td>{$baseInfo['company_no']}</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.CLI_SOURCE}</td>
+			    <td>{$baseInfo['source']}</td>
+			
+			    <td class="success">{$Think.lang.CLI_COUNTRY}</td>
+			    <td>{$baseInfo['country_ch']}</td>
+			    </tr>
+			<tr>
+			    <td class="success">{$Think.lang.CLI_CITY}</td>
+			    <td>{$baseInfo['city_cch']}</td>
+			    <td class="success">{$Think.lang.CLI_AREA}</td>
+			    <td>{$baseInfo['area_cch']}</td>
+			</tr>
+			
+			
+			<tr>
+			<td class="success">{$Think.lang.CLI_DETAILED}</td>
+			    <td colspan="3">
+			    {$baseInfo['detailed']}
+				</td>
+			</tr>
+			<tr>
+			    <td class="success">{$Think.lang.CLI_FOLLOW_DAY}</td>
+			    <td >{$baseInfo['follow']}</td>
+			    <td class="success">{$Think.lang.CLI_MOUSE}</td>
+			    <td >张泽建</td>
+			</tr>
+</tbody>
+</table>
+<if condition="!empty($change_log)">
+    <b>客户信息变更日志</b>
+<table class="table table-container">
+    <tr class="danger">
+        <td>变更人</td>
+        <td>变更时间</td>
+        <td>变更内容</td>
+    </tr>
+    <foreach name="change_log" item="vo">
+        <tr>
+        <td>{$vo.add_user|get_username}</td>
+        <td>{$vo.add_time|date="Y-m-d",###}</td>
+        <td>{$vo.str}</td>
+    </tr>
+    </foreach>
+</table>
+    </if>

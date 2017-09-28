@@ -1,0 +1,354 @@
+<script type="text/javascript">
+    window.UEDITOR_HOME_URL = "__PUBLIC__/Ueditor/"; //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+</script>
+<load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+
+<link rel="stylesheet" type="text/css" href="/Public/upload/uploadify.css">
+<script type="text/javascript" src="/Public/upload/jquery.uploadify-3.1.min.js"></script>
+
+
+<script type="text/javascript">
+            var editor;
+            function BeForeForm(formName){
+            if (editor.hasContents()){ //此处以非空为例
+
+            editor.sync(); //同步内容
+                    $("form[name='" + formName + "']").submit();
+            }
+            }
+</script>
+
+<form action="{:U('Product/add_product')}" method="post" role="form" id="form" class="form-horizontal" enctype="multipart/form-data">
+    <input type="hidden" name="product_id" value="{$product_info['id']}"/>
+    <input type="hidden" name="edit_type" value="{$edit_type}"/>
+    <legend>
+        <p class="text-primary">
+            {$Think.lang.PRODUCT_ADD}
+        </p>
+    </legend>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_NAME}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_name" id="product_name" value="{$product_info['product_name']}">
+        </div>
+
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_EN_NAME}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="en_name" value="{$product_info['en_name']}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_NO}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_no" value="{$product_info['product_no']}">
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_TYPE}</label>
+        <div class="col-sm-3">
+            <select class="form-control"  name="product_type">
+                <option value="">{$Think.lang.PLEASE_SELECT}</option>
+                <volist name="product_tree" id="product_tree">
+                    <option value="{$product_tree.id}" <if condition="$product_info['product_tree'] eq $key">selected="selected"</if> >{$product_tree.title_show}</option>
+                </volist>
+            </select>
+        </div>
+        <a class="btn btn-info" onclick="windowopen('{:U('Product/ProductType/add_product_type')}')">{$Think.lang.ADD}</a>
+
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_XH}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_format" value="{$product_info['product_format']}">
+        </div>
+
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_XH_EN}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_en_format" value="{$product_info['product_en_format']}">
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_CONTENT}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_content" value="{$product_info['product_content']}">
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_DW}</label>
+        <div class="col-sm-3">
+            <select class="form-control"  name="product_unit">
+                <option value="">请选择</option>
+                <volist name="c_s['product_unit']" id="vo">
+                    <option value="{$key}" <if condition="$product_info['product_unit'] eq $key">selected="selected"</if>>{$vo}</option>
+                </volist>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+
+
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_PLACE}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_place" value="{$product_info['product_place']}">
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_PIECES}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_price" value="{$product_info['product_price']}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_ISSELF}</label>
+        <div class="col-sm-3">
+            <input type="radio" name="is_self" value="1" checked="checked" />{$Think.lang.IS}
+            <input type="radio" name="is_self" value="2" <if condition="$product_info.sex eq 2">checked="checked"</if> >{$Think.lang.NO}
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_BUSSE}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="product_pro" value="{$product_info['product_pro']}">
+        </div>
+
+
+    </div>
+    <div class="form-group">
+
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+        <div class="col-sm-3">
+            <script type="text/plain" id="product_bak" name="product_bak"></script>
+            <script type="text/javascript">
+                        $(function(){
+                        var editor;
+                                //具体参数配置在  editor_config.js  中
+                                var options = {
+                                initialFrameWidth:750, //初化宽度
+                                        initialFrameHeight:300, //初化高度
+                                        focus:false, //初始化时，是否让编辑器获得焦点true或false
+                                        maximumWords:5000, //允许的最大字符数
+                                };
+                                editor = new UE.ui.Editor(options);
+                                editor.render("product_bak");
+                                editor.ready(function(){
+                                editor.setContent('{$product_info.product_bak|htmlspecialchars_decode=###}'); //加载数据库Action.class.PHP传过来的值
+                                });
+                        });            </script>
+        </div>
+
+        <div class="col-sm-3">
+            <!--
+                <input type="file" class="form-control" name="file" value="">
+            -->
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.EN_REMARKS}</label>
+        <div class="col-sm-3">
+            <script type="text/plain" id="product_en_bak" name="product_en_bak"></script>
+            <script type="text/javascript">
+                        $(function(){
+                        var editor;
+                                //具体参数配置在  editor_config.js  中
+                                var options = {
+                                initialFrameWidth:750, //初化宽度
+                                        initialFrameHeight:300, //初化高度
+                                        focus:false, //初始化时，是否让编辑器获得焦点true或false
+                                        maximumWords:5000, //允许的最大字符数
+                                };
+                                editor = new UE.ui.Editor(options);
+                                editor.render("product_en_bak");
+                                editor.ready(function(){
+                                editor.setContent('{$product_info.product_en_bak|htmlspecialchars_decode=###}'); //加载数据库Action.class.PHP传过来的值
+                                });
+                        });            </script>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.PRODUCT_PIC}</label>
+        <div class="col-sm-3">
+            {$up_load}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label  class="col-sm-2 control-label"></label>
+        <div id="show_upload">
+            <volist name="attach_info" id="vo">
+                <if condition="$vo['is_show'] eq 1">
+                    <div id="{$vo.id}" style='width:110px;float:left;'>
+                        <img data-toggle="modal" data-target="#myModal" onclick="get_modal($(this))"  title='点击看大图' style='width:100px;height100px;' src="__ROOT__/{$vo['url']|get_m_pic}"/>
+                        <br><a data-toggle="modal"  title='点击看大图'  src="__ROOT__/{$vo['url']|get_m_pic}"  data-target="#myModal" onclick="get_modal($(this))">
+                            {$vo['name']}
+                            <a href="javascript:void(0)" onclick="dele_attach({$vo.id});"><i class="icon-trash-o"></i></a>
+                        </a>
+                        <input type="hidden" value="__ROOT__/{$vo['url']}"/>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <else/>
+                    <div id="{$vo.id}" style="width:110px;float:left;">
+                        <img style="width:100px;height100px;" src="__ROOT__/{$vo['url']|showPic=###}"/>
+                        <br><a title='点击下载'  href="__ROOT__/{$vo['url']}">{$vo['name']}</a>
+                        <a href="javascript:void(0)" onclick="dele_attach({$vo.id});"><i class="icon-trash-o"></i></a>
+                    </div>
+                </if>
+            </volist>
+
+        </div>
+    </div>
+</div>
+<br>
+<div >
+<center>
+    <button class="btn btn-primary icon-check-square" id="submit-from" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+    <a class="btn btn-warning icon-backward" href="{:U('product_list')}">{$Think.lang.RETURN}</a>
+    <if condition="$product_info['product_pic'] neq ''">
+        <a class='btn btn-danger icon-external-link' onClick='dele_pro_pic();'> {$Think.lang.PRODUCT_DELETE_PIC}</a>
+    </if>
+</center>
+    </div>
+</form>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">{$Think.lang.PRODUCT_O_PIC}</a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <img alt="" id="mymodal_id" src="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script type="text/javascript">
+            function get_modal(obj) {
+            var url = obj.attr('src');
+                    $("#mymodal_id").attr("src", url);
+                    var o_url = obj.parent().children("input").val();
+                    $("#mymodal_url").attr("href", o_url);
+            }
+
+    //删除图片
+    function dele_attach(id) {
+    $.ajax({
+    type: "post",
+            url: "/index.php/Upload/Upload/dele_attach",
+            data: {id:id},
+            dataType: "html",
+            success: function(msg){
+            alert(msg);
+                    $("#" + id + "").remove(); ;
+                    //window.location = window.location;
+                    return;
+            }
+    });
+    }
+
+    //废弃
+    function dele_pro_pic() {
+    if (window.confirm('删除不可恢复，你确定要删除吗？')) {
+    var id = "{$product_info['id']}";
+            $.ajax({
+            type: "POST",
+                    url: "{:U('Product/dele_pic')}",
+                    data: {pro_id: id},
+                    success: function(msg) {
+                    alert(msg);
+                            window.location = window.location;
+                    }
+            });
+    } else {
+    return false;
+    }
+    }
+    //表单验证
+    $(document).ready(function() {
+    $('#form').bootstrapValidator({
+    message: 'This value is not valid',
+            feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+            product_name: {
+            validators: {
+            notEmpty: {
+            message: '产品名称不能为空'
+            },
+            }
+            },
+                    en_name: {
+                    validators: {
+                    notEmpty: {
+                    message: '英文名称不能为空'
+                    },
+                    }
+                    },
+                    product_no: {
+                    validators: {
+                    notEmpty: {
+                    message: '产品编号不能为空'
+                    },
+                    }
+                    },
+                    product_type: {
+                    validators: {
+                    notEmpty: {
+                    message: '请选择产品类型'
+                    },
+                    }
+                    },
+                    product_format: {
+                    validators: {
+                    notEmpty: {
+                    message: '规格型号不能为空'
+                    },
+                    }
+                    },
+                    product_price: {
+                    validators: {
+                    notEmpty: {
+                    message: '销售价格不能为空'
+                    },
+                    }
+                    },
+                    product_unit: {
+                    validators: {
+                    notEmpty: {
+                    message: '计量单位不能为空'
+                    },
+                    }
+                    },
+            }
+    }).on('success.form.bv', function(e) {
+        loadF(1);
+            $.ajax({
+                url:$("#form").attr("action"),
+                data:$("#form").serialize(),
+                type:"post",
+                dataType:"json",
+                success:function(ddd){
+                    if(ddd.status == 1){
+                        alert("保存成功");
+                        window.location.href=ddd.url;
+                    }else{
+                        alert("保存失败");
+                    }
+                }
+            });
+        });
+    });
+
+</script>

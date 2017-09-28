@@ -1,0 +1,54 @@
+
+	
+	
+	<form action="{:U('ProductType/add_product_type')}" method="post" role="form" class="form-horizontal">
+       <input type="hidden" name="edit_type" value="{$edit_type}" readonly="readonly"/>
+       <input type="hidden" name="pro_id" value="{$product_type_info['id']}" readonly="readonly"/>
+        <legend>
+        	<p class="text-primary">
+        	产品类型修改
+        	</p>
+        </legend>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_TYPE_TYPENAME}</label>
+            <div class="col-sm-10">
+            	<input type="text" style="width:30%" class="form-control" name="name" id="name" value="{$product_type_info['name']}">
+            </div>
+        </div>
+        <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.PRODUCT_TYPE_TYPENAME_EN}</label>
+        <div class="col-sm-10">
+            <input type="text" style="width:30%" class="form-control" name="en_name" id="name" value="{$product_type_info['en_name']}">
+        </div>
+    </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_SUPERIOR_MENU}</label>
+           	<div class="col-sm-10">
+	           	<select class="form-control" style="width:30%" name="pid" <if condition="$is_next eq 1">disabled="disabled"</if>>
+	                <option value="0">顶级类型</option>
+	                <volist name="product_tree" id="product_tree">
+	                    <option value="{$product_tree.id}" <if condition="$product_type_info['pid'] eq $product_tree['id']">selected="selected"</if> >{$product_tree.title_show}</option>
+	                </volist>
+	            </select>
+            </div>
+        </div>
+        
+       <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+            <div class="col-sm-10">
+            	<input type="text" class="form-control" style="width:30%" name="remarks" value="{$product_type_info['remarks']}">
+            </div>
+        </div>
+        
+        <div class="form-group">
+    		<div class="col-sm-offset-2 col-sm-10">
+	            <button class="btn btn-primary" id="submit" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+            	<a class="btn btn-warning" href="{:U('product_type_list')}">{$Think.lang.RETURN}</a>
+        	</div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

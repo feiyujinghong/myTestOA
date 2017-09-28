@@ -1,0 +1,156 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<div id="tabs-308576" class="tabbable">
+						<form action="{:U('Cli/insertCliLink')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+						<div class="container">
+							<legend>
+					        	<p class="text-primary">
+						            	{$Think.lang.LINK_INFO}
+						        </p>
+					        	<div class="progress progress-striped">
+						            <div class="progress-bar progress-bar-success" role="progressbar" 
+						                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+						                 style="width: 50%;">
+						              	 {$Think.lang.CLI_INFO}————{$Think.lang.LINK_INFO}
+						            </div>
+						        </div>
+					        </legend>
+					        
+					        <div class="form-horizontal">
+								   		<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_NAME}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="name" id="name" value="{$cli_info['name']}">
+											</div>
+											<label  class="col-sm-2 control-label">{$Think.lang.SEX}</label>
+								            <div class="col-sm-3">
+								                <input type="radio" name="sex" value="1" checked="checked" />{$Think.lang.MEN}
+								                <input type="radio" name="sex" value="2" <if condition="$cli_info.sex eq 2">checked="checked"</if> >{$Think.lang.WOMEN}
+								            </div>
+											
+											
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_BRI}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="bir" id="bir" value="{$cli_info['bir']}" onfocus="WdatePicker({skin: 'twoer'});" readonly="readonly"/>
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_ZHIWEI}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="position" value="{$cli_info['position']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_MOBILE}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="mobile" id="mobile" value="{$cli_info['mobile']}">
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_TELE}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="tele" value="{$cli_info['tele']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_PRIVATE_EMAIL}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="private_email" id="private_email" value="{$cli_info['private_email']}">
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_PUBLIC_EMAIL}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="com_email" value="{$cli_info['com_email']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_FAX}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="fax" id="fax" value="{$cli_info['fax']}">
+											</div>
+											
+											<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_WEB}</label>
+											<div class="col-sm-3">
+								            	<input type="text" class="form-control" name="web" value="{$cli_info['web']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_WORKE_ADDRESS}</label>
+											<div class="col-sm-7">
+								            	<input type="text" class="form-control" name="work_address" id="work_address" value="{$cli_info['work_address']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+								            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LINK_YJ_ADDRESS}</label>
+											<div class="col-sm-7">
+								            	<input type="text" class="form-control" name="adderss" id="adderss" value="{$cli_info['adderss']}">
+											</div>
+										</div>
+										
+										<div class="form-group">
+										    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+											<div class="col-sm-3">
+										          	<textarea class="comments" rows="5" cols="120" name="bak[]">{$cli_info['bak']}</textarea>
+											</div>
+										</div>
+								<center>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-3"></div>
+						            <div class="col-sm-offset-2 col-sm-3">
+						            	<input type="hidden" name="base_id" id="base_id" value="{$base_id}"/>
+						            	<input type="hidden" name="link_id" id="link_id" value="{$cli_info['id']}"/>
+						            	<button class="btn" type="button" onclick="rBaseCli();"><i class="icon-refresh"></i>{$Think.lang.BLACK_SUBMIT}</button>
+						                <button class="btn btn-large" id="submit-form" type="submit"><i class="icon-comment"></i>{$Think.lang.NXTT_SUBMIT}</button>
+						            </div>
+						        </div>
+						        </center>
+						  </div>
+						   
+	    			</div>
+	    			</form>
+</div>
+<script>
+function rBaseCli() {
+	window.location.href='{:U("Cli/cliInfo?base_id=$base_id&op_type=1&type=base&tpl=baseCli")}';
+	return false;
+	
+}
+//表单验证
+$(document).ready(function() {
+    $('#form').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	name: {
+                validators: {
+                    notEmpty: {
+                        message: '联系人姓名不能为空'
+                    },
+                }
+            },
+            
+            mobile: {
+                validators: {
+                    notEmpty: {
+                        message: '移动电话不能为空'
+                    },
+                }
+            },
+            
+            
+        }
+    });
+});
+
+
+
+</script>

@@ -1,0 +1,1 @@
+<?phpreturn array(	'public_verify_error' => "Wrong verify code","public_pass_empty" => "Password empty",	"public_user_empty" => 'User name',"public_live_or_remove"=>"User not exsit or resgin","public_pass_error" => "User name or password wrong","public_login_success" => "Longin in success","public_zh_cn" => "Chinese","public_en_us" => "English",);?>

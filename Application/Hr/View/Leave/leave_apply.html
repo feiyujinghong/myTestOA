@@ -1,0 +1,107 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>	
+ <legend>
+        <p class="text-primary">
+            {$Think.lang.LEAVE_LIST}
+        </p>
+    </legend>
+<form action="{:U('Leave/leave_apply',array('dosubmit'=>1))}" method="post" id='form' role="form" class="form-horizontal" data-fv-onsuccess="onFormSuccess">
+   
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LEAVE_TYPE}</label>
+        <div class="col-sm-3">
+            <select class="form-control"  name="leave_type">
+                <option value="">请选择</option>
+                <volist name="c_s.leave" id="vo">
+                    <option value="{$key}">{$vo}</option>
+                </volist>
+            </select>
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LEAVE_PER}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control"  name="" value="{$staff_n_p}" readonly="readonly">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LEAVE_S_TIME}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="leave_start_time" value="{$staff_info['role_name']}" onfocus="WdatePicker({skin: 'twoer'});"/>
+        </div>
+
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LEAVE_F_TIME}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control"  name="leave_finish_time" value="" onfocus="WdatePicker({skin: 'twoer'});"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.LEAVE_WHY}</label>
+        <div class="col-sm-3">
+            <textarea class="comments" rows="5" cols="120" name="leave_explain">{$staff_info['work_now']}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+        <div class="col-sm-3">
+            <textarea class="comments" rows="5" cols="120" name="remarks">{$staff_info['work_now']}</textarea>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+            <a class="btn btn-danger" href='{:U("leave_record")}'>{$Think.lang.RETURN}</a>
+            <button class="btn btn-primary" id="submit-form" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+
+        </div>
+    </div>
+
+    <script>
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                leave_type: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择请假类型'
+                        },
+                    }
+                },
+                leave_start_time: {
+                    validators: {
+                        notEmpty: {
+                            message: '请假时间不能为空'
+                        },
+                    }
+                },
+                leave_end_time: {
+                    validators: {
+                        notEmpty: {
+                            message: '销假时间不能为空'
+                        },
+                    }
+                },
+                leave_explain: {
+                    validators: {
+                        notEmpty: {
+                            message: '请假原因不能为空'
+                        },
+                    }
+                },
+            },
+            onSuccess:function(e){
+                if(!validatorFlowForm()){
+                    window.event.cancelBubble = true;//停止冒泡IE
+                    e.preventDefault();//停止冒泡firfox
+                }
+            }
+        });
+    });
+    </script>

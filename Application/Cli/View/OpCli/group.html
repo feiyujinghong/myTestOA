@@ -1,0 +1,27 @@
+<legend>
+    <p class="text-primary">
+        {$Think.lang.GROUP_LIST}<a href='{:U("groupSet")}' class="pull-right btn btn-info">{$Think.lang.ADD_GROUP}</a>
+    </p>
+    
+</legend>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="success">
+                            <th>{$Think.lang.GROUNP_NAME}</th>
+                            <th>{$Think.lang.GROUNP_LIDER}</th>
+                            <th>{$Think.lang.GROUP_USER}</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="groupData" id="vo">
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.leader_id}</td>
+                            <td>{$vo.user_ids}</td>
+                        <td><a href="{:U('groupSet',array('id'=>$vo['id']))}" class="authorize">{$Think.lang.UPDATE}</a>
+                        </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>

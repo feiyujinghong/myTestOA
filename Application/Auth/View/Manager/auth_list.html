@@ -1,0 +1,61 @@
+
+
+
+<table class="table">
+
+    <legend>
+        <p class="text-primary">
+            用户组列表
+            <a href='{:U("create_group")}' class="btn btn-primary pull-right">新增用户组</a>
+        </p>
+    </legend>
+
+    <thead>
+        <tr class="success">
+            <th><input type="checkbox" name="CheckboxGroup1" value="" id="CheckboxGroup1_0" /></th>
+            <th>{$Think.lang.MANAGER_GROUP}</th>
+            <th>{$Think.lang.DESCRIPTION}</th>
+            <th>{$Think.lang.MANAGER_GET_AUTH}</th>
+            <th>{$Think.lang.STATIC}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <notempty name="_list">
+        <volist name="_list" id="vo">
+            <tr class="line_g hover_bg">
+                <td>
+                    <form id="form1" name="form1" method="post" action="">
+                        <p>
+                            <label>
+                                <input type="checkbox" name="id[]" value="{$vo.id}"/>
+                            </label>
+                        </p>
+                    </form>
+                </td>
+                <td><a href="{:U('AuthManager/editgroup?id='.$vo['id'])}">{$vo.title}</a></td>
+                <td><span>{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</span></td>
+                <td>
+                    <a href="{:U('Manager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}" >{$Think.lang.MANAGER_READ_AUTH}</a>
+                </td>
+                <td>{$vo.status_text}</td>
+                <td>
+            <if condition="$vo.status eq 1">
+                <a href="{:U('Manager/change_status?method=delete&id='.$vo['id'])}" class="confirm ajax-get">{$Think.lang.DELETE}</a>
+                <else/>
+                <a href="{:U('Manager/change_status?method=recover&id='.$vo['id'])}" class="confirm ajax-get">{$Think.lang.RECOVER}</a>
+            </if>
+            <a href="{:U('Manager/edit_group?id='.$vo['id'])}" class="confirm ajax-get">{$Think.lang.UPDATE}</a>
+            </td>
+            </tr>
+        </volist>
+    </notempty>
+</tbody>
+
+</table>
+
+
+</div>
+</body>
+</html>  

@@ -1,0 +1,223 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<form action="" method="post" role="form" id="form" class="form-horizontal">
+    <legend>
+        <p class="text-primary">
+            {$title}
+        </p>
+    </legend>
+
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.container_name}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="name" id="num" value="{$data.name}">
+        </div>
+
+        <label  class="col-sm-2 control-label">{$Think.lang.to_warehouse}</label>
+        <div class="col-sm-3">
+            <input type="hidden" name="to_warehouse_id" id="to_warehouse_id" value='{$data.to_warehouse}'>
+            <input type="text" class="form-control" id="to_warehouse_name" value="{$warehouse}" readonly>
+        </div>
+        <a class="btn btn-primary" data-func="add_warehouse_ajax" style="cursor:pointer" data-toggle="modal" data-target="#selectWarehouse">{$Think.lang.select_warehouse}</a>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.send_time}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="send_time" value="{$data.send_time|selfDate='Y-m-d',###}" onfocus="WdatePicker({skin: 'twoer'});">
+        </div>
+        <label  class="col-sm-2 control-label">{$Think.lang.to_time}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="to_time" value="{$data.to_time|selfDate='Y-m-d',###}" onfocus="WdatePicker({skin: 'twoer'});">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_remark}</label>
+        <div class="col-sm-8">
+            <textarea rows="5"  class="form-control" name="remark" >{$data.remark}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.product_list}</label>
+        <div class="col-sm-10" >
+            <table class="table table-container" id="product_info">
+                <tr>
+                    <td>{$Think.lang.OPERATION}</td>
+                    <td>{$Think.lang.batch_number}</td>
+                    <td>{$Think.lang.product_name}</td>
+                    <td>{$Think.lang.product_format}</td>
+                    <td>{$Think.lang.product_unit}</td>
+                    <td>{$Think.lang.product_count}</td>
+                    <td>{$Think.lang.start_time}</td>
+                    <td>{$Think.lang.end_time}</td>
+                    <td>{$Think.lang.WAREHOUSE_W_NUM}</td>
+                    <td>{$Think.lang.remark}</td>
+                </tr>
+                <if condition="!empty($productData)">
+                    <foreach name="productData" item="val">
+                        <tr>
+                        <td><a class='text-primary del_option'><i class='icon-trash-o'></i></a></td>
+                        <td><input type='hidden' name='product_id[]' value="{$val.product_id}">
+                            <input type='text' name='batch_number[]' value="{$val.batch_number}" size="8"></td>
+                        <td><php>echo checkLanguage($val["product_name"],$val["en_name"])</php></td>
+                        <td><php>echo checkLanguage($val["product_format"],$val["product_en_format"])</php></td>
+                        <td>{$val['product_unit']}</td>
+                        <td><input type='text' name='count[]' value="{$val.count}" size="5"></td>
+                        <td><input type='text' name='start_time[]' value="{$val.start_time|selfDate='Y-m-d',###}" size="8" onfocus="WdatePicker({skin: 'twoer'});"></td>
+                        <td><input type='text' name='end_time[]' value="{$val.end_time|selfDate='Y-m-d',###}" size="8" onfocus="WdatePicker({skin: 'twoer'});"></td>
+                        <td><input type='text' name='warehouse_num[]' value="{$val.warehouse_num}" size="10" ></td>
+                        <td><input type='text' name='remark[]' value="{$val.remark}" size="15" ></td>
+                        </tr>
+                    </foreach>
+                    </if>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary"  type="button" target-form="form-horizontal" data-func="add_product" data-toggle="modal" data-target="#productModal">{$Think.lang.PRODUCT_SELECT}</button>
+            <button class="btn btn-info"  type="button" target-form="form-horizontal" onclick="onlySave()">{$Think.lang.only_save}</button>
+            <button class="btn btn-danger" type="button" target-form="form-horizontal" onclick="formSubmit()">{$Think.lang.SUBMIT}</button>
+            <button class="btn btn-warning" onclick="javascript:history.back(-1); return false;">{$Think.lang.RETURN}</button>
+        </div>
+    </div>
+    
+    <input type="hidden" value="0" name="status">
+</form>
+<script>
+    //仅保存
+    function onlySave(){
+        if(checkForm())
+            $("#form").submit();
+    }
+    function formSubmit(){
+        if(checkForm()){
+            $("[name='status']").val(1);
+            $("#form").submit();
+        }
+    }
+    //检查表单
+    function checkForm(){
+        if($("[name='name']").val() == ""){
+            alert("货柜名称不能为空");
+            $("[name='name']").focus();
+            return false;
+        }
+        if($("[name='to_warehouse']").val() == ""){
+            alert("请选择目的仓库");
+            $("[name='to_warehouse_name']").focus();
+            return false;
+        }
+        if($("[name='send_time']").val() == ""){
+            alert("发货时间不能为空");
+            $("[name='send_time']").focus();
+            return false;
+        }
+        if($("[name='to_time']").val() == ""){
+            alert("到货时间不能为空");
+            $("[name='to_time']").focus();
+            return false;
+        }
+        if($("[name='batch_number[]']").length == 0){
+            alert("请选择产品");
+            return false;
+        }
+        var i=0;
+        $("[name='batch_number[]']").each(function(){
+            if($(this).val()==""){
+                i++;
+                alert("批号不能为空");
+                $(this).focus();
+                return false;
+            }
+        });
+        $("[name='count[]']").each(function(){
+            if($(this).val()==""){
+                i++;
+                alert("数量不能为空");
+                $(this).focus();
+                return false;
+            }
+            if(isNaN($(this).val()) || $(this).val() <= 0){
+                i++;
+                alert("请填写大于0的数字类型");
+                $(this).focus();
+                return false;
+            }
+        });
+        $("[name='start_time[]']").each(function(){
+            if($(this).val()==""){
+                i++;
+                alert("生产不能为空");
+                $(this).focus();
+                return false;
+            }
+        });
+        $("[name='end_time[]']").each(function(){
+            if($(this).val()==""){
+                i++;
+                alert("生产不能为空");
+                $(this).focus();
+                return false;
+            }
+        });
+        var warehouse_num = "";
+        $("[name='warehous_num[]']").each(function(){
+            if($(this).val()==""){
+                i++;
+                alert("仓库识别码不能为空");
+                $(this).focus();
+                return false;
+            }
+            warehouse_num += $(this).val()+",";
+        });
+        if(i==0)
+            return true;
+        else
+            return false;
+        $.ajax({
+            url:"{:U('warehouseNumISHave')}",
+            data:{nums:warehouse_num},
+            sync:false,
+            success:function($data){
+                if($data != ""){
+                    $("[name='warehous_num[]']").each(function(){
+                            if($(this).val()==$data){
+                                alert("仓库识别码重复");
+                                $(this).focus();
+                                return false;
+                            }
+                    });
+                }
+            }
+        });
+        return true;
+    }
+     //添加仓库
+    function add_warehouse_ajax() {
+            var name=$("[type='radio']:checked").attr("obj-name");
+            var id = $("[type='radio']:checked").val();
+            $("#to_warehouse_name").val(name);
+            $("#to_warehouse_id").val(id);
+            $("#selectWarehouse").modal('hide');
+    }
+    
+     //添加产品
+    function add_product(){
+            var ids="";
+
+            $("[type='checkbox']:checked").each(function(){
+                ids += $(this).val()+",";
+            });
+            $.get("{:U('addContainerProduct')}",{ids:ids},function($data){
+                $("#product_info").append($data);
+                $("#productModal").modal("hide");
+            });
+    }
+    
+    $(document).on("click",".del_option",function(){
+        $(this).parent().parent().remove();
+    });
+</script>
+

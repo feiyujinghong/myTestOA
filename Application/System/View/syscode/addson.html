@@ -1,0 +1,89 @@
+<div class="container">
+    <legend>
+        <p class="text-primary">
+            {$Think.lang.ADD_CODE}----{$name}
+        </p>
+    </legend>
+    <form action="{:U('addSon',array('id'=>$id,'name'=>$name))}" method="post" role="form" id='form' class="form-horizontal">
+
+        <div class="form-group">
+            <label for="code" class="col-sm-2 control-label">{$Think.lang.CODE}</label>
+            <div class="col-sm-3">
+                <input type="text" name="code" value=""  class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">{$Think.lang.NAME}</label>
+            <div class="col-sm-3">
+                <input type="text" name="name" value="" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">{$Think.lang.ORDER}</label>
+            <div class="col-sm-3">
+                <input type="text" name="order" value="0" class="form-control">
+                <input type="hidden" name="p_id" value="{$id}" class="form-control">
+                <input type="hidden" name="code_name" value="{$name}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <button class="btn btn-primary" id='submit-form' type="submit">{$Think.lang.SUBMIT}</button>
+                <button class="btn btn-warning" id='submit-form' type="button" onclick="window.history.back()">{$Think.lang.RETURN}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '代码名称不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 30,
+                            message: '允许长度为2-15'
+                        },
+                    }
+                },
+                code: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '系统代码不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 30,
+                            message: '允许长度为2-15'
+                        },
+                    }
+                },
+                order: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '排序不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]+$/,
+                            message: '必须为数字类型'
+                        }
+                    }
+                },
+            }
+        });
+    });
+</script>

@@ -1,0 +1,362 @@
+<legend>
+    <p class="text-primary">
+        {$year}年{$month}月工资明细单
+    </p>
+</legend>
+<form action="{$action}" method="post" id="form" role="form" class="form-horizontal">
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">匹配系统用户</label>
+        <div class="col-sm-3">
+            <input type="hidden" name="year" value="{$year}">
+            <input type="hidden" name="month" value="{$month}">
+            <input type="hidden" name="status" value="{$data.status}" >
+            <input type="hidden" name="staff_id" value="{$data['staff_id']}" id ="staff_id" readonly="readonly">
+            <input type="hidden" name="user_id" value="{$data['user_id']}" id="user_id" readonly="readonly">
+            <input type="text" class="form-control" id="user_name" readonly="readonly" name="staff_name" value="{$data['staff_name']}">
+        </div>
+        <a class="btn btn-default" data-toggle="modal" data-target="#userModal" data-function="add_user" data-input-info="staff_id@staff_id#user_id@user_id#user_name@user_name#work_num@work_num">
+            + 选择员工
+        </a>
+    </div>
+
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">应出勤(天)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="attendance" value="{$data['attendance']}">
+        </div>
+
+        <label  class="col-sm-2 control-label">实际出勤(天)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="fact_attendance" value="{$data['fact_attendance']}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">病假(天)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="disease" value="{$data['disease']}">
+        </div>
+
+        <label  class="col-sm-2 control-label">事假(天)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="private_day" value="{$data['private_day'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">旷工(天)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="no_work" value="{$data['no_work'] }">
+        </div>
+
+        <label  class="col-sm-2 control-label">迟到(次)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="late" value="{$data['late'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">早退(次)</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="early" value="{$data['early'] }">
+        </div>
+
+        <label  class="col-sm-2 control-label">标准基本工资</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="base_wage" id="work_num" value="{$data['base_wage'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">实际基本工资</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="fact_wage" value="{$data['fact_wage'] }">
+        </div>
+
+        <label  class="col-sm-2 control-label">饭补</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="rice" value="{$data['rice'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">话补</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="phone" value="{$data['phone']}">
+        </div>
+
+        <label  class="col-sm-2 control-label">绩效工资</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="achievements" value="{$data['achievements'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">提成</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="commission" value="{$data['commission'] }">
+        </div>
+
+        <label  class="col-sm-2 control-label">病假</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="disease_money" value="{$data['disease_money']}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">事假</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="private_money" value="{$data['private_money'] }">
+        </div>
+
+        <label  class="col-sm-2 control-label">旷工</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="no_work_money" value="{$data['no_work_money'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">迟到/早退</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="late_early" value="{$data['late_early']}">
+        </div>
+
+        <label  class="col-sm-2 control-label">五险个人承担部分</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="insurance" value="{$data['insurance'] }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">住房公积金个人承担部分</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="fund" value="{$data['fund'] }">
+        </div>
+
+        <label  class="col-sm-2 control-label">个人所得税</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="tax" value='{$data["tax"]}'>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">备注说明</label>
+        <div class="col-sm-8">
+            <textarea name="remark" class="form-control"></textarea>
+        </div>
+    </div>
+    
+    <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <button class="btn btn-primary" id="submit-form" data-flag=0 type="submit" >仅保存</button>
+                <button class="btn btn-danger" id="submit-form" data-flag =1 type="submit" onclick="aa()">保存并发送</button>
+            </div>
+        </div>
+</form>
+
+<script>
+    function aa(){
+        $("[name='status']").val(1);
+    }
+    function add_user(data) {
+        var arr = data.split("#");
+        for (var i in arr) {
+            var keyVal = arr[i].split("@");
+            $("#" + keyVal[0]).val(keyVal[1]);
+        }
+    }
+    
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                staff_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择员工'
+                        },
+                    }
+                },
+                attendance: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '请填写应出勤天数'
+                        },
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                fact_attendance: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '请填写实际出勤天数'
+                        },
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                disease: {
+                    validators: {
+                        notEmpty: {
+                            message: '请填写病假天数'
+                        },
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                private_day: {
+                    validators: {
+                        notEmpty: {
+                            message: '请填写事假天数'
+                        },
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                no_work: {
+                    validators: {
+                        notEmpty: {
+                            message: '请填写旷工天数'
+                        },
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                late: {
+                    validators: {
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                early: {
+                    validators: {
+                        regexp:{
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                base_wage: {
+                    validators: {
+                        notEmpty:{
+                            message: "标准基本工资不能为空"
+                        },
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                fact_wage: {
+                        validators: {
+                        notEmpty:{
+                            message: "实际基本工资不能为空"
+                        },
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                rice: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                phone: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                achievements: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                commission: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                disease_money: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                private_money: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                no_work_money: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                late_early: {
+                    validators: {
+                        regexp: {
+                           regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                insurance: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },
+                fund: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },              
+                tax: {
+                    validators: {
+                        regexp: {
+                            regexp:/^[0-9]+.[0-9]{2}$/,
+                            message:"必须为数字类型,保留两位小数",
+                        }
+                    }
+                },    
+            },
+        });
+    });
+</script>

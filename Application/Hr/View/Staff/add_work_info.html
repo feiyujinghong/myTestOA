@@ -1,0 +1,123 @@
+<include file="./Application/Auth/View/Public/header.html" />
+	
+	<div class="container">
+		
+	
+	<form action="{:U('Staff/add_work_info')}" method="post" role="form" class="form-horizontal">
+        
+        <legend>
+        	<p class="text-primary">
+        		{$Think.lang.STAFF_W_MES}
+        		<!--
+			    <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
+				  + 选择
+				</button>
+				-->
+        	</p>
+        	
+        	<div class="progress progress-striped">
+			   <div class="progress-bar progress-bar-success" role="progressbar" 
+			      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+			      style="width: 75%;">
+			      {$Think.lang.STAFF_BASE_MES}——{$Think.lang.STAFF_LINKMES}——{$Think.lang.STAFF_W_MES}
+			   </div>
+			</div>
+        </legend>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.STAFF_W_BM}</label>
+			
+			
+			<div class="col-sm-3">
+	           	<select class="form-control"  name="work_dept">
+	                <volist name="department_tree" id="department_tree">
+	                    <option >{$department_tree.title_show}</option>
+	                </volist>
+	            </select>
+	        </div>
+			
+			<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.STAFF_W_XBM}</label>
+			<div class="col-sm-3">
+                <input type="text" class="form-control"  name="" value="{$staff_info['sys_depat']}" readonly="readonly">
+			</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.STAFF_W_JS}</label>
+			<div class="col-sm-3">
+            	<input type="text" class="form-control" name="" value="{$staff_info['role_name']}" readonly="readonly">
+			</div>
+			
+			<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.STAFF_W_HGZ}</label>
+			<div class="col-sm-3">
+                <input type="text" class="form-control"  name="work_num" value="{$staff_info['work_num']}">
+			</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.STAFF_W_NOWBAK}</label>
+			<div class="col-sm-3">
+            	<textarea class="comments" rows="5" cols="120" name="work_now">{$staff_info['work_now']}</textarea>
+			</div>
+		</div>
+		
+		<div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.STAFF_W_EDBAK}</label>
+			<div class="col-sm-3">
+            	<textarea class="comments" rows="5" cols="120" name="work_black">{$staff_info['work_black']}</textarea>
+			</div>
+		</div>
+        
+        
+        
+       <div class="form-group">
+    		<div class="col-sm-offset-2 col-sm-3">
+	            <input type="hidden" name="id" value="{$id}">
+            	<button class="btn btn-primary" id="submit" type="submit" target-form="form-horizontal">{$Think.lang.NXTT_SUBMIT}</button>
+            	<button class="btn btn-warning" onClick="read_link(); return false;">{$Think.lang.BLACK_SUBMIT}</button>
+            </div>
+        </div>
+    </form>
+    </div>
+    
+     
+    <!--
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="myModalLabel" aria-hidden="true">
+	   <div class="modal-dialog">
+		      <div class="modal-content">
+		         <div class="modal-header">
+		            <button type="button" class="close" 
+		               data-dismiss="modal" aria-hidden="true">
+		                  &times;
+		            </button>
+		            <h4 class="modal-title" id="myModalLabel">
+		               模态框（Modal）标题
+		            </h4>
+		         </div>
+		         <div class="modal-body">
+		            在这里添加一些文本
+		         </div>
+		         <div class="modal-footer">
+		            <button type="button" class="btn btn-default" 
+		               data-dismiss="modal">关闭
+		            </button>
+		            <button type="button" class="btn btn-primary">
+		               提交更改
+		            </button>
+		         </div>
+		      </div>
+		</div>
+	</div>
+     -->
+    
+<script type="text/javascript">
+	function read_link() {
+		window.location.href='{:U("Staff/read_link?id=$id")}';
+		return false;
+	}
+</script>    
+    
+</div>
+</body>
+</html>

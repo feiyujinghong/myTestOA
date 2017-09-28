@@ -1,0 +1,38 @@
+<style>
+    .success{
+        wdith:120px;
+    }
+</style>
+<legend>
+    <p class="text-warning">{$Think.lang.warning_set}</p>
+</legend>
+        <form method="post">
+<table class="table table-bordered">
+    <tr>
+        <td class="success">{$Think.lang.product_no}</td>
+        <td>{$data.product_no}</td>
+        <td class="success">{$Think.lang.product_name}</td>
+        <td>{$data.product_name}</td>
+    </tr>
+    <tr>
+        <td class="success">{$Think.lang.product_format}</td>
+        <td>{$data.product_format}</td>
+        <td class="success">{$Think.lang.warehouse_name}</td>
+        <td><php>if(cookie("think_language")=="zh-cn"){echo $data['name'];}else{echo $data["en_name"];}</php></td>
+    </tr>
+    <tr>
+
+        <td class="success">{$Think.lang.warnning}</td>
+        <td><input value="{$data.warnning}" name="warnning"></td>
+        <td class="success">{$Think.lang.danger}</td>
+        <td><input value="{$data.danger}" name="danger"></td>
+    </tr>
+    <tr>
+        <td colspan="4" style="color:red;">{$Think.lang.warnning_noice}</td>
+    </tr>
+</table>
+            <center>
+            <button type="submit" class="btn btn-primary">{$Think.lang.sure}</button>
+            <a class="btn btn-warning" href="javascript:window.history.back()">{$Think.lang.RETURN}</a>
+            </center>
+</form>

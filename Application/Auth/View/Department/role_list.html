@@ -1,0 +1,52 @@
+
+<legend>
+    <p class="text-primary">
+    角色列表<a class="btn btn-primary pull-right" href='{:U('Department/add_role')}'><i class="icon-plus"></i>{$Think.lang.ADD}</a>
+    </p>
+</legend>
+
+<table class="table">
+    <thead>
+        <tr class="success">
+            <th>名称</th>
+            <th>{$Think.lang.REMARKS}</th>
+            <th>{$Think.lang.STATIC}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <notempty name="role_info">
+        <volist name="role_info" id="vo">
+            <tr class="line_g hover_bg">
+
+                <td>{$vo['name']}</td>
+                <td>
+                	{$vo['remarks']}
+                </td>
+                <td>
+                	<if condition="$vo.dr eq 1">{$Think.lang.IS_HIDDEN_2}<else/>{$Think.lang.IS_SHOW_1}</if>
+                </td>
+                <td>
+                    <a href="{:U('Department/edit?id='.$vo['id'])}" class="authorize" data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+						<i class="icon-edit"></i>
+					</a>
+                </td>
+            </tr>
+        </volist>
+    </notempty>
+</tbody>
+
+</table>
+
+{$_page}
+</div>
+
+<script>$(function()
+    {
+        $("[data-toggle='popover']").popover();
+    });
+</script>
+
+</body>
+</html>  

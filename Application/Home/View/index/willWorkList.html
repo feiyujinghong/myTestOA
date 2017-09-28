@@ -1,0 +1,54 @@
+<table class='table' >
+    <thead>
+        <tr class="success">
+            <th>标题</th>
+            <th>流程名称</th>
+            <th>发送人</th>
+            <th>到达时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <if condition="!empty($data)">
+    <foreach name='data' item='val' key="key">
+        <tr <if condition="$key%2 eq 1">class='danger'</if>>
+            <td><a href="{$val.url}">{$val.name}</a></td>
+            <td>{$val.flow_name}</td>
+            <td>{$val.from_user_name}</td>
+            <td>{$val.add_time|date="Y-m-d H:i:s",###}</td>
+            <td><php>echo $status_arr[$val["status"]]</php></td>
+            <td>
+                <a href="{$val.url}"><i class="icon-pencil" data-toggle="tooltip" title="审批"></i></a>
+            </td>
+        </tr>
+    </foreach>
+        <else />
+        <include file="Auth@Public/empty_data" />
+        </if>
+</table>
+<script>
+    $(function() {
+        $("[name='selectAll']").bind("click", function() {
+            if ($(this).is(':checked')) {
+                $(".check").attr("checked",'true');
+            }else{
+                $(".check").removeAttr("checked");
+            }
+        });
+        $(".delete").bind("click",function(){
+            if(!confirm("确定删除？"))
+                return false;
+            var ids="";
+            $("[class='check']:checked").each(function(){
+                ids += $(this).val()+",";
+            });
+            if(ids != ""){
+                $.get("{:U('delete')}",{ids:ids},function(){
+                    window.location.reload();
+                });
+            }else{
+                alert("请选择内容");
+            }
+        });
+    });
+</script>

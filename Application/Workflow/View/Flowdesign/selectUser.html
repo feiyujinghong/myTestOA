@@ -1,0 +1,111 @@
+                <link rel="stylesheet" href="__PUBLIC__/css/zTreeStyle/zTreeStyle.css" type="text/css">
+                <script type="text/javascript" src="__PUBLIC__/js/zTree/jquery.ztree.all-3.5.js"></script>
+
+                <div style="float:left;width:150px;height:500px;overflow:auto;">
+                    <div class="zTreeDemoBackground left" style="float:left;width:15%;">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                </div>
+
+                <div style=" width:400px;height:450px;overflow:auto;margin-left:5px;" id="user_list">
+
+
+                </div>
+                <center><a class="btn btn-info" href="javascript:select_sure()">确定</a></center>
+                <script>
+                    var setting = {
+                        data: {
+                            simpleData: {
+                                enable: true,
+                            },
+                        },
+                        callback: {
+                            onClick: onclick,
+                        }
+                    };
+
+                    var more_select = 1; //0-单选 -1多选
+                    var selected_users = new Array();//选中的用户id+name
+                    function onclick(event, treeId, treeNode, clickFlag) {
+                        var dept_id = treeNode.id
+                        $.ajax({
+                            type: "POST",
+                            dataType: "JSON",
+                            url: "__APP__/Auth/Auth/query_dept_user",
+                            data: {dept_id: dept_id},
+                            success: function(info) {
+                                if (info.ret != 0) {
+                                    addUserList(info.data);
+                                }else{
+                                    $("#user_list").html("");
+                                }
+                            }
+                        });
+                    }
+
+                    function addUserList(dataObj) {
+                        var ret = "<ul class=list-group>";
+                        for (var o in dataObj) {
+                            ret += "<li class='list-group-item'><i class='icon-square-o'></i> 姓名：" + dataObj[o].name + "<div class='btn-group btn-group-xs' style='float:right;'> <button type='button' data-user-id ='"+dataObj[o].id+"' data-user-name='"+dataObj[o].name+"' class='btn btn-default' onclick='selectUser(this)'>选择</button></div></li>";
+                        }
+                        ret += '</ul>';
+                        $("#user_list").html(ret);
+                    }
+
+                    var zTree, rMenu;
+                    $(document).ready(function() {
+                        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+                        zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                        rMenu = $("#rMenu");
+                    });
+
+                    var treeNodes1 = {$tree_data};
+                    $(function() {
+                        $.fn.zTree.init($("#treeDemo"), setting, treeNodes1);
+                    });
+                    //选人
+                    function selectUser(obj) {
+                        var is_check = $(obj).parent().parent().find("i").attr("class");
+                        var user_name = $(obj).attr("data-user-name");
+                        var user_id = $(obj).attr("data-user-id");
+                        selected_users[user_id] = user_name;
+                        if (is_check == "icon-square-o") {
+                            $(obj).parent().parent().find("i").attr("class", "icon-check-square-o");
+                        } else {
+                            selected_users.splice(user_id,1);
+                            $(obj).parent().parent().find("i").attr("class", "icon-square-o");
+                        }
+                    }
+                    //选人确定
+                    function select_sure() {
+                        var key;
+                        var user_ids = "";
+                        var user_names = "";
+                        for(key in selected_users){
+                            if(selected_users[key] == "")
+                                continue;
+                            user_ids += key+",";
+                            user_names += selected_users[key]+",";
+                        }
+                        user_ids = user_ids.substring(0,user_ids.length-1);
+                        user_names = user_names.substring(0,user_names.length-1);
+                        default_add_user(user_ids,user_names);
+                        window.close();
+                    }
+                    
+                    function default_add_user(user_ids,user_names) {
+                        window.opener.document.getElementById("range_user_ids").value=user_ids;
+                        window.opener.document.getElementById("range_user_text").value=user_names;
+                    }
+                    
+                </script>
+                <style type="text/css">
+                    div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+                    div#rMenu ul li{
+                        margin: 1px 0;
+                        padding: 0 5px;
+                        cursor: pointer;
+                        list-style: none outside none;
+                        background-color: #DFDFDF;
+                    }
+                </style>

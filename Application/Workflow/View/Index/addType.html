@@ -1,0 +1,48 @@
+<div class="container">
+    <form action="{:U('addType')}" method="post" role="form" id='type_form' class="form-horizontal">
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.TYPE_NAME}</label>
+            <div class="col-sm-3">
+                <input type="text" name="name" value=""  class="form-control" placeholder="{$Think.lang.TYPE_NAME}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.P_TYPE}</label>
+
+            <div class="col-sm-3">
+                <input type="hidden" name="pid"  value="" class="form-control" readonly>
+                <input type="text" name="pname" value="" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <button class="btn btn-primary" id='submit-form' type="button">{$Think.lang.SUBMIT}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(function(){
+        $("#submit-form").bind("click",function(){
+            var name = $("[name='name']").val();
+            if(name == ""){
+                $("[name='name']").parent().parent().addClass("has-error");
+                $("[name='name']").focus();
+                return false;
+            }
+            var form = $("#type_form");
+            $.ajax({
+                url : form.attr("action"),
+                type:'post',
+                data : form.serialize(),
+                dataType: "json",
+                success:function (data){
+                        alert(data.info);
+                        window.location.reload();
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,24 @@
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">{$Think.lang.PRODUCT_INFO}</a></li>
+    <li role="presentation"><a href="#warehousenum" aria-controls="warehousenum" role="tab" data-toggle="tab">{$Think.lang.WAREHOUSENUM}</a></li>
+    <li role="presentation"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">{$Think.lang.ABOUT_ACCOUNT}</a></li>
+    <li role="presentation"><a href="#customer" aria-controls="customer" role="tab" data-toggle="tab">{$Think.lang.ABOUT_CUSTOMER}</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="info">
+          <include file='show_product_info' />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="warehousenum">
+          <include file='warehousenum' />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="account"><center><h4>暂未开放，敬请期待！</h4></center></div>
+    <div role="tabpanel" class="tab-pane" id="customer"><center><h4>暂未开放，敬请期待！</h4></center></div>
+  </div>
+
+</div>

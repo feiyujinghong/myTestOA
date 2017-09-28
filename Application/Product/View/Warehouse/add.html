@@ -1,0 +1,146 @@
+<form action="" method="post" role="form" id="form" class="form-horizontal">
+
+    <legend>
+        <p class="text-primary">
+            {$title}
+        </p>
+    </legend>
+
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_num}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="num" id="num" value="{$data.num}">
+        </div>
+
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_name}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="name" value="{$data.name}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_en_name}</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="en_name" value="{$data.en_name}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_en_address}</label>
+        <div class="col-sm-8">
+            <textarea rows="5"  class="form-control" name="en_address" >{$data.en_address}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_address}</label>
+        <div class="col-sm-8">
+            <textarea rows="5"  class="form-control" name="address" >{$data.address}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_admin}</label>
+        <div class="col-sm-8">
+            <textarea  class="form-control" name="admin" id="admin" readonly="readonly">{$data.admin_name}</textarea>
+            <input type="hidden" name="admin_id" id="admin_id" value="{$data.admin_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label"></label>
+        <div class="col-sm-8">
+            <a class="btn btn-default" data-toggle="modal" data-target="#userModal" data-function="add_user" data-input-info="admin@user_name#admin_id@user_id">
+                + {$Think.lang.USER_SELECT}
+            </a>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.warehouse_remark}</label>
+        <div class="col-sm-8">
+            <textarea rows="5"  class="form-control" name="remark" >{$data.remark}</textarea>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary" id="submit-form" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+            <button class="btn btn-warning" onclick="javascript:history.back(-1);
+                    return false;">{$Think.lang.RETURN}</button>
+        </div>
+    </div>
+</form>
+<script>
+    function add_user(data) {
+        var arr = data.split("#");
+        for (var i in arr) {
+            var keyVal = arr[i].split("@");
+            $("#" + keyVal[0]).val(keyVal[1]);
+        }
+    }
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                num: {
+                    validators: {
+                        notEmpty: {
+                            message: '{$Think.lang.num_not_empty}'
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 50,
+                            message: '{$Think.lang.max_length}50',
+                        },
+                        regexp: {
+                            regexp: /^[0-9A-Za-z]+$/,
+                            message: '{$Think.lang.num_regexp}'
+                        }
+                    }
+                },
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '{$Think.lang.name_not_empty}'
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 50,
+                            message: '{$Think.lang.max_length}50',
+                        },
+                    }
+                },
+                en_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '{$Think.lang.en_name_not_empty}'
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 50,
+                            message: '{$Think.lang.max_length}50',
+                        },
+                    }
+                },
+                address: {
+                    validators: {
+                        notEmpty: {
+                            message: '{$Think.lang.address_not_empty}'
+                        },
+                    }
+                },
+                en_address: {
+                    validators: {
+                        notEmpty: {
+                            message: '{$Think.lang.en_address_not_empty}'
+                        },
+                    }
+                },
+            },
+        });
+    });
+
+</script>
+

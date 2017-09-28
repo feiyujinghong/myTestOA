@@ -1,0 +1,47 @@
+<include file="./Application/Auth/View/Public/header.html" />
+<div id="tabs-308576" class="tabbable">
+	
+						<form action="{:U('Cli/cityAreaAdd')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+						<div id="contact" class="tab-pane">
+						<div class="container">
+								<legend>
+						        	{$Think.lang.ADD_P_CITY}
+						        </legend>
+						        <div class="form-horizontal">
+							   		
+							   		<div class="form-group">
+							            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_COUNTRY}</label>
+										<div class="col-sm-3">
+							            	<input type="text" class="form-control"  value="{$country_name}" readonly="readonly"/>
+										</div>
+										
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_CITY}</label>
+										<div class="col-sm-3">
+							            	<input type="text" class="form-control"  name="city" value="">
+										</div>
+										
+										<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_AREA}</label>
+										<div class="col-sm-3">
+							            	<input type="text" class="form-control"  name="area" value="">
+										</div>
+									</div>
+									
+									
+							   	<center>
+							   		<div class="form-group">
+							   		<div class="col-sm-offset-2 col-sm-3"></div>
+							            <div class="col-sm-offset-2 col-sm-3">
+							            <input type="hidden" name="country_id" value="{$country_id}"/>
+							            	<button class="btn btn-large" id="" type="submit"><i class="icon-comment"></i>{$Think.lang.SUBMIT}</button>
+							            </div>
+							        </div>
+							   	</center>
+							   </div>
+							   
+		    			</div>
+			</div>
+	    			</form>
+</div>

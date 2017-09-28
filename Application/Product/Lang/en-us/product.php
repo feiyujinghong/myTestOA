@@ -1,0 +1,32 @@
+<?php
+return array(
+	"PRODUCT_ADD"=>"Product Addition",
+	"PRODUCT_NAME"=>"Product Name",
+	"PRODUCT_NO"=>"Product No.",
+	"PRODUCT_TYPE"=>"Product Type",
+	"PRODUCT_DW"=>"Unit",
+	"PRODUCT_XH"=>"Component",
+	"PRODUCT_XH_EN"=>"Component For English",
+	"PRODUCT_PIECES"=>"Selling Price",
+	"PRODUCT_INPIECES"=>"Purchasing Price",
+	"PRODUCT_ISSELF"=>"Self-production or Purchase",
+	"PRODUCT_EN_PLACE"=>"Purchase For English",
+	"PRODUCT_PLACE"=>"Production Place",
+	"REMARKS" =>"Product details",
+	"EN_REMARKS"=>"Product details For English",
+	"PRODUCT_BUSSE"=>"Supplier",
+	"PRODUCT_PIC"=>" Picture",
+	"PRODUCT_DELETE_PIC"=>"Picture Deletion",
+	"PRODUCT_O_PIC"=>"Original Picture",
+	"PRODUCT_LIST"=>"Product List ",
+	"PRODUCT_SELE"=>"Product Selection",
+	"PLEASE_SELECT" => "Please Select",
+	"PRODUCT_EN_NAME"=>"English Name",
+	"PRODUCT_CONTENT"=>"Content",
+	
+	"PRODUCT_INFO"=>"Product Info",
+	"WAREHOUSENUM"=>"Warehouse num",
+	"ABOUT_ACCOUNT"=>"About Account",
+	"ABOUT_CUSTOMER"=>"About Customer",
+);
+?>

@@ -1,0 +1,47 @@
+<div>
+    <table class='table'>
+    	<legend>
+        	<p class="text-primary">
+        	员工列表
+        	</p>
+        </legend>
+        <thead>
+            <tr class="success">
+                <th>部门</th>
+                <th>工作类型</th>
+                <th>姓名</th>
+                <th>身份证号</th>
+                <th>移动电话</th>
+                <th>电话</th>
+                <th>户口所在地</th>
+                <th>毕业学校</th>
+                <th>专业</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            
+            <volist name="staff_info" id="vo">
+	            <tr class="active">
+	                <td>{$vo.work_dept}</td>
+	                <td>{$vo.work_type}</td>
+	                <td>{$vo.name}</td>
+	                <td>{$vo.card_id}</td>
+	                <td>{$vo.phone}</td>
+	                <td>{$vo.tele}</td>
+	                <td>{$vo.household_address}</td>
+	                <td>{$vo.college}</td>
+	                <td>{$vo.discipline}</td>
+	                <td>
+		                <if condition="$vo['status'] eq 1">正常
+		                <else/>离职
+		                </if>
+	                </td>
+	                <td>
+	                	<a href="{:U('Staff/show_user_info?id='.$vo['id'])}" class="authorize">查看</a>
+	                </td>
+	            </tr>
+            </volist>
+        </thead>
+    </table>
+    {$_page}
+</div>

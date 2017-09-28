@@ -1,0 +1,73 @@
+<legend>
+    <p class="text-primary">
+        工资单列表
+        
+    </p>
+    
+</legend>
+<div class="btn-toolbar" style="padding-left:5px;">
+<if condition="$is_manage"><a href='{:U("add")}' class="btn btn-primary pull-right"><i class="icon-plus"></i>新增工资单</a></if>
+<form class="form-inline pull-left" method="get">
+  <div class="input-group">
+  <!--<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-year">-->
+  <select name="get_year" class="form-control" aria-describedby="basic-year">
+      <option <if condition="$_GET['get_year'] eq 2015">selected</if>>2015</option>
+  <option <if condition="$_GET['get_year'] eq 2016">selected</if>>2016</option>
+  <option <if condition="$_GET['get_year'] eq 2017">selected</if>>2017</option>
+  <option <if condition="$_GET['get_year'] eq 2018">selected</if>>2018</option>
+  <option <if condition="$_GET['get_year'] eq 2019">selected</if>>2019</option>
+  <option <if condition="$_GET['get_year'] eq 2020">selected</if>>2020</option>
+  </select>
+  <span class="input-group-addon" id="basic-year">年</span>
+  <select name="get_month" class="form-control" aria-describedby="basic-month">
+      <option <if condition="$_GET['get_month'] eq 01">selected</if>>01</option>
+  <option <if condition="$_GET['get_month'] eq 02">selected</if>>02</option>
+  <option <if condition="$_GET['get_month'] eq 03">selected</if>>03</option>
+  <option <if condition="$_GET['get_month'] eq 04">selected</if>>04</option>
+  <option <if condition="$_GET['get_month'] eq 05">selected</if>>05</option>
+  <option <if condition="$_GET['get_month'] eq 06">selected</if>>06</option>
+   <option <if condition="$_GET['get_month'] eq 07">selected</if>>07</option>
+  <option <if condition="$_GET['get_month'] eq 08">selected</if>>08</option>
+  <option <if condition="$_GET['get_month'] eq 09">selected</if>>09</option>
+  <option <if condition="$_GET['get_month'] eq 10">selected</if>>10</option>
+  <option <if condition="$_GET['get_month'] eq 11">selected</if>>11</option>
+  <option <if condition="$_GET['get_month'] eq 12">selected</if>>12</option>
+  </select>
+  <span class="input-group-addon" id="basic-month">月</span>
+    <input class='form-control' placeholder="姓名" name='get_name' value='{$_GET["get_name"]}'>
+</div>
+  <button type="submit" class="btn btn-default">查询</button>
+</form>
+</div>
+<table class='table'>
+    <thead>
+        <tr class="success">
+            <th>标题</th>
+            <th>员工姓名</th>
+            <th>年份</th>
+            <th>月份</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+</thead>
+<if condition='!empty($data)'>
+    <volist name="data" id="vo">
+        <tr class="active">
+            <td>{$vo.year}年{$vo.month}月工资明细单</td>
+            <td>{$vo.staff_name}</td>
+            <td>{$vo.year}</td>
+            <td>{$vo.month}</td>
+            <td><php>echo $status[$vo['status']];</php></td>
+            <td>
+        <if condition="($vo['status'] eq 0) and ($is_manage)">
+            <a href="{:U('update',array('id'=>$vo['id']))}" data-toggle="tooltip" data-placement="top" title="编辑"><i class="icon-edit"></i></a>
+        </if>
+        <a href="{:U('showInfo',array('id'=>$vo['id']))}" data-toggle="tooltip" data-placement="top" title="查看"><i class="icon-eye"></i></a>
+        </td>
+        </tr>
+    </volist>
+    <else />
+    <include file="Auth@Public/empty_data" />
+    </if>
+</table>
+{$_page}

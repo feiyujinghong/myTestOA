@@ -1,0 +1,99 @@
+
+<script type="text/javascript">
+    function next_pro(obj){
+    if ("r_next" == obj) {
+    alert("{$Think.lang.DEPARTMENT_LAST_TYPE}");
+            return false;
+    }
+    //var url = "Department/department_show?pid="+val;
+    window.location = "__URL__/product_type_list?pid=" + obj;
+            }
+
+    function dele_p_t(id) {
+    if (window.confirm('你确定要删除吗？')){
+    var id = id;
+            $.ajax({
+            type:"GET",
+                    url:"{:U('productType/dele_p_t')}",
+                    data:{id:id},
+                    success:function(msg){
+                    alert(msg);
+                            window.location = window.location;
+                    }
+            });
+    } else{
+    return false;
+    }
+    }
+</script>
+<div id="tabs-308576" class="tabbable">
+    <legend>
+        <p class="text-primary">
+            {$Think.lang.PRODUCT_TYPE_JG}
+            <a href='{:U("ProductType/add_product_type")}' class="btn btn-primary icon-plus pull-right">添加类型</a>
+        </p>
+    </legend>
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#panel-270543">{$Think.lang.DEPARTMENT_LIST_SHOW}</a>
+        </li>
+        <li class="">
+            <a data-toggle="tab" href="#panel-46001">{$Think.lang.DEPARTMENT_TREE_SHOW}</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="panel-270543" class="tab-pane active">
+            <table class="table">
+
+
+                <thead>
+                    <tr class="success">
+                        <th>{$Think.lang.PRODUCT_TYPE_TYPENAME}</th>
+                        <th>{$Think.lang.REMARKS}</th>
+                        <th>{$Think.lang.DEPARTMENT_ADD_TIME}</th>
+                        <th>{$Think.lang.OPERATION}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <notempty name="product_type_info">
+                    <volist name="product_type_info" id="vo">
+                        <tr class="line_g hover_bg">
+
+                            <td>{$vo.name}</td>
+                            <td>{$vo.remarks}</td>
+                            <td>{$vo.add_time|date="Y-m-d",###}</td>
+                            <td>
+                        <if condition="$vo['next_count'] neq 0 ">
+                            <a   value="{$vo.id}" onClick="next_pro('{$vo.id}')" data-toggle="tooltip" data-placement="top" title="{$Think.lang.DEPARTMENT_NEXT_TYPE}"><i class='icon-angle-down'></i></a>
+                            <else/>
+                            <a   value="{$vo.id}" onClick="next_pro('r_next')" data-toggle="tooltip" data-placement="top" title="{$Think.lang.DEPARTMENT_LAST_TYPE}"><i class='icon-angle-down'></i></a>
+                        </if>
+                        <a href="{:U('ProductType/product_type_edit?id='.$vo['id'])}" class="authorize" data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+                            <i class="icon-edit"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="authorize" onClick="dele_p_t({$vo.id});" data-toggle="tooltip" data-placement="top" title="{$Think.lang.DELETE}">
+                            <i class="icon-trash-o"></i>
+                        </a>
+                        </td>
+
+                        </tr>
+                    </volist>
+                </notempty>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="panel-46001" class="tab-pane">
+            <include file='product_type_tree' />
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</div>
+</body>
+</html>  

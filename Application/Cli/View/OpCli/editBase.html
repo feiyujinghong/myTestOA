@@ -1,0 +1,205 @@
+<div id="tabs-308576" class="tabbable">
+    <form action="{:U('OpCli/editBase')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+        <div class="container">
+            <legend>
+                <p class="text-primary">
+                    {$Think.lang.CLI_INFO}
+                </p>
+            </legend>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_CORP_NAME}</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="company_name" id="company_name" value="{$baseInfo['company_name']}"/>
+                    </div>
+
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_CORP_NO}</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="company_no" value="{$baseInfo['company_no']}" readonly="readonly"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_SOURCE}</label>
+                    <div class="col-sm-3">
+                        <select class="form-control"  name="source">
+                            {$cli_from}
+                        </select>
+                    </div>
+
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_COUNTRY}</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="country_name" id="country_name" value="{$baseInfo['country_ch']}" readonly="readonly"/>
+                        <input type="hidden" class="form-control" name="country" id="country" value="{$baseInfo['country']}"/>
+
+                    </div>
+                    <a class="btn" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>{$Think.lang.SELECT}</a>
+                    <a class="btn" onclick="cityAreaAdd();"><i class="icon-pencil"></i>{$Think.lang.ADD}</a>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_CITY}</label>
+                    <div class="col-sm-3">
+                        <select class="form-control"  name="city" id="city" onchange="get_area()">
+                            {$baseInfo['city_ch']}
+                        </select>
+                    </div>
+
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_AREA}</label>
+                    <div class="col-sm-3">
+                        <select class="form-control"  name="area" id="area">
+                            {$baseInfo['area_ch']}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_DETAILED}</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="detailed" value="{$baseInfo['detailed']}"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.CLI_FOLLOW_DAY}</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="follow" value="{$baseInfo['follow']}"/>
+                    </div>
+
+                </div>
+                <center>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-3">
+                            <input type="hidden" name="base_id" id="base_id" value="{$baseInfo['id']}"/>
+                            <button class="btn btn-danger" id="submit-form" type="submit"><i class="icon-toggle-up"></i>{$Think.lang.SUBMIT}</button>
+                            <a href='{:U("OpCli/cliList")}' class="btn btn-warning"><i class="icon-backward"></i> {$Think.lang.return}</a>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </form>
+    <!-- 隐藏 -->
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:910px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" 
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        {$Think.lang.CLI_COUNTRY}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {$country_str}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default contray"  data-dismiss="modal" id="moni">{$Think.lang.COLSE}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>	    				
+</div>	    				
+<script>
+    function getCity(id) {
+        if (isNaN(id)) {
+            alert("非法数据");
+            return;
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "{:U('CliBase/city')}",
+                data: {id: id},
+                success: function(msg) {
+                    var mes = eval("(" + msg + ")");
+                    $("#country").val(mes.country.id);
+                    $("#country_name").val(mes.country.name);
+                    $("#city").html(mes.str);
+                    $("#myModal").hide();
+                    //$("#moni").click();
+                }
+            });
+        }
+    }
+
+    function get_area() {
+        var city_id = $("#city").val();
+        if (isNaN(city_id)) {
+            alert("非法数据");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "{:U('CliBase/area')}",
+            data: {city_id: city_id},
+            success: function(msg) {
+                $("#area").html(msg);
+            }
+        });
+
+    }
+
+    function cityAreaAdd() {
+        var country_id = $("#country").val();
+        if ("" == country_id) {
+            alert("请选择国家");
+            return false;
+        }
+        windowopen("/index.php/Cli/Cli/cityAreaAdd/country_id/" + country_id)
+    }
+
+//表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                company_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '公司名称不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 30,
+                            message: '允许长度为1-60'
+                        },
+                    }
+                },
+                company_no: {
+                    validators: {
+                        notEmpty: {
+                            message: '客户编号不能为空'
+                        },
+                    }
+                },
+                source: {
+                    validators: {
+                        notEmpty: {
+                            message: '客户来源不能为空'
+                        },
+                    }
+                },
+                follow: {
+                    validators: {
+                        notEmpty: {
+                            message: '跟踪周期不能为空'
+                        },
+                    }
+                },
+            }
+        });
+    });
+
+
+
+</script>

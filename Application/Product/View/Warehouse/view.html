@@ -1,0 +1,48 @@
+   
+<legend>
+        <p class="text-primary">
+            {$Think.lang.warehouse_info}<a class="btn btn-danger icon-stop pull-right" onclick="window.close()">{$Think.lang.CLOSE} </a>
+        </p>
+    </legend>
+<table class="table table-bordered">
+	   <tbody>
+	      <tr>
+	         <td class="success"> {$Think.lang.warehouse_num}</td>
+	         <td>{$baseData['num']}</td>
+	         <td class="success"> {$Think.lang.warehouse_name}</td>
+	         <td>{$baseData['name']}</td>
+	      </tr>
+                      <tr>
+	         <td class="success"> {$Think.lang.warehouse_en_name}</td>
+	         <td colspan='3'>{$baseData['en_name']}</td>
+	      </tr>
+              <tr>
+	         <td class="success"> {$Think.lang.warehouse_en_address}</td>
+	         <td colspan='3'>{$baseData['en_address']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success"> {$Think.lang.warehouse_address}</td>
+	         <td colspan='3'>{$baseData['address']}</td>
+                 <tr>
+                 </tr>
+	         <td class="success"> {$Think.lang.warehouse_admin}</td>
+	         <td colspan='3'>{$baseData['user_admin']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success"> {$Think.lang.warehouse_remark}</td>
+	         <td colspan='3'>{$baseData['remark']}</td>
+	      </tr>
+	      
+	      <tr>
+	         <td class="success"> {$Think.lang.add_user}</td>
+	         <td>{$baseData["add_user"]|get_username=###}</td>
+	         <td class="success"> {$Think.lang.add_date}</td>
+	         <td>{$baseData['add_time']|date="Y-m-d",###}</td>
+	      </tr>
+	   </tbody>
+	</table>
+        <style>
+            .success{
+                width:150px;
+            }
+        </style>

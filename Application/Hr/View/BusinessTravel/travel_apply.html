@@ -1,0 +1,118 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>	
+<form action="{:U('BusinessTravel/travel_apply?dosubmit=1')}" method="post" role="form" id="form" class="form-horizontal">
+    <legend>
+        <p class="text-primary">
+            {$Think.lang.BUST_APP}
+        </p>
+    </legend>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.BUST_TITLE}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control"  name="title" value="{$travel_info['title']}" />
+        </div>
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.BUST_ER}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control"  name="" value="{$staff_n_p}" readonly="readonly">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.BUST_S_TIME}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="travel_start_time" value="" onfocus="WdatePicker({skin: 'twoer'});"/>
+        </div>
+
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.BUST_F_TIME}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control"  name="travel_finish_time" value="" onfocus="WdatePicker({skin: 'twoer'});"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.BUST_PLACE}</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="travel_place" value="{$travel_info['travel_place']}"/>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.BUST_CONTENT}</label>
+        <div class="col-sm-3">
+            <textarea class="comments" rows="5" cols="120" name="travel_info">{$travel_info['travel_info']}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+        <div class="col-sm-3">
+            <textarea class="comments" rows="5" cols="120" name="remarks">{$travel_info['remarks']}</textarea>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+            <input type="hidden" name="id" value="{$travel_info.id}"/>
+            <button class="btn btn-warning" type="reset">{$Think.lang.RESET}</button>
+            <button class="btn btn-primary" id="submit-form" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+        </div>
+    </div>
+
+<script>
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                title: {
+                    validators: {
+                        notEmpty: {
+                            message: '标题不能为空'
+                        },
+                    }
+                },
+                travel_start_time: {
+                    validators: {
+                        notEmpty: {
+                            message: '离司时间不能为空'
+                        },
+                    }
+                },
+                travel_finish_time: {
+                    validators: {
+                        notEmpty: {
+                            message: '回司时间不能为空'
+                        },
+                    }
+                },
+                travel_place: {
+                    validators: {
+                        notEmpty: {
+                            message: '出差地点不能为空'
+                        },
+                    }
+                },
+                travel_info: {
+                    validators: {
+                        notEmpty: {
+                            message: '出差内容不能为空'
+                        },
+                    }
+                },
+            },
+            onSuccess:function(e){
+                if(!validatorFlowForm()){
+                    window.event.cancelBubble = true;//停止冒泡IE
+                    e.preventDefault();//停止冒泡firfox
+                }
+            }
+        });
+    });
+    </script>

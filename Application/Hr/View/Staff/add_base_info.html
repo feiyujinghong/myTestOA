@@ -1,0 +1,252 @@
+<div class="container">
+    <legend>
+        <p class="text-primary">
+            {$Think.lang.STAFF_BASE_MES}
+        </p>
+        <div class="progress progress-striped">
+            <div class="progress-bar progress-bar-success" role="progressbar" 
+                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+                 style="width: 25%;">
+               {$Think.lang.STAFF_BASE_MES}
+            </div>
+        </div>
+    </legend>
+    <form action="{:U('Staff/add_base_info')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_NAME}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="name" id="name" value="{$staff_info['name']}">
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_INSERVER}</label>
+            <div class="col-sm-3">
+                <input type="hidden" class="form-control" id="user_id" name="user_id" value="{$staff_info['user_id']}" readonly="readonly">
+                <input type="text" class="form-control" id="user_name" readonly="readonly" value="{$staff_info['name']}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_IDNUM}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="card_id" value="{$staff_info['card_id']}">
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.SEX}</label>
+            <div class="col-sm-3">
+                <input type="radio" name="sex" value="1" checked="checked" />{$Think.lang.MEN}
+                <input type="radio" name="sex" value="2" <if condition="$staff_info.sex eq 2">checked="checked"</if> >{$Think.lang.WOMEN}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_BIRTYPE}</label>
+            <div class="col-sm-3">
+                <input type="radio" name="bir_type" value="1" checked="checked"/>{$Think.lang.STAFF_BIRTYPE_O}
+                <input type="radio" name="bir_type" value="2" <if condition="$staff_info['bir_type'] eq 2">checked="checked"</if> />{$Think.lang.STAFF_BIRTYPE_T}
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_BIRDATE}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="birthday_str" id="" <if condition="$staff_info['birthday'] neq ''">value="{$staff_info['birthday']|date='Y-m-d',###}"</if> />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_PHONE}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="phone" id="phone" value="{$staff_info['phone']}">
+            </div>
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_TELE}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="tele" value="{$staff_info['tele']}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_EMAIL}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="email" value="{$staff_info['email']}">
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_QQ}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="qq" value="{$staff_info['qq']}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_MINGZ}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="nation" value="{$staff_info['nation']}">
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_MANA}</label>
+            <div class="col-sm-3">
+                <!-- 
+                <input type="text" class="form-control"  name="marriage" value="{$staff_info['marriage']}">
+                -->
+                <select class="form-control"  name="marriage">					
+                    <option value="">请选择</option>
+                    <volist name="c_s['marriage']" id="vo">
+                        <option value="{$key}" <if condition="$staff_info['marriage'] eq $key">selected="selected"</if>>{$vo}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_ZIMM}</label>
+            <div class="col-sm-3">
+                <!--
+                <input type="text" class="form-control" name="political" value="{$staff_info['political']}">
+                -->
+                <select class="form-control"  name="political">					
+                    <option value="">请选择</option>
+                    <volist name="c_s['political']" id="vo">
+                        <option value="{$key}" <if condition="$staff_info['political'] eq $key">selected="selected"</if>>{$vo}</option>
+                    </volist>
+                </select>
+
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_STUD}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="college" value="{$staff_info['college']}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_ZZYY}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="discipline" value="{$staff_info['discipline']}">
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_XL}</label>
+            <div class="col-sm-3">
+                <!-- 
+                <input type="text" class="form-control"  name="education" value="{$staff_info['education']}">
+                -->
+                <select class="form-control"  name="education">
+                    <option value="">请选择</option>
+                    <volist name="c_s['education']" id="vo">
+                        <option value="{$key}" <if condition="$staff_info['education'] eq $key">selected="selected"</if>>{$vo}</option>
+                    </volist>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_ACCO}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="household_address" value="{$staff_info['household_address']}">
+            </div>
+
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_NOWPLACE}</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="now_address" value="{$staff_info['now_address']}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">{$Think.lang.STAFF_WORK_PHOTO}</label>
+            <div class="col-sm-3">
+                <input type="file" class="form-control" name="file" value="">
+            </div>
+
+            <if condition="$staff_info['user_pic'] neq ''">
+                <label  class="col-sm-2 control-label">{$Think.lang.STAFF_WORK_UPPIC}</label>
+                <div class="col-sm-3">
+                    <a class="btn btn-default" target="_bank" href="__ROOT__/{$staff_info['user_pic']}">{$Think.lang.VIEW}</a>
+                </div>
+            </if>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <input type="hidden" name="id" value="{$id}">
+                <button class="btn btn-primary" id="submit-form" type="submit">{$Think.lang.NXTT_SUBMIT}</button>
+
+                <a class="btn btn-default" data-toggle="modal" data-target="#userModal" data-function="add_user" data-input-info="name@user_name#user_id@user_id#user_name@user_name">
+                    + {$Think.lang.STAFF_INSERVER}
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '姓名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 30,
+                            message: '允许长度为2-30'
+                        },
+                    }
+                },
+                card_id: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '身份证不能为空'
+                        },
+                        stringLength: {
+                            min: 18,
+                            max: 18,
+                            message: '允许长度为18'
+                        },
+                    }
+                },
+                birthday_str: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '出生不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]{4}-[0-2]{2}-[0-3]{2}$/,
+                            message: '必须为日期类型例如：2014-01-12'
+                        }
+                    }
+                },
+                phone: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[0-9]{11}$/,
+                            message: '手机号码位数不对'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        regexp: {
+                            regexp: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
+                            message: '邮箱格式不正确'
+                        }
+                    }
+                },
+            }
+        });
+    });
+</script>
+
+
+
+

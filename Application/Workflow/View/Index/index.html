@@ -1,0 +1,42 @@
+<include file='typeTree' />
+<div style='float: left;width:80%'>
+    <div class="btn-toolbar">
+        <button type="button" class="btn btn-info pull-left" onclick="window.location.href='{:U(\"add\")}'">新建流程</button>
+    </div>    
+<table class='table'>
+        <thead>
+            <tr class="success">
+                <th>流程名称</th>
+                <th>流程类型</th>
+                <th>备注</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <foreach name='flow_list' key="key" item='val'>
+            <tr >
+                <td>{$val.flow_name}</td>
+                <td>{$val.cat_id}</td>
+                <td>{$val.flow_desc}</td>
+                <td><if condition="$val['status'] eq 1">禁用<else />正常</if></td>
+                <td>
+                    <a href="{:U('Flowdesign/index',array('flow_id'=>$val['id']))}" target='_blank' data-toggle="tooltip" data-placement="top" title="{$Think.lang.FLOW_DESIDN}">
+                        <i class="icon-random"></i>
+                    </a>
+                    <a href="{:U('updateFlow',array('flow_id'=>$val['id']))}"  data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+                        <i class="icon-edit"></i>
+                    </a>
+                    <if condition="$val['status'] eq 0">
+                    <a href="{:U('Deny',array('flow_id'=>$val['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.FLOW_DENY}">
+                        <i class="icon-trash-o"></i>
+                    </a>
+                        <else />
+                        <a href="{:U('UnDeny',array('flow_id'=>$val['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.FLOW_NO_DENY}">
+                        <i class="icon-chain-broken"></i>
+                    </a>
+                        </if>
+                </td>
+            </tr>
+            </foreach>
+        </thead>
+    </table>
+</div>

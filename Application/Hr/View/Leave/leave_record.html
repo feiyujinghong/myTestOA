@@ -1,0 +1,61 @@
+
+<legend>
+    <p class="text-primary">
+        {$Think.lang.LEAVE_RD}<a class="btn btn-primary pull-right" href="{:U('Leave/leave_apply')}">{$Think.lang.LEAVE_APP}</a>
+    </p>
+</legend>
+
+<table class="table">
+    <thead>
+        <tr class="success">
+            <th>{$Think.lang.LEAVE_TITLE}</th>
+            <th>{$Think.lang.LEAVE_PER}</th>
+            <th>{$Think.lang.LEAVE_TYPE}</th>
+            <th>{$Think.lang.LEAVE_S_TIME}</th>
+            <th>{$Think.lang.LEAVE_F_TIME}</th>
+            <th>{$Think.lang.LEAVE_WHY}</th>
+            <th>{$Think.lang.REMARKS}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <notempty name="leave_info">
+        <volist name="leave_info" id="vo">
+            <tr class="line_g hover_bg">
+                <td>{$vo['title']}</td>
+                <td><php>echo get_username($vo['user_id']);</php></td>
+                <td>{$vo['leave_type_ch']}</td>
+                <td>{$vo['leave_start_time']|date="Y-m-d",###}</td>
+                <td>{$vo['leave_finish_time']|date="Y-m-d",###}</td>
+                <td>
+                    <a  style="width:180px;cursor: pointer;" title="详细信息"  
+                        data-container="body" data-toggle="popover" data-placement="top" 
+                        data-content="{$vo['leave_explain']}">
+                        {:mb_strimwidth($vo['leave_explain'],0,20,"...","utf-8")}
+                    </a>
+
+                </td>
+                <td>
+                    <a style="width:180px;cursor: pointer;" title="备注信息"  
+                       data-container="body" data-toggle="popover" data-placement="top" 
+                       data-content="{$vo['remarks']}">
+                        {:mb_strimwidth($vo['remarks'],0,20,"...","utf-8")}
+                    </a>
+                </td>
+                <td>
+                    <a href="{:U('leave/show_leave_info?id='.$vo['id'])}" class="authorize">{$Think.lang.VIEW}</a>
+                    <!--<a href="{:U('leave/up_date_recruitment?id='.$vo['id'])}" class="authorize">编辑</a>-->
+
+                </td>
+            </tr>
+        </volist>
+    </notempty>
+</tbody>
+
+</table>
+
+{$_page}
+</div>
+</body>
+</html>  

@@ -1,0 +1,92 @@
+<script type="text/javascript">
+    window.UEDITOR_HOME_URL = "__PUBLIC__/Ueditor/"; //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+</script>
+<load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+
+<div id="tabs-308576" class="tabbable">
+
+    <form action="" method="post" id="form" role="form" class="form-horizontal">
+        <div id="contact" class="tab-pane">
+            <div class="container">
+                <legend>
+                    <p class="text-primary">
+                        	{$Think.lang.HELP_INFO}
+                    </p>
+                </legend>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">{$Think.lang.HELP_USER}</label>
+                        <div class="col-sm-3">
+                            <input type="hidden" class="form-control" name="help_user_id" id="help_user_id">
+                            <input type="text" class="form-control" name="help_user_name" id="help_user_name" readonly="readonly">
+                        </div>
+                        <a href='#' class='btn btn-default' data-toggle="modal" data-clear="1" data-target="#userModal" data-more="0" data-function="default_add_user" data-input-info="help_user_name@user_name#help_user_id@user_id"><i class='icon-plus'></i> 选择</a>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">{$Think.lang.HELP_TITLE}</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="title" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.HELP_Q_CONTENT}</label>
+                        <div class="col-sm-3">
+                            <script type="text/plain" id="content" name="content"></script>
+                            <script type="text/javascript">
+                                        $(function() {
+                                        var editor;
+                                                //具体参数配置在  editor_config.js  中
+                                                var options = {
+                                                initialFrameWidth: 550, //初化宽度
+                                                        initialFrameHeight: 200, //初化高度
+                                                        focus: false, //初始化时，是否让编辑器获得焦点true或false
+                                                        maximumWords: 5000, //允许的最大字符数
+                                                };
+                                                editor = new UE.ui.Editor(options);
+                                                editor.render("content");
+                                                editor.ready(function() {
+                                                editor.setContent(); //加载数据库Action.class.PHP传过来的值
+                                                });
+                                        });                            </script>
+                        </div>
+
+
+
+
+                    </div>
+                    <center>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-3">
+                                <input type="hidden" name="cli_id" id="base_id" value="{$id}"/>
+                                <button class="btn btn-danger" id="" type="button" onclick="submit_form()"><i class="icon-upload icon-white"></i>{$Think.lang.SUBMIT}</button>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+function submit_form(){
+    if($("#help_user_id").val() == ""){
+        alert("请选择求助人");
+        return false;
+    }
+     if($("#title").val() == ""){
+        alert("请填写标题");
+        return false;
+    }
+     if($("[name='content']").val() == ""){
+        alert("请填写问题描述");
+        return false;
+    }
+    $("#form").submit();
+}
+</script>

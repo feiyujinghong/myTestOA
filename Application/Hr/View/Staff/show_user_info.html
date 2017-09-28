@@ -1,0 +1,204 @@
+<style>
+    .success{
+        width:150px;
+    }
+</style>
+<div>
+    <table class="table table-bordered">
+	   <legend>
+        	<p class="text-primary">
+        	{$Think.lang.STAFF_BASE_MES}<a href="{:U('staff_list')}" class='btn btn-danger icon-backward pull-right'>{$Think.lang.RETURN}</a>
+        	</p>
+        </legend>
+	   
+	   <tbody>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_NAME}</td>
+	         <td>{$staff_info.name}</td>
+	         <td class="success">{$Think.lang.SEX}</td>
+	         <td>{$staff_info.sex_ch}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_MINGZ}</td>
+	         <td>{$staff_info.nation}</td>
+	         <td class="success">{$Think.lang.STAFF_MANA}</td>
+	         <td>{$staff_info.marriage_ch}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_IDNUM}</td>
+	         <td>{$staff_info.card_id}</td>
+	         <td class="success">{$Think.lang.STAFF_PHONE}</td>
+	         <td>{$staff_info.phone}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_TELE}</td>
+	         <td>{$staff_info.tele}</td>
+	         <td class="success">{$Think.lang.STAFF_EMAIL}</td>
+	         <td>{$staff_info.email}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_ACCO}</td>
+	         <td colspan="3">{$staff_info.household_address}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_NOWPLACE}</td>
+	         <td colspan="3">{$staff_info.now_address}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_QQ}</td>
+	         <td>{$staff_info.qq}</td>
+	         <td class="success">{$Think.lang.STAFF_STUD}</td>
+	         <td>{$staff_info.college}</td>
+	      </tr>
+	      
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_ZZYY}</td>
+	         <td>{$staff_info.discipline}</td>
+	         <td class="success">{$Think.lang.STAFF_XL}</td>
+	         <td>{$staff_info.education_ch}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	
+	<table class="table table-bordered">
+	   <legend>
+        	<p class="text-primary">
+        	{$Think.lang.STAFF_P_MES}
+        	</p>
+        </legend>
+	   
+	   <tbody>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_NAME}</td>
+	         <td>{$staff_info.spouse_name}</td>
+	         <td class="success">{$Think.lang.STAFF_P_TELE}</td>
+	         <td>{$staff_info.spouse_phone}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_UNIT}</td>
+	         <td>{$staff_info.spouse_work_name}</td>
+	         <td class="success">{$Think.lang.STAFF_P_ZW}</td>
+	         <td>{$staff_info.spouse_position}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_UNITPLACE}</td>
+	         <td colspan="3">{$staff_info.spouse_work_address}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	<table class="table table-bordered">
+	   <legend>
+        	<p class="text-primary">
+        	{$Think.lang.STAFF_LINKMES}(1)
+        	</p>
+        </legend>
+	   
+	   <tbody>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_NAME}</td>
+	         <td>{$staff_info['link_info'][0]['link_name']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_GX}</td>
+	         <td>{$staff_info['link_info'][0]['link_gx']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_TELE}</td>
+	         <td>{$staff_info['link_info'][0]['link_tele']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_UNIT}</td>
+	         <td>{$staff_info['link_info'][0]['link_work']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_ZW}</td>
+	         <td>{$staff_info['link_info'][0]['link_position']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_PLACE}</td>
+	         <td>{$staff_info['link_info'][0]['link_address']}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	
+	<table class="table table-bordered">
+	   <legend>
+        	<p class="text-primary">
+        	{$Think.lang.STAFF_LINKMES}(2)
+        	</p>
+        </legend>
+	   
+	   <tbody>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_NAME}</td>
+	         <td>{$staff_info['link_info'][1]['link_name']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_GX}</td>
+	         <td>{$staff_info['link_info'][1]['link_gx']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_TELE}</td>
+	         <td>{$staff_info['link_info'][1]['link_tele']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_UNIT}</td>
+	         <td>{$staff_info['link_info'][1]['link_work']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_P_ZW}</td>
+	         <td>{$staff_info['link_info'][1]['link_position']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_PLACE}</td>
+	         <td>{$staff_info['link_info'][1]['link_address']}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	<table class="table table-bordered">
+	   <legend>
+        	<p class="text-primary">
+        	{$Think.lang.STAFF_W_MES}
+        	</p>
+        </legend>
+	   
+	   <tbody>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_W_BM}</td>
+	         <td>{$staff_info['depat_str']}</td>
+	         <td class="success">{$Think.lang.STAFF_P_ZW}</td>
+	         <td>{$staff_info['role_name']}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_W_EDBAK}</td>
+	         <td colspan="3">{$staff_info.work_black}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.STAFF_W_NOWBAK}</td>
+	         <td colspan="3">{$staff_info.work_now}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	
+   <div class="panel-group" id="accordion">
+	   <div class="panel panel-default">
+	      <div class="panel-heading">
+	         <h4 class="panel-title">
+	            <a data-toggle="collapse" data-parent="#accordion" 
+	               href="#collapseOne">
+	               	 <legend>
+			        	<p class="text-primary">
+			        	 {$Think.lang.STAFF_FILE_MES}  < {$Think.lang.VIEW} >
+			        	</p>
+			        </legend>
+	            </a>
+	         </h4>
+	      </div>
+	      <div id="collapseOne" class="panel-collapse collapse in">
+	         <div class="panel-body">
+	            <table class="table table-bordered">
+				   <tbody>
+					   <volist name="file_info" id="vo">
+					       <tr>
+					       		<td><a href="__ROOT__/{$vo.path}" target="_bank">{$vo.name}</a></td>
+					       </tr>
+					   </volist>
+				   </tbody>
+				</table>
+	         </div>
+	      </div>
+	   </div>
+   </div>
+   <script type="text/javascript">
+	   $(function () { $('#collapseOne').collapse('hide')});
+   </script> 
+	
+</div>

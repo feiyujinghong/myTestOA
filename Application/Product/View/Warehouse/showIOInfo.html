@@ -1,0 +1,58 @@
+<button onclick="print_eara()">{$Think.lang.print}</button>
+<button onclick="window.history.back()">{$Think.lang.return}</button>
+<script src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script src="__PUBLIC__/js/jquery.printArea.js"></script>
+<script>
+    function print_eara(){
+        $(".main").printArea();
+    }
+</script>
+<div class='main' style='background-color: white;margin-top:100px;'>
+    <style>
+        .form-group{
+            line-height: 50px;
+            font-size:20px;
+            padding-left:50px;
+        }
+        .form-group .tab{
+            display:inline-block;
+            width:100px;
+            text-align: right;
+        }
+    </style>
+<center>
+   <h3> {$data.name}【产品】{$data.product_name}出入库日志详情</h3>
+</center>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.product_name}:</span>
+        <span>{$data.product_name}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.product_no}:</span>
+        <span>{$data.product_no}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.product_format}:</span>
+        <span>{$data.product_format}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'> {$Think.lang.type}:</span>
+        <span>{$type[$data[type]]}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.option_user}:</span>
+        <span>{$data.user_id|get_username=###}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.number}:</span>
+        <span>{$data.num}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.warehouse_num_inner}{$Think.lang.time}:</span>
+        <span>{$data.add_time|date="Y-m-d H:i:s",###}</span>
+    </div>
+    <div class='form-group'>
+        <span class='tab'>{$Think.lang.desc}:</span>
+        <span>{$data.desc}</span>
+    </div>
+    </div>

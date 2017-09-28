@@ -1,0 +1,213 @@
+<script type="text/javascript">
+    window.UEDITOR_HOME_URL = "__PUBLIC__/Ueditor/"; //UEDITOR_HOME_URL、config、all这三个顺序不能改变(绝对路径)
+</script>
+<load href="__PUBLIC__/Ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/Ueditor/ueditor.all.min.js" />
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/upload/uploadify.css">
+<script type="text/javascript" src="/Public/upload/jquery.uploadify-3.1.min.js"></script>
+<div id="tabs-308576" class="tabbable">
+	
+						<form action="{:U('Cli/insertFollow')}" method="post" id="form" role="form" class="form-horizontal" enctype="multipart/form-data">
+						<div id="contact" class="tab-pane">
+						<div class="container">
+								<legend>
+						        	<p class="text-primary">
+							            	{$Think.lang.FOLLOW_INFO}
+							        </p>
+						        	<div class="progress progress-striped">
+							            <div class="progress-bar progress-bar-success" role="progressbar" 
+							                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 	
+							                 style="width: 100%;">
+							              	 {$Think.lang.CLI_INFO}————{$Think.lang.LINK_INFO}————{$Think.lang.INFORMATION_INFO}————{$Think.lang.FOLLOW_INFO}
+							            </div>
+							        </div>
+						        </legend>
+						        <div class="form-horizontal">
+							   		<div class="form-group">
+							            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.GOUTONG_TIME}</label>
+										<div class="col-sm-3">
+							            	<input type="text" class="form-control" name="follow_time" value="{$contact['contact_time']}" onfocus="WdatePicker({skin: 'twoer'});" readonly="readonly"/>
+										</div>
+										
+									</div>
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.FOLLOW_TYPE}</label>
+										<div class="col-sm-3">
+							            	<select class="form-control"  name="follow_type">
+							                    {$follow_type}
+							                </select>
+							            </div>
+									</div>
+									
+									<div class="form-group">
+							            <!--
+							            <label for="inputEmail3" class="col-sm-2 control-label">沟通内容</label>
+										<div class="col-sm-3">
+							            	<textarea class="comments" rows="5" cols="120" name="follow_content"></textarea>
+										</div>
+										 -->
+										
+										<label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.FOLLOW_CONTENT}</label>
+									        <div class="col-sm-3">
+									            <script type="text/plain" id="follow_content" name="follow_content"></script>
+									            <script type="text/javascript">
+									                        $(function(){
+									                        var editor;
+									                                //具体参数配置在  editor_config.js  中
+									                                var options = {
+									                                initialFrameWidth:750, //初化宽度
+									                                        initialFrameHeight:300, //初化高度
+									                                        focus:false, //初始化时，是否让编辑器获得焦点true或false
+									                                        maximumWords:5000, //允许的最大字符数
+									                                };
+									                                editor = new UE.ui.Editor(options);
+									                                editor.render("follow_content");
+									                                editor.ready(function(){
+									                                editor.setContent('{$followInfo.follow_content|htmlspecialchars_decode=###}'); //加载数据库Action.class.PHP传过来的值
+									                                });
+									                        });
+									            </script>
+											</div>
+									</div>
+									
+									<div class="form-group">
+							            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.FOLLOW_FILE}</label>
+										<div class="col-sm-3">
+							            	{$up_load}
+										</div>
+									</div>
+									
+							   	 	<div class="form-group">
+								        <label  class="col-sm-2 control-label"></label>
+								        <div id="show_upload">
+								            <volist name="cli_info" id="vo">
+								                <if condition="$vo['is_show'] eq 1">
+								                    <div id="{$vo.id}" style='width:110px;float:left;'>
+								                        <img data-toggle="modal" data-target="#myModal" onclick="get_modal($(this))"  title="{$Think.lang.SHOW_BIG_PIC}" style='width:100px;height100px;' src="__ROOT__/{$vo['url']|get_m_pic}"/>
+								                        <br><a data-toggle="modal"  title="{$Think.lang.SHOW_BIG_PIC}"  src="__ROOT__/{$vo['url']|get_m_pic}"  data-target="#myModal" onclick="get_modal($(this))">
+								                            {$vo['name']}
+								                            <a href="javascript:void(0)" onclick="dele_attach({$vo.id});"><i class="icon-trash-o"></i></a>
+								                        </a>
+								                        <input type="hidden" value="__ROOT__/{$vo['url']}"/>
+								                    </div>
+								                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								                    <else/>
+								                    <div id="{$vo.id}" style="width:110px;float:left;">
+								                        <img style="width:100px;height100px;" src="__ROOT__/{$vo['url']|showPic}"/>
+								                        <br><a title='点击下载'  href="__ROOT__/{$vo['url']}">{$vo['name']}</a>
+								                        <a href="javascript:void(0)" onclick="dele_attach({$vo.id});"><i class="icon-trash-o"></i></a>
+								                    </div>
+								                </if>
+								            </volist>
+								
+								        </div>
+								    </div>
+							   	 	
+							   	 	
+							   	 	<center>
+							   	 	
+							   		<div class="form-group">
+							   		<div class="col-sm-offset-2 col-sm-3"></div>
+							            <div class="col-sm-offset-2 col-sm-3">
+							            	<input type="hidden" name="base_id" id="base_id" value="{$base_id}"/>
+							            	<button class="btn" type="button" onclick="rBaseCli();"><i class="icon-refresh"></i>{$Think.lang.BLACK_SUBMIT}</button>
+							                <button class="btn btn-large" id="submit-form" type="submit"><i class="icon-upload icon-white"></i>{$Think.lang.SURE}</button>
+							            </div>
+							        </div>
+							        </center>
+							   
+							   </div>
+							   
+		    			</div>
+			</div>
+	    			</form>
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">{$Think.lang.PRODUCT_O_PIC}</a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <img alt="" id="mymodal_id" src="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
+
+
+
+<script>
+
+function get_modal(obj) {
+	var url = obj.attr('src');
+    $("#mymodal_id").attr("src", url);
+    var o_url = obj.parent().children("input").val();
+    $("#mymodal_url").attr("href", o_url);
+}
+
+//删除图片
+function dele_attach(id) {
+    $.ajax({
+    type: "post",
+            url: "/index.php/Upload/Upload/dele_attach",
+            data: {id:id},
+            dataType: "html",
+            success: function(msg){
+            		alert(msg);
+                    $("#" + id + "").remove(); ;
+                    //window.location = window.location;
+                    return;
+            }
+    });
+}
+
+function rBaseCli() {
+	window.location.href='{:U("Cli/cliInfo?base_id=$base_id&op_type=1&type=infomation&tpl=informationCli")}';
+	return false;
+	
+}
+//表单验证
+$(document).ready(function() {
+    $('#form').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	follow_time: {
+                validators: {
+                    notEmpty: {
+                        message: '沟通时间不能为空'
+                    },
+                }
+            },
+            
+            
+            
+        }
+    });
+});
+
+
+
+</script>

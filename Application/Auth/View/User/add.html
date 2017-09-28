@@ -1,0 +1,215 @@
+
+<script type="text/javascript">
+    function insertDeparHtml() {
+        var in_html = $("#tr_line").clone(true);
+        in_html.insertBefore("#in_line");
+    }
+
+
+</script>
+<div class="container">
+    <form action="" method="post" role="form" id="form" class="form-horizontal" enctype="multipart/form-data">
+        <legend>
+            <p class="text-primary">
+                <if condition='empty($id)'>{$Think.lang.USER_USER_ADD}<else />{$Think.lang.USER_USER_UPDATE}</if>
+            </p>
+        </legend>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.USER_USER_NAME}</label>
+            <div class="col-sm-3">
+                <input type="text" name="username" value="{$data.username}"  class="form-control" placeholder="{$Think.lang.USER_USER_TS}">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.USER_PWD}</label>
+
+            <div class="col-sm-3">
+                <input type="password" name="password" value="" class="form-control" placeholder="{$Think.lang.USER_PWD_TS}" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.USER_CHECK_PWD}</label>
+            <div class="col-sm-3">
+                <input type="password" name="repassword" value=""  class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-3">
+                <input type="text" name="name" value="{$data.name}"  class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-3">
+                <label class="radio-inline">
+                    <input type="radio" name="sex" id="inlineRadio1" value="0" <if condition='$data["sex"] eq 0'>checked</if> > 男
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="sex" id="inlineRadio2" value="1"  <if condition='$data["sex"] eq 1'>checked</if> > 女
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">在职状态</label>
+            <div class="col-sm-3">
+                <label class="radio-inline">
+                  <input type="radio" name="status" id="inlineRadio1" value="1"  <if condition='($data["sex"] eq 1) OR ($data["sex"] eq 0)'>checked</if> > 在职
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="status" id="inlineRadio2" value="2"  <if condition='$data["sex"] eq 2'>checked</if> > 离职
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">移动电话</label>
+            <div class="col-sm-3">
+                <input type="text" name="mobile" value="{$data.mobile}"  class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.EMAIL}</label>
+            <div class="col-sm-3">
+                <input type="text" name="email" value="{$data.email}"  class="form-control">
+            </div>
+        </div>
+        <!--
+        <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-3">
+                        <input class="btn btn-warning" onclick="insertDeparHtml()" value="{$Think.lang.ADD}"/>
+                </div>
+        </div>
+        -->
+        <div class="form-group" id="tr_line">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.USER_DEPARTMENT}</label>
+            <div class="col-sm-3" id="tr_line">
+                <select class="form-control"  name="department[]">
+                    <volist name="department_tree" id="department_tree">
+                        <option value="{$department_tree.id}" <if condition="$dept_id eq $department_tree['id']">selected</if>>{$department_tree.title_show}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+
+        <div id="in_line"></div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.USER_ROLE}</label>
+            <div class="col-sm-3">
+                <select class="form-control"  name="role_id">
+                    <volist name="role" id="role">
+                        <option value="{$role.id}" <if condition="$data['role_id'] eq $role['id']">selected</if>>{$role.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">用户头像</label>
+            <div class="col-sm-3">
+                <input type="file" name="file"/>
+            </div>
+        </div>
+        <if condition='!empty($id)'>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">当前头像</label>
+            <div class="col-sm-3">
+                <img src='__ROOT__/{$data["top_pic"]}' width='150'>
+            </div>
+        </div>
+            </if>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <button class="btn btn-primary" id="submit-form" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+                <a class="btn btn-warning" href="javascript:window.history.back()">{$Think.lang.RETURN}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 30,
+                            message: '允许长度为2-30'
+                        },
+                    }
+                },
+                <if condition="empty($id)">
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '允许长度为6-30'
+                        },
+                    }
+                },
+                repassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '确认密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '允许长度为6-30'
+                        },
+                    }
+                },
+                </if>
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '姓名不能为空'
+                        },
+                    }
+                },
+                mobile: {
+                    validators: {
+                        notEmpty: {
+                            message: '移动电话不能为空'
+                        },
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: '邮箱不能为空'
+                        },
+                    }
+                },
+            }
+        });
+    });
+</script>
+
+</div>
+</body>
+</html>

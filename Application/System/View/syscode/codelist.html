@@ -1,0 +1,46 @@
+ <legend>
+        <p class="text-primary">
+            {$name}
+        </p>
+    </legend>
+<div class="btn-toolbar">
+    <a href="{:U('addSon',array('id'=>$id,'name'=>$name))}" type="button" class="btn btn-primary">{$Think.lang.ADD}</a>
+    <a href="{:U('index')}" type="button" class="btn btn-warning">{$Think.lang.RETURN}</a>
+</div>
+<table class='table'>
+        <thead>
+            <tr class="success">
+                <th>#</th>
+                <th>系统代码</th>
+                <th>名称</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <if condition='!empty($code_list)'>
+            <foreach name='code_list' key="key" item='val'>
+            <tr >
+                <td>{$val.id}</td>
+                <td>{$val.code}</td>
+                <td>{$val.name}</td>
+                <td><if condition="$val['status'] eq 1">禁用<else />正常</if></td>
+                <td>
+                    <a href="{:U('updateSon',array('id'=>$val['id']))}"  data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+                        <i class="icon-edit"></i>
+                    </a>
+                    <if condition="$val['status'] eq 0">
+                        <a href="{:U('Deny',array('id'=>$val['id'],'name'=>$name,'status'=>1))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.DENY}">
+                        <i class="icon-trash"></i>
+                    </a>
+                        <else />
+                        <a href="{:U('Deny',array('id'=>$val['id'],'name'=>$name,'status'=>0))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.NO_DENY}">
+                        <i class="icon-ok"></i>
+                    </a>
+                        </if>
+                </td>
+            </tr>
+            </foreach>
+                <else />
+                <include file='Auth@Public/empty_data' />
+        </if>
+    </table>

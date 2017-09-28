@@ -1,0 +1,36 @@
+<legend>
+        <p class="text-primary">
+            {$Think.lang.product_io_log}<a class="btn btn-danger icon-stop pull-right" onclick="window.close()"> {$Think.lang.close}</a>
+        </p>
+    </legend>
+<table class="table table-bordered">
+                    <thead>
+                        <tr class="success">
+                            <th>{$Think.lang.product_name}</th>
+                            <th>{$Think.lang.product_format}</th>
+                            <th>{$Think.lang.number}</th>
+                            <th>{$Think.lang.time}</th>
+                            <th>{$Think.lang.option_user}</th>
+                            <th>{$Think.lang.desc}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id='product_volist'>
+                    <if condition="!empty($data)">
+                        <volist name="data" id="vo">
+                            <tr class="line_g hover_bg">
+                                <td>{$vo['product_name']}</td>
+                                <td>{$vo['product_format']}</td>
+                                <td>{$vo['num']}</td>
+                                <td>{$vo['add_time']|date="Y-m-d H:i:s",###}</td>
+                                <td>{$vo["user_id"]|get_username=###}</td>
+                                <td><a href="{:U('showIOInfo',array('id'=>$vo['id']))}">{$vo["desc"]}</a></td>
+                            </tr>
+                        </volist>
+                        <else />
+                        <include file="Auth@Public/empty_data" />
+                    </if>
+                    </tbody>
+
+                </table>
+                {$_page}

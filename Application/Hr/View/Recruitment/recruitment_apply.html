@@ -1,0 +1,149 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>	
+    <form action="{:U('Recruitment/recruitment_apply?dosubmit=1')}" method="post" role="form" id='form' class="form-horizontal">
+        <legend>
+            <p class="text-primary">
+                部门用人需求申请表
+            </p>
+        </legend>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">用人部门</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="department" value="{$staff['title']}" />
+            </div>
+            <label for="inputEmail3" class="col-sm-2 control-label">申请人</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="" value="{$staff_n_p}" readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">申请岗位</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="position" value=""/>
+            </div>
+
+            <label for="inputEmail3" class="col-sm-2 control-label">需求人数</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control"  name="need_count" value=""/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">紧急程度</label>
+            <div class="col-sm-6">
+                <volist name="c_s['acute']" id="vo">
+                    <input type="radio" name="acute" value="{$key}">&nbsp;{$vo} &nbsp;&nbsp;&nbsp;
+                </volist>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">申请原因</label>
+            <div class="col-sm-3">
+                <select class="form-control"  name="recruitment_need">					
+                    <option value="">请选择</option>
+                    <volist name="c_s['recruitment_need']" id="vo">
+                        <option value="{$key}">{$vo}</option>
+                    </volist>
+                </select>
+            </div>
+            <label for="inputEmail3" class="col-sm-2 control-label">到岗时间</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" name="entry_time" value="{$staff_info['entry_time']}" onfocus="WdatePicker({skin: 'twoer'});"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">职能概述</label>
+            <div class="col-sm-3">
+                <textarea class="comments" rows="5" cols="120" name="job_info">{$staff_info['work_now']}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">岗位要求</label>
+            <div class="col-sm-3">
+                <textarea class="comments" rows="5" cols="120" name="job_need">{$staff_info['work_now']}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-3">
+                <button class="btn btn-warning" type="reset">撤销</button>
+                <button class="btn btn-primary" id="submit-form" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+            </div>
+        </div>
+        
+        <script>
+    //表单验证
+    $(document).ready(function() {
+        $('#form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                department: {
+                    validators: {
+                        notEmpty: {
+                            message: '申请部门不能为空'
+                        },
+                    }
+                },
+                position: {
+                    validators: {
+                        notEmpty: {
+                            message: '申请岗位不能为空'
+                        },
+                    }
+                },
+                need_count: {
+                    validators: {
+                        notEmpty: {
+                            message: '需求人数不能为空'
+                        },
+                        regexp:{
+                            regexp:/^[0-9]+$/,
+                            message:'必须为数字类型',
+                        }
+                    }
+                },
+                recruitment_need: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择申请原因'
+                        },
+                    }
+                },
+                entry_time: {
+                    validators: {
+                        notEmpty: {
+                            message: '到岗时间不能为空'
+                        },
+                    }
+                },
+                job_info: {
+                    validators: {
+                        notEmpty: {
+                            message: '职能概述不能为空'
+                        },
+                    }
+                },
+                job_need: {
+                    validators: {
+                        notEmpty: {
+                            message: '岗位需求不能为空'
+                        },
+                    }
+                },
+            },
+            onSuccess:function(e){
+                if(!validatorFlowForm()){
+                    window.event.cancelBubble = true;//停止冒泡IE
+                    e.preventDefault();//停止冒泡firfox
+                }
+            }
+        });
+    });
+    </script>

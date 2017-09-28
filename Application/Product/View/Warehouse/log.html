@@ -1,0 +1,67 @@
+<form class="form-inline"  method="get" style="margin-top:20px;">
+    <div class="form-group">
+        <label >产品名称</label>
+        <input type="text" name="product_name" value="{$_GET['product_name']}" class="form-control" id="exampleInputName2" placeholder="输入产品名称">
+
+        <label >产品编号</label>
+        <input type="text" name="product_no" value="{$_GET['product_no']}" class="form-control" id="exampleInputEmail2" placeholder="输入产品编号">
+
+        <label >是否自产</label>
+
+        <select class="form-control"  name="is_self">
+            <option value="">请选择</option>
+            <option value="1" <if condition="$_GET['is_self'] eq 1">selected="selected"</if> >是</option>
+            <option value="2" <if condition="$_GET['is_self'] eq 2">selected="selected"</if> >否</option>
+        </select>
+
+        <button type="submit" class="btn btn-default">搜索<tton>
+                </div>
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr class="success">
+                            <th>产品名称</th>
+                            <th>产品编号</th>
+                            <th>计量单位</th>
+                            <th>规格型号</th>
+                            <th>类型</th>
+                            <th>数量</th>
+                            <th>操作人</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <if condition="!empty($numData)">
+                        <volist name="numData" id="vo">
+                            <tr class="line_g hover_bg">
+                                <td>{$vo['produec_type_str']}</td>
+                                <td>{$vo['product_name']}</td>
+                                <td>{$vo['product_no']}</td>
+                                <td>{$vo['product_unit_ch']}</td>
+                                <td>{$vo['product_price']}</td>
+                                <td>{$vo['num']}</td>
+                                <td>
+                            <if condition="$vo.is_self eq 1">是
+                                <else/>否
+                            </if>
+                            </td>
+                            <td>
+                                <a href="{:U('Product/show_product_info?id='.$vo['id'])}" class="authorize">查看</a>
+                            </td>
+                            </tr>
+                        </volist>
+                        <else />
+                        <include file="Auth@Public/empty_data" />
+                    </if>
+                    </tbody>
+
+                </table>
+
+                {$_page}
+
+                <script>$(function()
+                    {
+                        $("[data-toggle='popover']").popover();
+                    });
+                </script>

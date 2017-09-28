@@ -1,0 +1,35 @@
+
+	<div class="container">
+	<form action="{:U('Manager/write_group')}" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal">
+        
+        <legend>
+	    	<p class="text-primary">
+	    	{$auth_group['id']?'编辑':'新增'}用户组
+	    	</p>
+	    </legend>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MANAGER_GROUP_NAME}</label>
+            <div class="col-sm-3">
+                <input id="auth-title" type="text" name="title" value="{$auth_group.title}"  class="form-control"/>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MANAGER_GROUP_REMARKS}</label>
+            <div class="col-sm-3">
+                <label><textarea class="form-control" rows="3" cols="50" cid="auth-description" type="text" name="description">{$auth_group.description}</textarea></label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+    		<div class="col-sm-offset-2 col-sm-3">
+	            <input type="hidden" name="id" value="{$auth_group.id}" />
+	            <button type="submit" class="btn btn-primary">{$Think.lang.SUBMIT}</button>
+	            <a class="btn btn-warning" href="{:U('auth_list')}">{$Think.lang.RETURN}</a>
+        	</div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

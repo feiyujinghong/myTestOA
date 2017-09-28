@@ -1,0 +1,95 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<legend>
+        <p class="text-primary">
+            {$title}
+        </p>
+    </legend>
+
+<form id='form' method="post" action='{:U("ioProduct",array("type"=>$type))}'>
+<table class='table table-bordered'>
+    <thead>
+        <tr class='success'>
+            <th>产品信息</th>
+            <th>库存数量</th>
+            <th>出入库数量</th>
+            <th>批号</th>
+            <th>生产日期</th>
+            <th>有效日期</th>
+            <th>仓库识别码</th>
+            <th>备注</th>
+        </tr>
+    </thead>
+    <foreach name='list_data' item='val' key='id'>
+        <tr>
+            <td>{$val.name}</td>
+            <td>{$val.count}</td>
+            <td>
+                <input type='hidden' name='ids[]' value='{$id}'>
+                <input type='hidden' name='warehouse_id[]' value='{$val.warehouse_id}'>
+                <input type='hidden' name='product_id[]' value='{$val.product_id}'>
+                <input type='text' size='10' class='count' name='num[]' max='{$val.count}'>
+            </td>
+            <td>
+                <input type='text' size='10' class='batch_number' name='batch_number[]' >
+            </td>
+            <td>
+                <input type='text' size='10' class='start_time' name='start_time[]' max='{$val.start_time}' onfocus="WdatePicker({skin: 'twoer'})">
+            </td>
+            <td>
+                <input type='text' size='10' class='end_time' name='end_time[]' max='{$val.end_time}' onfocus="WdatePicker({skin: 'twoer'})">
+            </td>
+            <td>
+                <input type='text' size='10' class='batch_number' name='warehouse_num[]' >
+            </td>
+            <td>
+                <input type='text' size='10' class='batch_number' name='remark[]' >
+            </td>
+        </tr>
+    </foreach>
+</table>
+    <a class='btn btn-warning icon-backward pull-right' onclick='window.history.back()'> 返回</a>
+<a class='btn btn-primary icon-plus pull-right' onclick='sure()'> 确定</a>
+
+<script>
+    function sure(){
+        var is_true = 0;
+        $(".count").each(function(){
+            var num = $(this).val();
+            var max = $(this).attr("max");
+            //声明正则表达式
+            var re = /^[1-9]\d*$/;
+            //验证
+            if (!re.test(num))
+            {
+                alert("请输入正整数");
+                $(this).focus();
+                is_true = 1;
+                return false;
+            }
+        });
+            $(".batch_number").each(function(){
+                if($(this).val() == ""){
+                    alert("批号不能为空");
+                    is_true=1;
+                    return false;
+                }
+            });
+            $(".start_time").each(function(){
+                if($(this).val() == ""){
+                    alert("生产日期不能为空");
+                    is_true=1;
+                    return false;
+                }
+            });
+            $(".end_time").each(function(){
+                if($(this).val() == ""){
+                    alert("有效日期不能为空");
+                    is_true=1;
+                    return false;
+                }
+            });
+        if(is_true == 0){
+            $("#form").submit();
+        }
+    }
+</script>

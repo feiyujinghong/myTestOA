@@ -1,0 +1,57 @@
+<form action="" method="post" role="form" id="form" class="form-horizontal" >
+    <legend>
+        <p class="text-primary">
+            {$Think.lang.OP_GROUP}
+        </p>
+    </legend>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.GROUNP_NAME}</label>
+        <div class="col-sm-4">
+            <input type="hidden" name="id" value="{$id}">
+            <input type='text' name='name' id='name'  class="form-control" value='{$name}'>
+        </div>
+    </div>
+<div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.GROUNP_LIDER}</label>
+        <div class="col-sm-4">
+            <input type='hidden' name='leader_user_id' id='leader_user_id' readonly="readonly" class="form-control" value='{$leader_id}'>
+            <input type="text" name="leader_user_name" id="leader_user_name" readonly="readonly"  class="form-control" value="{$leader_name}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{$Think.lang.GROUP_USER}</label>
+        <div class="col-sm-4">
+            <input type='hidden' name='user_id' id='user_id' readonly="readonly" class="form-control" value='{$user_ids}'>
+            <textarea name='user_name' rows="4" cols="70" id='user_name' readonly='readonly' class="form-control">{$usernames}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label"></label>
+        <div class="col-sm-3">
+             <a class="btn btn-warning" data-toggle="modal" data-clear = 1 data-target="#userModal" data-more=0 data-function="default_add_user" data-input-info="leader_user_name@user_name#leader_user_id@user_id">
+                    {$Think.lang.SELECT_GROUP_TEAM}
+                </a>
+            <a class="btn btn-danger" data-toggle="modal" data-clear = 1 data-target="#userModal" data-more=1 data-function="default_add_user" data-input-info="user_name@user_name#user_id@user_id">
+                    {$Think.lang.SELECT_GROUP_USER}
+                </a>
+            <input type='button' value="{$Think.lang.SUBMIT}" class='btn btn-primary'   onclick='submir_form()'>
+        </div>
+    </div>
+</form>
+<script>
+    function submir_form(){
+        if($("#name").val() == ""){
+            alert("请填写组名称");
+            return false;
+        }
+        if($("#leader_user_id").val() == ""){
+            alert("请选择组长");
+            return false;
+        }
+        if($("#user_id").val() == ""){
+            alert("请选择组员");
+            return false;
+        }
+        $("#form").submit();
+    }
+</script>

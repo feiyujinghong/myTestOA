@@ -1,0 +1,212 @@
+
+<style>
+    .desktop{
+        width:45%;
+        float: left;
+        margin-right:20px;
+    }
+</style>
+<div class="panel panel-success desktop">
+    <!-- Default panel contents -->
+    <div class="panel-heading">本月员工生日列表
+        <a href="{:U('Hr/Staff/staff_list_bir?bir=bir')}" target='content_frame' style="float: right;">全部</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>日期类型</th>
+                <th>日期</th>
+                <th>电话</th>
+            </tr>
+        </thead>
+        <notempty name="staff_info">
+            <tbody>
+            <volist name="staff_info" id="vo">
+                <tr>
+                    <td>{$vo['name']}
+                <if condition="$vo['sex'] eq 1">[男]<else/>[女]</if>
+                </td>
+                <td><if condition="$vo['bir_type'] eq 1">阳历<else/>农历</if></td>
+                <td>{$vo.birthday|date="Y-m-d",###}</td>
+                <td>{$vo.phone}</td>
+                </tr>
+            </volist>
+            </tbody>
+            <else/>
+            <tbody>
+                <tr>
+                    <td colspan="4">没有数据...</td>
+                </tr>
+            </tbody>
+        </notempty>
+    </table>
+</div>
+<div class="panel panel-info desktop">
+    <!-- Default panel contents -->
+    <div class="panel-heading">本月发单预订单</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>客户名称</th>
+                <th>发单日期</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <notempty name="orderData">
+            <tbody>
+            <volist name="orderData" id="vo">
+                <tr>
+                    <td>{$vo['cli_name']}</td>
+                <td>{$vo.order_time|date="Y-m-d",###}</td>
+                <td><a href=javascript:windowopen("{:U('Cli/CliOrder/showInfo',array('id'=>$vo['id']))}") data-toggle="tooltip" data-placement="top" title="查看"><i class='icon-eye'></i></a></td>
+                </tr>
+            </volist>
+            </tbody>
+            <else/>
+            <tbody>
+                <tr>
+                    <td colspan="4">没有数据...</td>
+                </tr>
+            </tbody>
+        </notempty>
+    </table>
+</div>
+<div class="panel panel-danger desktop">
+    <!-- Default panel contents -->
+    <div class="panel-heading">本月客户生日</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>公司名称</th>
+                <th>联系人</th>
+                <th>生日</th>
+                <th>电话</th>
+            </tr>
+        </thead>
+         <notempty name="brithDayData">
+            <tbody>
+            <volist name="brithDayData" id="vo">
+                <tr>
+                    <td>{$vo['company_name ']}</td>
+                    <td>{$vo['name ']}</td>
+                <td>{$vo.bir|date="m-d",###}</td>
+                <td>{$vo['mobile ']}</td>
+                </tr>
+            </volist>
+            </tbody>
+            <else/>
+            <tbody>
+                <tr>
+                    <td colspan="4">没有数据...</td>
+                </tr>
+            </tbody>
+        </notempty>
+    </table>
+</div>
+<div class="panel panel-warning desktop">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Panel heading</div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-warning desktop">
+    <!-- Default panel contents -->
+    <div class="panel-heading">合同信息</div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-warning desktop">
+    <!-- Default panel contents -->
+    <div class="panel-heading">工作计划</div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,56 @@
+
+	
+	
+	<form action="{:U('Department/add_department')}" method="post" role="form" class="form-horizontal">
+       <input type="hidden"  name="id" id="id" value="{$de_info.id}">
+        <legend>
+        	<p class="text-primary">
+        	添加部门
+        	</p>
+        </legend>
+        
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.DEPARTMENT_NAME}</label>
+            <div class="col-sm-10">
+            	<input type="text" style="width:30%" class="form-control" name="name" id="name" value="{$de_info.name}">
+            </div>
+        </div>
+        <!--
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.DEPARTMENT_LEVEL}</label>
+            <div class="col-sm-10">
+                <input type="radio" name="level" value="1">鎬诲叕鍙�
+            	<input type="radio" name="level" value="2">鍒嗗叕鍙�
+            	<input type="radio" name="level" value="3">閮ㄩ棬
+            	<input type="radio" name="level" value="4">鍥㈤槦
+            </div>
+        </div>
+         -->
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.MENU_SUPERIOR_MENU}</label>
+           	<div class="col-sm-10">
+	           	<select class="form-control" style="width:30%" name="pid">
+	                <volist name="department_tree" id="department_tree">
+	                    <option value="{$department_tree.id}" <if condition="$de_info['pid'] eq $key">selected="selected"</if>>{$department_tree.title_show}</option>
+	                </volist>
+	            </select>
+            </div>
+        </div>
+        
+       <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">{$Think.lang.REMARKS}</label>
+            <div class="col-sm-10">
+            	<input type="text" class="form-control" style="width:30%" name="remarks" value="{$de_info.remarks|default=''}">
+            </div>
+        </div>
+        
+        <div class="form-group">
+    		<div class="col-sm-offset-2 col-sm-10">
+            	<button class="btn btn-primary" id="submit" type="submit" target-form="form-horizontal">{$Think.lang.SUBMIT}</button>
+            	<button class="btn btn-warning" onclick="javascript:history.back(-1);return false;">{$Think.lang.RETURN}</button>
+        	</div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

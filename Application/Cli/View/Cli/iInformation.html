@@ -1,0 +1,80 @@
+
+<table class="table table-bordered">
+    <tbody>
+        	<tr>
+			    <td class="success">{$Think.lang.INFORMATION_INFO}</td>
+			    <td colspan="3">
+			    	<volist name="infomationInfo" id="vo">
+						<if condition="$vo['is_show'] eq 1">
+						<div style='width:120px;float:left;'>
+							<img data-toggle="modal" data-target="#myModal" onclick="get_modal($(this))"  title="{$Think.lang.SHOW_BIG_PIC}" style='width:100px;height100px;' src="__ROOT__/{$vo['url']|get_m_pic}"/>
+							<br><a data-toggle="modal"  title="{$Think.lang.SHOW_BIG_PIC}"  src="__ROOT__/{$vo['url']|get_m_pic}"  data-target="#myModal" onclick="get_modal($(this))">
+								{$vo['name']}
+							</a>
+							<input type="hidden" value="__ROOT__/{$vo['url']}"/>
+						</div>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				    	<else/>
+				    	<div style='width:120px;float:left;'>
+			                                                    <img style="width:100px;height100px;" src="__ROOT__/{$vo['url']|showPic}"/>
+					    	<br><a title='点击下载'  href="__ROOT__/{$vo['url']}">{$vo['name']}</a>
+					    </div>
+				    	</if>
+				    </volist>
+			         <!--
+				        <a data-toggle="modal"  title='点击看大图'   data-target="#myModal">
+				            <img style='width:100px;height100px;' src="__ROOT__/{$product_info['product_pic']|get_m_pic}">
+				        </a>
+				     -->
+			
+			    </td>
+			</tr>
+    </tbody>
+</table>
+<style>
+    .success{
+        width:150px;
+    }
+</style>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">{$Think.lang.PRODUCT_O_PIC}</a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <img alt="" id="mymodal_id" src="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</tbody>
+</table>
+
+<style>
+    .success{
+        width:150px;
+    }
+</style>
+
+<script>
+function get_modal(obj) {
+	var url = obj.attr('src');
+	$("#mymodal_id").attr("src", url);
+	var o_url = obj.parent().children("input").val();
+	$("#mymodal_url").attr("href", o_url);
+}
+
+</script>

@@ -1,0 +1,71 @@
+<form id='workflow_form' style='bottom:130px;' action='{:U("Workflow/Run/Run")}' method="post">
+    <div class="bs-callout bs-callout-info" id="callout-glyphicons-dont-mix">
+        <h4>审批意见</h4>
+        <textarea class="form-control" name="flow_remark" style='height:70px;'></textarea>
+        <input type='hidden' name='model' value='{$model}'><input type='hidden' name='app_id' value='{$app_id}'>
+
+    </div>
+    <foreach name="data" item="val">
+        <div class="bs-callout bs-callout-danger" id="callout-glyphicons-dont-mix">
+            <h4><input style='width:30px;' checked="checked" name='process_id[]' type="checkbox" id="process_id_{$val.process_id}" value={$val.process_id}>{$val.process_name}
+                <button type="button" data-toggle="modal" data-target="#userModal" class=' btn btn-primary pull-right' data-function="add_user" data-input-info="step_user_{$val.process_id}@user_name#process_user_{$val.process_id}@user_id">选择审批人</button> 
+            </h4>
+            <p>
+                <span id='step_user_{$val.process_id}'></span>
+                <input type='hidden' id='process_user_{$val.process_id}' name='process_user_{$val.process_id}'>
+            </p>
+            <p>
+                <input type='checkbox' checked name='msg_{$val.process_id}[]' value=1>内部消息
+                <input type='checkbox' name='msg_{$val.process_id}[]' value=2>手机短信
+            </p>
+        </div>
+    </foreach>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+            <if condition="empty($data)">
+                <button class="btn btn-danger" id="submit" target-form="form-horizontal">结束</button>
+                <else />
+            <button class="btn btn-primary" id="submit" target-form="form-horizontal">转交下一步</button>
+            </if>
+            <button class="btn btn-warning" onclick="javascript:history.back(-1);return false;">{$Think.lang.RETURN}</button>
+        </div>
+    </div>
+</form>
+
+</div>
+</body>
+</html>
+<script>
+    function add_user(data) {
+        var arr = data.split("#");
+        for (var i in arr) {
+            var keyVal = arr[i].split("@");
+            $("#" + keyVal[0]).html("<span class='label label-success'>" + keyVal[1] + "</span>");
+            $("#" + keyVal[0]).val(keyVal[1]);
+        }
+    }
+    $("#workflow_form").submit(function(e){
+        if(!validatorFlowForm()){
+            e.preventDefault();
+        }
+        return true;
+    });
+    function validatorFlowForm(){
+        if($("#workflow_form [type='checkbox']").length == 0)
+            return true;
+        if($("[name='process_id[]']:checked").length == 0){
+            alert("请选择转交步骤");
+            return false;
+        }else{
+            var user_empty = 1;
+            $("[name='process_id[]']:checked").each(function (){
+                var process_id = $(this).val();
+                if($("#process_user_"+process_id).val() == ""){
+                    alert("请选择下一步骤的经办人");
+                    user_empty = 0;
+                }
+            });
+        }
+        return user_empty;
+    }
+</script>

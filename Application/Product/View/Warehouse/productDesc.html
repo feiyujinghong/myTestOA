@@ -1,0 +1,36 @@
+<table class="table">
+    <thead>
+        <tr class="success">
+            <th>批次号</th>
+            <th>{$Think.lang.product_name}</th>
+            <th>{$Think.lang.product_format}</th>
+            <th>{$Think.lang.product_unit}</th>
+            <th>{$Think.lang.warehouse_count}</th>
+            <th>{$Think.lang.start_time}</th>
+            <th>{$Think.lang.end_time}</th>
+            <th>{$Think.lang.warehouse_w_num}</th>
+            <th>{$Think.lang.remark}</th>
+        </tr>
+    </thead>
+
+    <tbody id='product_volist'>
+    <if condition="!empty($data)">
+        <volist name="data" id="vo">
+            <tr class="line_g hover_bg">
+            <td>{$vo['batch_number']}</td>
+            <td>{$product_data['product_name']}</td>
+            <td>{$product_data['product_format']}</td>
+            <td><php>echo $unit[$product_data['product_unit']];</php></td>
+            <td id="count_{$vo.id}">{$vo["count"]}</td>
+            <td>{$vo["start_time"]|date="Y-m-d",###}</td>
+            <td>{$vo["end_time"]|date="Y-m-d",###}</td>
+            <td>{$vo['warehouse_num']}</td>
+            <td>{$vo['remark']}</td>
+            </tr>
+        </volist>
+        <else />
+        <include file="Auth@Public/empty_data" />
+    </if>
+</tbody>
+</table>
+<center><a class="btn btn-warning" onclick="window.history.back()">{$Think.lang.return}</a></center>

@@ -1,0 +1,36 @@
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">{$Think.lang.CLI_INFO}</a></li>
+    <li role="presentation"><a href="#warehousenum" aria-controls="warehousenum" role="tab" data-toggle="tab">{$Think.lang.LINK_INFO}</a></li>
+    <li role="presentation"><a href="#file" aria-controls="file" role="tab" data-toggle="tab">{$Think.lang.INFORMATION_INFO}</a></li>
+    <li role="presentation"><a href="#customer" aria-controls="customer" role="tab" data-toggle="tab">{$Think.lang.FOLLOW_INFO}</a></li>
+    <li role="presentation"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">{$Think.lang.HT_INFO}</a></li>
+<!--    <li role="presentation"><a href="#orderForm" aria-controls="orderForm" role="tab" data-toggle="tab">{$Think.lang.DD_INFO}</a></li>-->
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="info">
+          <include file='iBaseInfo' />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="warehousenum">
+          <include file='iLinkInfo' />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="file">
+              <include file='iInformation' />
+      </div>
+        <div role="tabpanel" class="tab-pane" id="customer">
+            <include file='iFollow' />
+        </div>
+       <div role="tabpanel" class="tab-pane" id="account">
+              <center>暂未开放</center>
+      </div>
+        <div role="tabpanel" class="tab-pane" id="orderForm">
+            <center>暂未开放</center>
+        </div>
+  </div>
+
+</div>

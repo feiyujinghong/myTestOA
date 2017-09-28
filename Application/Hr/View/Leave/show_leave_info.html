@@ -1,0 +1,30 @@
+<legend>
+        	<p class="text-primary">
+             {$Think.lang.LEAVE_MES}
+             </p>
+        </legend>  
+<table class="table table-bordered">
+	   <tbody>
+	      <tr>
+	         <td class="success">{$Think.lang.LEAVE_NAME}</td>
+	         <td>{$staff_n_p}</td>
+	         <td class="success">{$Think.lang.LEAVE_TYPE}</td>
+	         <td>{$leave_info.leave_type_ch}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.LEAVE_TYPE}</td>
+	         <td>{$leave_info.leave_start_time|date="Y-m-d",###}</td>
+	         <td class="success">{$Think.lang.LEAVE_S_TIME}</td>
+	         <td>{$leave_info.leave_finish_time|date="Y-m-d",###}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.LEAVE_WHY}</td>
+	         <td colspan="3">{$leave_info.leave_explain}</td>
+	      </tr>
+	      <tr>
+	         <td class="success">{$Think.lang.REMARKS}</td>
+	         <td colspan="3">{$leave_info.remarks}</td>
+	      </tr>
+	   </tbody>
+	</table>
+	

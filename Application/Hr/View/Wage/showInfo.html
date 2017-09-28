@@ -1,0 +1,129 @@
+<legend>
+    <p class="text-primary">
+        {$data.year}年{$data.month}月工资明细单--{$data.staff_name}
+    </p>
+</legend>
+<div class="print">
+<center><h3>大兴安岭林格贝尔有机食品有限公司<br>{$data.year}年{$data.month}月工资明细单</h3></center>
+<table class="table table-bordered" style="width:80%;margin:auto;">
+    <tr>
+        <td class='info'>姓名</td>
+        <td colspan="3">{$data.staff_name}</td>
+    </tr>
+    <tr>
+        <td class='info'>应出勤</td>
+        <td>{$data.attendance}</td>
+        <td class='info'>实际出勤</td>
+        <td>{$data.fact_attendance}</td>
+        
+    </tr>
+    
+    <tr>
+        <td class='info'>迟到/早退</td>
+        <td>{$data.late}/{$data.early}</td>
+        <td class='info'>病假（天）</td>
+        <td>{$data.disease}</td>
+         </tr>
+    
+    <tr>
+        <td class='info'>事假（天）</td>
+        <td>{$data.private_day}</td>
+        <td class='info'>旷工（天）</td>
+        <td>{$data.no_work}</td>
+    </tr>
+    <tr>
+        <td class='info'>标准基本工资</td>
+        <td>{$data.base_wage}</td>
+        <td class='info'>实际基本工资</td>
+        <td>{$data.fact_wage}</td>
+        
+    </tr>
+    <tr>
+        <td class='info'>饭补</td>
+        <td>{$data.rice}</td>
+        <td class='info'>话补</td>
+        <td>{$data.phone}</td>
+        </tr>
+    <tr>
+        <td class='info'>实发绩效工资</td>
+        <td>{$data.achievements}</td>
+        <td class='info'>提成</td>
+        <td>{$data.commission}</td>
+    </tr>
+    <tr class='success'>
+        <td>工资总额</td>
+        <td colspan='3'><php>echo $total =  round($data['fact_wage']+$data['rice']+$data['phone']+$data['achievements']+$data['commission'],2);</php>
+        <span style='margin-left:20px;' class='icon-keyboard-o'>
+            <span class="label label-success">工资总额</span> = 
+            <span class="label label-info">实际基本工资</span> + 
+            <span class="label label-info">饭补</span> + 
+            <span class="label label-info">话补</span> + 
+            <span class="label label-info">实发绩效工资</span> + 
+            <span class="label label-info">提成</span> 
+        </span>
+</td>
+    </tr>
+    <tr>
+        <td class='info'>病假</td>
+        <td>{$data.disease_money}</td>
+        <td class='info'>事假</td>
+        <td>{$data.private_money}</td>
+        
+    </tr>
+    <tr>
+        <td class='info'>旷工</td>
+        <td>{$data.no_work_money}</td>
+        <td class='info'>迟到/早退</td>
+        <td>{$data.late_early}</td>
+         </tr>
+    <tr>
+        <td class='info'>五险个人承担部分</td>
+        <td>{$data.insurance}</td>
+        <td class='info'>住房公积金个人承担部分</td>
+        <td>{$data.fund}</td>
+    </tr>
+    <tr>
+        <td class='info'>个人所得税</td>
+        <td colspan="3">{$data.tax}</td>
+    </tr>
+    <tr class='success'>
+        <td >扣款总额</td>
+        <td colspan='3'><php>echo $kou = round($data['tax']+$data['fund']+$data['disease_money']+$data['private_money']+$data['no_work_money']+$data['late_early']+$data['insurance'],2);</php>
+        <span style='margin-left:20px;' class='icon-keyboard-o'>
+            <span class="label label-success">扣款总额</span> = 
+            <span class="label label-info">事假</span> + 
+            <span class="label label-info">旷工</span> + 
+            <span class="label label-info">迟到/早退</span> + 
+            <span class="label label-info">五险个人承担部分</span> + 
+            <span class="label label-info">住房公积金个人承担部分</span> + 
+            <span class="label label-info">个人所得税</span> 
+        </span>
+</td>
+    </tr>
+    <tr class='danger'>
+        <td>实发工资</td>
+        <td colspan="3"><php>echo ($total-$jian);</php></td>
+    </tr>
+</table>
+</div>
+<center>
+    <a href='{:U("wageList")}' class="btn btn-danger">返回</a>
+    <a  class="btn btn-primary" id="print">打印</a>
+</center>
+<style>
+    .print{
+        background-color: white;
+        padding-top:20px;
+    }
+    .info{
+        width:150px;
+    }
+</style>
+<script src="__PUBLIC__/js/jquery.printArea.js"></script>
+<script>
+    
+    $("#print").click(function(){
+        $(".info").css("width","150px;");
+        $(".print").printArea();
+    });
+</script>

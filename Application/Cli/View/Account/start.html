@@ -1,0 +1,173 @@
+<script type="text/javascript" src="__JS__/datas/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/upload/uploadify.css">
+<script type="text/javascript" src="/Public/upload/jquery.uploadify-3.1.min.js"></script>
+<form action="" method="post" id="form" role="form" class="form-horizontal">
+    <div id="contact" class="tab-pane">
+        <div class="container">
+            <legend>
+                <p class="text-primary">
+                    {$Think.lang.CLIY_ORDER}
+                    <a href="{:U('Account/start',array('id'=>$id))}" class="btn btn-info pull-right">{$Think.lang.HT_SEND}</a>&nbsp;
+                    <a href="javascript:window.history.back()" class="btn btn-warning pull-right" style="margin-right: 10px;">{$Think.lang.RETURN}</a> &nbsp;
+                    <a href=javascript:windowopen("{:U('Cli/Cli/showCliInfo',array('id'=>$data['cli_id']))}") style="margin-right: 10px;" class="btn btn-danger pull-right">客户信息</a>
+                </p>
+            </legend>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{$Think.lang.CLIY_CLINAME}</label>
+                <div class="col-sm-3">
+                    <input type='text' class='form-control'  name='account_date' value="{$data.company_name}" readonly="readonly">
+                </div>
+
+                <label class="col-sm-2 control-label">客户编号</label>
+                <div class="col-sm-3">
+                    <input type='text' class='form-control'  name='account_date' value="{$data.company_no}" readonly="readonly">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">签约日期</label>
+                <div class="col-sm-3">
+                    <input type='text' class='form-control'  name='account_date' onfocus="WdatePicker({skin: 'twoer'});">
+                </div>
+                <label class="col-sm-2 control-label">合同编号</label>
+                <div class="col-sm-3"><input type='text' class='form-control'  name='number' ></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">销往国家</label>
+                <div class="col-sm-3"><input type='text' class='form-control'  name='contry' ></div>
+                <label class="col-sm-2 control-label">收款账户</label>
+                <div class="col-sm-3"><input type='text' class='form-control'  name='collection_account' ></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">是否外销</label>
+                <div class="col-sm-3">
+                    <input type="radio" name="is_out" value="1" checked>是
+                    <input type="radio" name="is_out" value="2">否
+                </div>
+                <label class="col-sm-2 control-label">客户佣金</label>
+                <div class="col-sm-3"><input type='text' class='form-control'  name='commission' ></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">发货周期</label>
+                <div class="col-sm-3"><input type='text' class='form-control'  name='send_round' ></div>
+                <label class="col-sm-2 control-label">是否商检</label>
+                <div class="col-sm-3">
+                    <input type="radio" name="is_check" value="1" checked>是
+                    <input type="radio" name="is_check" value="2">否
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">是否需要辐照</label>
+                <div class="col-sm-3">
+                    <input type="radio" name="is_fuzhao" value="1" checked>是
+                    <input type="radio" name="is_fuzhao" value="2">否
+                </div>
+                <label class="col-sm-2 control-label">是否需要开票</label>
+                <div class="col-sm-3">
+                    <input type="radio" name="is_ticket" value="1" checked>是
+                    <input type="radio" name="is_ticket" value="2" >否
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">是否需要二次包装</label>
+                <div class="col-sm-3">
+                    <input type="radio" name="is_second" value="1" checked>是
+                    <input type="radio" name="is_second" value="2">否
+                </div>
+                <label class="col-sm-2 control-label">是否需要第三方检测</label>
+                <div class="col-sm-3">
+                    <input type="radio" name="is_other_check" value="1" checked>是
+                    <input type="radio" name="is_other_check" value="2" >否
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-10">
+                    <textarea name="remark" cols="100" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">附件</label>
+                <div class="col-sm-10">
+                    {$up_load}
+                    <div id="show_upload"></div>
+                </div>
+            </div>
+            <table class="table table-bordered" id="product_info">
+                <tr class="success">
+                    <td colspan="8" style="text-align: center;"><b>{$Think.lang.CLIY_PRD_LIST}</b></td>
+                </tr>
+                <tr>
+                    <td>{$Think.lang.OPERATION}</td>
+                    <td>{$Think.lang.CLIY_PRO_NAME}</td>
+                    <td>{$Think.lang.CLIY_USE_CHENGF}</td>
+                    <td>{$Think.lang.CLIY_HL}</td>
+                    <td>{$Think.lang.CLIY_JLDW}</td>
+                    <td>{$Think.lang.CLIY_XSJG}</td>
+                    <td>{$Think.lang.CLIY_SJ_PIECES}</td>
+                    <td>{$Think.lang.CLIY_SUM}</td>
+                </tr>
+                <foreach name='listData' item='vo'>
+                    <tr>
+                        <td><a class='text-primary del_option'><i class='icon-trash-o'></i></a></td>
+                    <input type='hidden' name='product_id[]' value={$vo.id}>
+                    <td>{$vo.product_name}</td>
+                    <td>{$vo.product_format}</td>
+                    <td>{$vo.product_content}</td>
+                    <td>{$vo.product_unit}</td>
+                    <td>{$vo.product_price}</td>
+                    <td>{$vo["selling_price"]}</td>
+                    <td><input type="text" name="product_count[]" size=10 value="{$vo.count}"></td>
+                    </tr>
+                </foreach>
+            </table>
+        </div>
+    </div>
+</div>
+</form>
+<script>
+    var img_id_upload = new Array();//初始化数组，存储已经上传的图片名
+    var i = 0;//初始化数组下标
+    $(function() {
+        $('#file_upload').uploadify({
+            'auto': false, //关闭自动上传
+            'removeTimeout': 1, //文件队列上传完成1秒后删除
+            'swf': '/Public/upload/uploadify.swf',
+            'uploader': "/index.php/Upload/Upload/moveUpload/tb/product/moduleid/",
+            'method': 'post', //方法，服务端可以用
+            'buttonText': '上传附件', //设置按钮文本
+            'multi': true, //允许同时上传多张图片
+            'uploadLimit': 50, //一次最多只允许上传10张图片
+            'fileTypeDesc': 'Image Files', //只允许上传图像
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.jpeg; *.txt; *.doc; *.docx; *.rtf; *.ppt; *.zip; *.rar; *.xls; *.pdf; *.xlsx;', //限制允许上传的图片后缀
+            'fileSizeLimit': '20000KB', //限制上传的图片不得超过200KB 
+            'onUploadSuccess': function(file, data, response) {
+                var arr = eval("(" + data + ")");
+                if (isNaN(arr.id)) {
+                    alert(arr.id);
+                    return;
+                }
+                if ("" == $("#upload_update").val()) {
+                    $("#upload_update").val(arr.id);
+                } else {
+                    var upload_id = $("#upload_update").val();
+                    upload_id = upload_id + "|" + arr.id;
+                    $("#upload_update").val(upload_id);
+                }
+                $("#show_upload").append(arr.path);
+                //每次成功上传后执行的回调函数，从服务端返回数据到前端
+                img_id_upload[i] = data.id;
+                i++;
+            },
+            'onQueueComplete': function(queueData) {
+
+                alert(i + "个文件上传成功!")
+
+            }
+        });
+    });
+
+
+    $(document).on("click", ".del_option", function() {
+        $(this).parent().parent().remove();
+    });
+</script>

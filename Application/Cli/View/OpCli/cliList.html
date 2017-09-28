@@ -1,0 +1,183 @@
+
+
+<form class="form-inline" id="search_form" method="get" style="margin-bottom:20px;">
+    <div class="form-group">
+        <label>{$Think.lang.CLI_CORP_NAME}</label>
+        <input type="text" name="company_name" value="{$_GET['company_name']}" class="form-control">
+        <label>{$Think.lang.CLI_CORP_NO}</label>
+        <input type="text" name="company_no" value="{$_GET['company_no']}" class="form-control">
+        <label>{$Think.lang.CLI_MOUSE}</label>
+        <input type="hidden" name="user_id" id='user_id' value="{$_GET['user_id']}" class="form-control">
+        <input type="text" name="user_name" id='user_name' value="{$_GET['user_name']}" class="form-control" readonly="readonly">
+        <a href='#' class='btn btn-default' data-toggle="modal" data-clear="1" data-target="#userModal" data-more="0" data-function="default_add_user" data-input-info="user_name@user_name#user_id@user_id"><i class='icon-plus'></i>{$Think.lang.SELECT}</a>
+        <button type="submit" class="btn btn-danger"><i class="icon-search"></i>{$Think.lang.search}</button>
+        </div>
+ 
+    <a class="btn btn-primary pull-right" href='{:U("Cli/addCLi")}'><i class="icon-plus">{$Think.lang.ADD}</i></a>
+                </form>
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="success">
+                            <th>{$Think.lang.CLI_CORP_NAME}</th>
+                            <th>{$Think.lang.CLI_CORP_NO}</th>
+                            <th>{$Think.lang.CLI_SOURCE}</th>
+                            <th>{$Think.lang.CLI_COUNTRY}</th>
+                            <th>{$Think.lang.CLI_CITY}</th>
+                            <th>{$Think.lang.CLI_AREA}</th>
+                            <th>{$Think.lang.CLI_DETAILED}</th>
+                            <th>{$Think.lang.CLI_FOLLOW_DAY}</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <notempty  name="cliInfo">
+                            <volist name="cliInfo" id="vo">
+                            <tr>
+                                <td>{$vo.company_name}</td>
+                                <td>{$vo.company_no}</td>
+                                <td>{$vo.source_ch}</td>
+                                <td>{$vo.country_ch}</td>
+                                <td>{$vo.city_ch}</td>
+                                <td>{$vo.area_ch}</td>
+                                <td>{$vo.detailed}</td>
+                                <td>{$vo.follow}{$Think.lang.FOLLOW_DAY}</td>
+                                <td>
+                                	<a href='__APP__/Cli/Cli/showCliInfo/id/{$vo.id}' title="{$Think.lang.VIEW}" data-toggle="tooltip" data-placement="top"><i class="icon-chain"></i></a>
+                                    <a href='__APP__/Cli/OpCli/editBase/base_id/{$vo.id}' title="{$Think.lang.UPDATE}" data-toggle="tooltip" data-placement="top"><i class="icon-edit"></i></a>
+                                    <a href='__APP__/Cli/OpCli/vipCli' title="{$Think.lang.CLI_VIP}" data-toggle="tooltip" data-placement="top"><i class="icon-upload icon-white"></i></a>
+                                    <a href='javascript:fenpei({$vo.id})' title="客户重分配" data-toggle="tooltip" data-placement="top"><i class="icon-cubes icon-white"></i></a>
+                                    <if condition="is_administrator()">
+                                        <a href='{:U("delete",array("id"=>$vo["id"]))}'><i class='icon-trash-o' title="{$Think.lang.DELETE}" data-toggle="tooltip" data-placement="top"></i></a>
+                                        </if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>{$Think.lang.LINK_INFO}（{$vo.link_count}）
+	                                <a href="__URL__/addLinks/base_id/{$vo.id}" title="{$Think.lang.LINK_INFO_ADD}" data-toggle="tooltip" data-placement="top"><i class="icon-plus"></i></a>
+	                                <a  title="{$Think.lang.LINK_LIST}" data-placement="top" data-toggle="modal" data-target="#myModal" onclick="get_modal({$vo['id']})" data-toggle="tooltip" data-placement="top">
+	                                	<i class="icon-list-ul"></i>
+	                                </a>
+                                </td>
+                                <td>{$Think.lang.INFORMATION_INFO}（{$vo.attach_count}）
+                                	<a href="__URL__/informationOp/base_id/{$vo.id}" title="{$Think.lang.INFORMATION_INFO}" data-toggle="tooltip" data-placement="top"><i class="icon-list-ul"></i></a>
+                                </td>
+                                <td>{$Think.lang.FOLLOW_INFO}（{$vo.follow_count}）
+                                	<a href="__URL__/followList/base_id/{$vo.id}" title="{$Think.lang.FOLLOW_INFO}" data-toggle="tooltip" data-toggle="tooltip" data-placement="top"><i class="icon-phone"></i></a>
+                                </td>
+                                <td>{$Think.lang.HELP}（<a href="{:U('CliHelp/helpList',array('cli_id'=>$vo['id']))}">{$vo.help_count}</a>）
+                                    <a href=javascript:windowopen("{:U('CliHelp/addHelp',array('id'=>$vo['id']))}") title="{$Think.lang.HELP_INFO}" data-toggle="tooltip" data-toggle="tooltip" data-placement="top"><i class="icon-thumbs-o-up"></i></a>
+                                </td>
+                                <td colspan="4">{$Think.lang.YUDINGDAN}（<a href="{:U('CliOrder/orderList',array('cli_id'=>$vo['id']))}">{$vo.order_count}</a>）
+                                    <a href="{:U('CliOrder/addOrder',array('id'=>$vo['id']))}" title="{$Think.lang.YUDINGDAN_ADD}" data-toggle="tooltip" data-toggle="tooltip" data-placement="top"><i class="icon-bookmark-o"></i></a>
+                                </td>
+                            </tr>
+                            
+                            <tr class="info">
+                            	<td colspan="9"></td>
+                            </tr>
+                            
+                            </volist>
+                            
+                    <else />
+                        <include file="Auth@Public/empty_data" />
+                    </notempty>
+                    </tbody>
+
+                </table>
+                {$_page}
+                
+                
+                
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">{$Think.lang.LINK_LIST}</a>
+                </h4>
+            </div>
+             <div class="modal-body" id="links_html">
+                	
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!------------------案件分配--------------------->
+    <div class="modal fade" id="fenpeiModal" tabindex="-1" role="dialog" aria-labelledby="fenpeiModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <a id="mymodal_url" href="" target="_bank">分配人</a>
+                </h4>
+            </div>
+             <div class="modal-body" id="links_html">
+                 <input type="hidden" id="fenpei_cli_id">
+                 <foreach name="leader" item="leader_id">
+                     <input type="radio" name="fenpei_user_id" value="{$leader_id}">{$leader_id|get_username}
+                 </foreach>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info"  onclick="fenpei_sure()">{$Think.lang.SURE}</button>
+                <button type="button" class="btn btn-default"  data-dismiss="modal">{$Think.lang.COLSE}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script>
+function get_modal(id) {
+	$.ajax({
+		url: "/index.php/Cli/OpCli/linksHtml",
+        data: {base_id:id},
+        type:"post",
+        dataType:"html",
+        success:function(msg){
+            if(false === msg){
+            	alert("信息获取失败！");
+            }else{
+                $("#links_html").html(msg);
+            }
+        }
+    });
+}
+
+
+function fenpei(cli_id){
+    $('#fenpeiModal').modal('show');
+    $("#fenpei_cli_id").val(cli_id);
+}
+function fenpei_sure(){
+    var cli_id = $("#fenpei_cli_id").val();
+    var fenpei_user_id = $("[name='fenpei_user_id']:checked").val();
+    if(cli_id == ""){
+        alert("为选择客户");
+        return false;
+    }
+    if($("[name='fenpei_user_id']:checked").length == 0){
+        alert("请选择分配人");
+        return false;
+    }
+    $.get("{:U('fenpei')}",{cli_id:cli_id,fenpei_user_id:fenpei_user_id},function(data){
+        alert(data);
+        if(data == "分配成功")
+            $('#fenpeiModal').modal('hide');
+    })
+}
+</script>

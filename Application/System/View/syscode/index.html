@@ -1,0 +1,43 @@
+<div class="btn-toolbar">
+    <a href="{:U('add')}" type="button" class="btn btn-primary">{$Think.lang.ADD}</a>
+</div>
+<table class='table'>
+        <thead>
+            <tr class="success">
+                <th>#</th>
+                <th>系统代码</th>
+                <th>名称</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <if condition='!empty($code_data)'>
+            <foreach name='code_data' key="key" item='val'>
+            <tr >
+                <td>{$val.id}</td>
+                <td>{$val.code}</td>
+                <td>{$val.name}</td>
+                <td><if condition="$val['status'] eq 1">禁用<else />正常</if></td>
+                <td>
+                    <a href="{:U('codeList',array('id'=>$val['id'],'name'=>$val['name']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.CODE_LIST}">
+                        <i class="icon-eye"></i>
+                    </a>
+                    <a href="{:U('update',array('id'=>$val['id']))}"  data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+                        <i class="icon-edit"></i>
+                    </a>
+                    <if condition="$val['status'] eq 0">
+                    <a href="{:U('Deny',array('id'=>$val['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.DENY}">
+                        <i class="icon-minus-square"></i>
+                    </a>
+                        <else />
+                        <a href="{:U('UnDeny',array('id'=>$val['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.NO_DENY}">
+                        <i class="icon-check-circle"></i>
+                    </a>
+                        </if>
+                </td>
+            </tr>
+            </foreach>
+                <else />
+                <include file='Auth@Public/empty_data' />
+        </if>
+    </table>

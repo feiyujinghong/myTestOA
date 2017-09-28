@@ -1,0 +1,10 @@
+<foreach name="alreadyStepData" item="val">
+        <div class="bs-callout bs-callout-info" id="callout-glyphicons-dont-mix">
+            <h4>{$val.process_name}</h4>
+            <p>
+                <span>办理人：{$val.user_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>办理状态：{$val.status}</span><br>
+                <span>发送时间：{$val.add_time}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>完成时间：{$val.end_time}</span><br>
+                <span>审核意见：{$val.flow_remark}</span>
+            </p>
+        </div>
+    </foreach>

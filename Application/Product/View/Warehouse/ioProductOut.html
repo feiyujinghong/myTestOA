@@ -1,0 +1,102 @@
+<legend>
+        <p class="text-primary">
+            {$title}
+        </p>
+    </legend>
+
+<form id='form' method="post" action='{:U("ioProduct",array("type"=>$type))}'>
+    <if condition="$type eq 3">
+  <div class="input-group col-sm-5">
+  <span class="input-group-addon">目标仓库</span>
+  <input type="text" class="form-control" name="to_warehouse_name" id="to_warehouse_name" aria-label="Amount (to the nearest dollar)">
+  <input type="hidden" id="to_warehouse_id" name="to_warehouse_id">
+  <span class="input-group-addon" data-func="add_warehouse_ajax" style="cursor:pointer" data-toggle="modal" data-target="#selectWarehouse"><i class="icon-plus"></i>点击选择仓库</span>
+</div>
+ 
+    </if>
+<table class='table table-bordered'>
+    <thead>
+        <tr class='success'>
+            <th>选择</th>
+            <th>批号</th>
+            <th>产品信息</th>
+            <th>生产日期</th>
+            <th>有效日期</th>
+            <th>库存数量</th>
+            <th>出库数量</th>
+        </tr>
+    </thead>
+    <foreach name='list_data' item='val' key='id'>
+        <tr>
+            <td><input type="checkbox" id="{$val.id}" class="select"></td>
+             <td>
+                {$val.batch_number}
+            </td>
+            <td><php>echo $outProductName[$val["product_id"]];</php></td>
+            <td>
+                {$val.start_time|date="Y-m-d",###}
+            </td>
+            <td>
+                 {$val.end_time|date="Y-m-d",###}
+            </td>
+            <td>{$val.count}</td>
+            <td>
+                <input type='hidden' name='ids[]' value='{$val.id}'>
+                <input type='hidden' name='warehouse_id[]' value='{$val.warehouse_id}'>
+                <input type='hidden' name='product_id[]' value='{$val.product_id}'>
+                <input type='text' size='10' class='count_{$val.id}' name='num[]' max='{$val.count}'>
+            </td>
+        </tr>
+    </foreach>
+</table>
+    <a class='btn btn-warning icon-backward pull-right' onclick='window.history.back()'> 返回</a>
+<a class='btn btn-primary icon-plus pull-right' onclick='sure()'> 确定</a>
+
+<script>
+    function sure(){
+        var is_true = 0;
+        if($(".select:checked").length <= 0){
+            alert("请选择出库产品");
+            return false;
+        }
+        $(".select:checked").each(function(){
+            var id = $(this).attr("id");
+            var num = $(".count_"+id).val();
+            var max = $(".count_"+id).attr("max");
+            //声明正则表达式
+            var re = /^[1-9]\d*$/;
+            //验证
+            if (!re.test(num))
+            {
+                alert("请输入正整数");
+                $(".count_"+id).focus();
+                is_true = 1;
+                return false;
+            }
+            if(parseInt(num) > parseInt(max)){    //如果出库数量大于库存
+                alert("不能大于库存数量");
+                is_true = 1;
+                return false;
+            }
+        });
+        <?php if($type==3){?>
+            if($("#to_warehouse_id").val() == ""){
+                alert("请选择仓库");
+                is_true = 1;
+                return false;
+            }    
+            <?php }?>
+        if(is_true == 0){
+            $("#form").submit();
+        }
+    }
+    
+    //添加产品
+    function add_warehouse_ajax() {
+            var name=$("[type='radio']:checked").attr("obj-name");
+            var id = $("[type='radio']:checked").val();
+            $("#to_warehouse_name").val(name);
+            $("#to_warehouse_id").val(id);
+            $("#selectWarehouse").modal('hide');
+    }
+</script>

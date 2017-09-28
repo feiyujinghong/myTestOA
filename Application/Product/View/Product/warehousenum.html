@@ -1,0 +1,32 @@
+<legend>
+    <p class="text-primary">
+        	{$product_info['product_name']}
+    </p>
+</legend>
+<table class="table">
+                    <thead>
+                        <tr class="success">
+                            <th>仓库名称</th>
+                            <th>低级预警值</th>
+                            <th>高级预警值</th>
+                            <th>库存</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <notempty name="warehousenum">
+                        <volist name="warehousenum" id="vo">
+                            <tr class="line_g hover_bg">
+                                <td>{$vo['name']}</td>
+                                <td>{$vo['warnning']}</td>
+                                <td>{$vo['danger']}</td>
+                                <td>{$vo['count']}</td>
+                            </tr>
+                        </volist>
+                    </notempty>
+                    </tbody>
+                </table>
+<center>
+    <button class="btn btn-danger" onclick="javascript:history.back(-1);return false;">
+        <i class='icon-backward'></i>{$Think.lang.RETURN}</button>
+</center>

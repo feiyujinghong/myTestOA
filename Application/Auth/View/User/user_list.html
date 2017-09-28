@@ -1,0 +1,52 @@
+
+
+<table class="table">
+    <legend>
+        <p class="text-primary">
+            用户列表
+            <a href='{:U("add")}' class="btn btn-primary pull-right">添加用户</a>
+        </p>
+    </legend>
+    <thead>
+        <tr class="success">
+            <!--<th><input class="check-all" type="checkbox"/></th>-->
+            <th>{$Think.lang.USER_UID}</th>
+            <th>{$Think.lang.USER_NICKNAME}</th>
+            <th>{$Think.lang.USER_LOGIN_TIMES}</th>
+            <th>{$Think.lang.USER_LOGIN_LAST_TIME}</th>
+            <th>{$Think.lang.USER_LOGIN_LAST_IP}</th>
+            <th>{$Think.lang.STATIC}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+    </thead>
+    <tbody>
+    <notempty name="_list">
+        <volist name="_list" id="vo">
+            <tr class="line_g hover_bg">
+                <!--<td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>-->
+                <td>{$vo.uid} </td>
+                <td>{$vo.nickname}</td>
+                <td>{$vo.login}</td>
+                <td><span><if condition="$vo.last_login_time neq 0">{$vo.last_login_time|time_format}<else/>未登陆</if></span></td>
+                <td><span>{:long2ip($vo['last_login_ip'])}</span></td>
+                <td>{$vo.status_text}</td>
+                <td>
+                    <a href="{:U('update',array('id'=>$vo['uid']))}" class="authorize">{$Think.lang.update}</a>
+                    <a href="{:U('Manager/group?uid='.$vo['uid'])}" class="authorize">{$Think.lang.USER_GRANT}</a>
+                </td>
+            </tr>
+        </volist>
+        <else/>
+        <include file="Auth@Public/empty_data">
+    </notempty>
+</tbody>
+</table>
+
+<div class="page">
+    {$_page}
+</div>
+
+
+</div>
+</body>
+</html>   

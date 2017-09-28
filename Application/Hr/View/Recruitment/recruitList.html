@@ -1,0 +1,45 @@
+
+<legend>
+    <p class="text-primary">
+        申请记录<a class="btn btn-primary pull-right" href="{:U('Recruitment/recruitment_apply')}"><i class='icon-plus'></i>用人申请</a>
+    </p>
+</legend>
+
+<table class="table">
+    <thead>
+        <tr class="success">
+            <th>用人部门</th>
+            <th>申请岗位</th>
+            <th>需求人数</th>
+            <th>紧急程度</th>
+            <th>到岗时间</th>
+            <th>申请原因</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+<if condition='!empty($data)'>
+        <volist name="data" id="vo">
+            <tr class="line_g hover_bg">
+                <td>{$vo['department']}</td>
+                <td>{$vo['position']}</td>
+                <td>{$vo['need_count']}</td>
+                <td>{$vo['acute']}</td>
+                <td>{$vo['entry_time']}</td>
+                <td>{$vo['recruitment_need']}</td>
+                
+                <td>
+                    <a href="{:U('leave/show_leave_info?id='.$vo['id'])}" class="authorize">查看</a>
+                    <!--<a href="{:U('leave/up_date_recruitment?id='.$vo['id'])}" class="authorize">编辑</a>-->
+
+                </td>
+            </tr>
+        </volist>
+<else />
+<include file="Auth@Public/empty_data" />
+</if>
+</table>
+
+{$_page}
+</div>
+</body>
+</html>  

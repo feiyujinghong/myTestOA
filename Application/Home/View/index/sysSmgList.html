@@ -1,0 +1,56 @@
+<div class='btn-toolbar'>
+    <a class='btn btn-danger delete' >删除</a>
+</div>
+<table class='table table-striped'>
+    <thead>
+        <tr>
+            <th><input type='checkbox'  name="selectAll">全选</th>
+            <th>内容</th>
+            <th>发送时间</th>
+            <th>发送人</th>
+        </tr>
+    </thead>
+    <if condition="!empty($data)">
+    <foreach name='data' item='val'>
+        <tr>
+            <td><input type='checkbox' name='id[]' class="check"  value='{$val.id}'></td>
+            <td><a href="{$val.url}" onclick='read_msg("{:U(\'Auth/Public/read_msg\',array(\'id\'=>$val[\'id\']))}")'>{$val.content}</a></td>
+            <td>{$val.time}</td>
+            <td>{$val.form_uid|get_username=###}</td>
+        </tr>
+    </foreach>
+        <else />
+        <include file="Auth@Public/empty_data" />
+        </if>
+</table>
+{$_page}
+<script>
+    function read_msg(url){
+        $.get(url);
+    }
+    
+    $(function() {
+        $("[name='selectAll']").bind("click", function() {
+            if ($(this).is(':checked')) {
+                $(".check").attr("checked",'true');
+            }else{
+                $(".check").removeAttr("checked");
+            }
+        });
+        $(".delete").bind("click",function(){
+            if(!confirm("确定删除？"))
+                return false;
+            var ids="";
+            $("[class='check']:checked").each(function(){
+                ids += $(this).val()+",";
+            });
+            if(ids != ""){
+                $.get("{:U('delete')}",{ids:ids},function(){
+                    window.location.reload();
+                });
+            }else{
+                alert("请选择内容");
+            }
+        });
+    });
+</script>

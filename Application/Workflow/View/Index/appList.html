@@ -1,0 +1,30 @@
+<div class="btn-toolbar">
+    <button type="button" class="btn btn-info pull-left" onclick="window.location.href = '{:U(\"addApp\")}'">添加应用</button>
+</div>    
+<table class='table'>
+    <thead>
+        <tr class="success">
+            <th>#</th>
+            <th>应用名称</th>
+            <th>模型</th>
+            <th>流程</th>
+            <th>操作</th>
+        </tr>
+    <foreach name='data' key="key" item='val'>
+        <tr >
+            <td>{$val.id}</td>
+            <td>{$val.name}</td>
+            <td>{$val.model}</td>
+            <td><?php echo $workflow[$val["flow_id"]]?></td>
+        <td>
+            <a href="{:U('updateApp',array('id'=>$val['id']))}" data-toggle="tooltip" data-placement="top" title="{$Think.lang.UPDATE}">
+                <i class="icon-edit"></i>
+            </a>
+            <a href="{:U('deleteApp',array('id'=>$val['id']))}"  data-toggle="tooltip" data-placement="top" title="{$Think.lang.DELETE}">
+                <i class="icon-trash-o"></i>
+            </a>
+        </td>
+        </tr>
+    </foreach>
+</thead>
+</table>

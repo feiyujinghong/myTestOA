@@ -1,0 +1,87 @@
+
+
+<form class="form-inline" id="search_form" method="get" style="margin-top:20px;">
+    <div class="form-group">
+        <label >公司名称</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control">&nbsp;
+
+        <label >客户编号</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control">&nbsp;
+        
+        <label >客户来源</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control">&nbsp;
+        
+        <label >国家</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control">&nbsp;
+        
+        <label >城市</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control">&nbsp;
+        
+        <label >地区</label>
+        <input type="text" name="name" value="{$_GET['name']}" class="form-control">&nbsp;
+
+        <button type="submit" class="btn btn-info">{$Think.lang.search}</button>
+    </div>
+    
+    <a class="btn btn-primary pull-right" href='{:U("Cli/addCLi")}'><i class="icon-plus"></i>客户添加</a>
+                </form>
+<span class="products" style="width:10px;">{$io_products}</span>
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="success">
+                            <th>公司名称</th>
+                            <th>客户编号</th>
+                            <th>客户来源</th>
+                            <th>国家</th>
+                            <th>城市</th>
+                            <th>地区</th>
+                            <th>地址详情</th>
+                            <th>跟踪周期</th>
+                            <th>{$Think.lang.OPERATION}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <notempty  name="cliInfo">
+                            <volist name="cliInfo" id="vo">
+                            <tr>
+                                <td>{$vo.company_name}</td>
+                                <td>{$vo.company_no}</td>
+                                <td>{$vo.source}</td>
+                                <td>{$vo.country_ch}</td>
+                                <td>{$vo.city_ch}</td>
+                                <td>{$vo.area_ch}</td>
+                                <td>{$vo.detailed}</td>
+                                <td>{$vo.follow}天</td>
+                                <td>
+                                	<a href=''><i class="icon-chain"></i></a>
+                                    <a href=''><i class="icon-edit"></i></a>
+                                    <a href=''><i class='icon-trash-o'></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>联系人信息（{$vo.link_count}）</td>
+                                <td></td>
+                                <td>资料信息（{$vo.attach_count}）</td>
+                                <td></td>
+                                <td>跟踪信息（{$vo.link_count}）</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                </td>
+                            </tr>
+                            
+                            <tr class="info">
+                            	<td colspan="9"></td>
+                            </tr>
+                            
+                            </volist>
+                            
+                    <else />
+                        <include file="Auth@Public/empty_data" />
+                    </notempty>
+                    </tbody>
+
+                </table>
+                {$_page}

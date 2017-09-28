@@ -1,0 +1,130 @@
+<include file="./Application/Auth/View/Public/header.html" />
+<div id="tabs-308576" class="tabbable">
+	<legend>
+    	<p class="text-primary">
+    		{$Think.lang.CLI_INFO}
+    	</p>
+    </legend>
+		<ul class="nav nav-tabs">
+			<li class="active">
+			<a data-toggle="tab" href="#base">基本信息</a>
+			</li>
+			
+			<li class="">
+			<a data-toggle="tab" href="#link">联系人信息</a>
+			</li>
+			
+			<li class="">
+			<a data-toggle="tab" href="#file">资料信息</a>
+			</li>
+			
+			<li class="">
+			<a data-toggle="tab" href="#contact">跟踪信息</a>
+			</li>
+			<li>
+			    <iframe id="iframe_sub" name="iframe_sub" class="col-sm-3" style="height: 40px;width:500px;" marginwidth="0" marginheight="0" frameborder="0" scrolling="auto">
+			    </iframe>
+			</li>
+			<li class="" style="float:right">
+				
+	    		<div class="col-sm-offset-1 col-sm-10">
+		            <button class="btn btn-primary" id="" type="" target-form="form-horizontal">添加（城／区）</button>
+	           </div>
+		        
+			</li>
+		</ul>
+	
+		<div class="tab-content">
+			
+			<div id="base" class="tab-pane active">
+						<include file="Cli:baseCli"/>
+				
+		     </div>
+			
+			<div id="link" class="tab-pane">
+					<include file="Cli:linkCli"/>
+			</div>
+			
+			<div id="file" class="tab-pane">
+					<div class="container">
+							<legend>
+					        	
+					        </legend>
+					        <div class="form-horizontal">
+						   		<div class="form-group">
+						            <label for="inputEmail3" class="col-sm-2 control-label">资料信息</label>
+									<div class="col-sm-3">
+						            	<input type="text" class="form-control" name="product_name" id="product_name" value="{$staff_info['product_name']}">
+									</div>
+									
+									<label for="inputEmail3" class="col-sm-2 control-label">资料信息</label>
+									<div class="col-sm-3">
+						            	<input type="text" class="form-control" name="product_no" value="{$staff_info['product_no']}">
+									</div>
+								</div>
+						   </div>
+						   
+	    			</div>
+			</div>
+			
+			<div id="contact" class="tab-pane">
+					<div class="container">
+							<legend>
+					        	
+					        </legend>
+					        <div class="form-horizontal">
+						   		<div class="form-group">
+						            <label for="inputEmail3" class="col-sm-2 control-label">沟通时间</label>
+									<div class="col-sm-3">
+						            	<input type="text" class="form-control" name="follow_time" value="{$contact['contact_time']}">
+									</div>
+									
+								</div>
+								
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">沟通方式</label>
+									<div class="col-sm-3">
+						            	<select class="form-control"  name="follow_type">
+						                    <option value="">请选择</option>
+						                    <option value="">1</option>
+						                    <option value="">2</option>
+						                    <option value="">3</option>
+						                </select>
+						            </div>
+									<label for="inputEmail3" class="col-sm-2 control-label">联系方式</label>
+									<div class="col-sm-3">
+						            	<select class="form-control"  name="link_type">
+						                    <option value="">请选择</option>
+						                    <option value="">1</option>
+						                    <option value="">2</option>
+						                    <option value="">3</option>
+						                </select>
+						            </div>
+								</div>
+								
+								<div class="form-group">
+						            <label for="inputEmail3" class="col-sm-2 control-label">沟通内容</label>
+									<div class="col-sm-3">
+						            	<textarea class="comments" rows="5" cols="120" name="follow_content"></textarea>
+									</div>
+								</div>
+								
+								<div class="form-group">
+						            <label for="inputEmail3" class="col-sm-2 control-label">附件</label>
+									<div class="col-sm-3">
+						            	附件
+									</div>
+								</div>
+						   </div>
+						   
+	    			</div>
+			</div>
+			
+		</div>
+		
+</div>
+
+
+
+
+

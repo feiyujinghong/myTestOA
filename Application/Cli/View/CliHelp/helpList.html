@@ -1,0 +1,29 @@
+<legend>
+    <p class="text-primary">
+        {$Think.lang.HELP_LIST} -- {$name}<a href=javascript:windowopen('{:U("addHelp",array("id"=>$cli_id))}') class="btn btn-primary pull-right"><i class="icon-plus"></i>{$Think.lang.ADD_HELP}</a>
+    </p>
+</legend>
+    
+<table class='table table-striped' >
+    <thead>
+        <tr class="success">
+            <th>{$Think.lang.HELP_USER}</th>
+            <th>{$Think.lang.HELP_TITLE}</th>
+            <th>{$Think.lang.HELP_SE_TIME}</th>
+            <th>{$Think.lang.OPERATION}</th>
+        </tr>
+</thead>
+<if condition='!empty($data)'>
+    <volist name="data" id="vo">
+        <tr>
+            <td>{$vo.help_user_id|get_username}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.add_time|date="Y-m-d",###}</td>
+            <td><a href="{:U('helpComment',array('id'=>$vo['id']))}">{$Think.lang.VIEW}</a></td>
+        </tr>
+    </volist>
+    <else />
+    <include file="Auth@Public/empty_data" />
+    </if>
+</table>
+{$_page}
